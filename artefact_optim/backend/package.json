@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "enka-network-api": "^5.0.13",
+    "flatted": "^3.3.3"
+  }
+}

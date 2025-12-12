@@ -1,0 +1,5586 @@
+[{
+  "enka": "1",
+  "_data": "2",
+  "characterData": "3",
+  "costume": "4",
+  "artifacts": "5",
+  "weapon": "6",
+  "stats": "7",
+  "level": 90,
+  "xp": 0,
+  "ascension": 6,
+  "maxLevel": 90,
+  "stamina": 240,
+  "friendship": 10,
+  "unlockedConstellations": "8",
+  "skillLevels": "9",
+  "unlockedPassiveTalents": "10"
+},{
+  "_tasks": "11",
+  "hoyoType": 0,
+  "options": "12",
+  "cachedAssetsManager": "13"
+},{
+  "avatarId": 10000114,
+  "propMap": "14",
+  "fightPropMap": "15",
+  "skillDepotId": 11401,
+  "inherentProudSkillList": "16",
+  "skillLevelMap": "17",
+  "proudSkillExtraLevelMap": "18",
+  "equipList": "19",
+  "fetterInfo": "20"
+},{
+  "nameCard": "21",
+  "details": "22",
+  "_data": "23",
+  "enka": "1",
+  "id": 10000114,
+  "name": "24",
+  "description": "25",
+  "bodyType": "26",
+  "weaponType": "27",
+  "gender": "28",
+  "_nameId": "29",
+  "icon": "30",
+  "sideIcon": "31",
+  "splashImage": "32",
+  "gachaSlice": "33",
+  "cardIcon": "34",
+  "_releaseData": "35",
+  "releasedAt": "36",
+  "isArchon": false,
+  "isTraveler": false,
+  "isMannequin": false,
+  "rarity": "37",
+  "stars": 5,
+  "costumes": "38",
+  "skillDepotId": 11401,
+  "_skillData": "39",
+  "arkhe": "40",
+  "elementalBurst": "41",
+  "element": "42",
+  "skills": "43",
+  "elementalSkill": "44",
+  "normalAttack": "45",
+  "passiveTalents": "46",
+  "constellations": "47"
+},{
+  "enka": "1",
+  "_data": "48",
+  "id": 211400,
+  "name": "49",
+  "description": "50",
+  "characterId": 10000114,
+  "isDefault": true,
+  "_nameId": "29",
+  "icon": "51",
+  "sideIcon": "52",
+  "splashImage": "53",
+  "stars": null,
+  "cardIcon": "54"
+},[
+  "55",
+  "56",
+  "57",
+  "58",
+  "59"
+],{
+  "location": "60",
+  "enka": "1",
+  "_data": "61",
+  "weaponData": "62",
+  "refinementRank": 1,
+  "refinement": "63",
+  "level": 90,
+  "ascension": 6,
+  "maxLevel": 90,
+  "isAwaken": true,
+  "weaponStats": "64"
+},{
+  "_data": "15",
+  "enka": "1",
+  "healthBase": "65",
+  "healthFlat": "66",
+  "healthPercent": "67",
+  "attackBase": "68",
+  "attackFlat": "69",
+  "attackPercent": "70",
+  "defenseBase": "71",
+  "defenseFlat": "72",
+  "defensePercent": "73",
+  "speedBase": "74",
+  "speedPercent": "75",
+  "critRate": "76",
+  "critDamage": "77",
+  "chargeEfficiency": "78",
+  "healAdd": "79",
+  "healedAdd": "80",
+  "elementMastery": "81",
+  "physicalRes": "82",
+  "physicalDamage": "83",
+  "pyroDamage": "84",
+  "electroDamage": "85",
+  "hydroDamage": "86",
+  "dendroDamage": "87",
+  "anemoDamage": "88",
+  "geoDamage": "89",
+  "cryoDamage": "90",
+  "pyroRes": "91",
+  "electroRes": "92",
+  "hydroRes": "93",
+  "dendroRes": "94",
+  "anemoRes": "95",
+  "geoRes": "96",
+  "cryoRes": "97",
+  "matchedElementDamage": "90",
+  "highestDamageBonus": "98",
+  "pyroEnergyCost": 0,
+  "electroEnergyCost": 0,
+  "hydroEnergyCost": 0,
+  "dendroEnergyCost": 0,
+  "anemoEnergyCost": 0,
+  "cryoEnergyCost": 0,
+  "geoEnergyCost": 0,
+  "energyCost": 0,
+  "cooldownReduction": "99",
+  "shieldStrength": "100",
+  "currentPyroEnergy": 0,
+  "currentElectroEnergy": 0,
+  "currentHydroEnergy": 0,
+  "currentDendroEnergy": 0,
+  "currentAnemoEnergy": 0,
+  "currentCryoEnergy": 0,
+  "currentGeoEnergy": 0,
+  "currentEnergy": 0,
+  "currentHealth": "101",
+  "maxHealth": "102",
+  "attack": "103",
+  "defense": "104",
+  "speed": "105",
+  "statProperties": "106"
+},[],[
+  "107",
+  "108",
+  "109"
+],[
+  "110",
+  "111",
+  "112"
+],[
+  "113"
+],{
+  "enkaUrl": "114",
+  "imageBaseUrls": "115",
+  "userAgent": "116",
+  "requestTimeout": 3000,
+  "defaultLanguage": "117",
+  "textAssetsDynamicData": "118",
+  "cacheDirectory": null,
+  "showFetchCacheLog": true,
+  "userCache": "119",
+  "gameDataBaseUrl": "120",
+  "githubToken": null,
+  "enkaSystem": "121"
+},{
+  "enka": "1",
+  "defaultCacheDirectoryPath": "122",
+  "cacheDirectoryPath": "122",
+  "gameDataBaseUrl": "120",
+  "_cacheUpdater": null,
+  "_githubCache": null,
+  "_isFetching": false
+},{
+  "1001": "123",
+  "1002": "124",
+  "1003": "125",
+  "1004": "126",
+  "4001": "127",
+  "10010": "128",
+  "10049": "129"
+},{
+  "1": 12417.3544921875,
+  "2": 5048.8798828125,
+  "3": 0.19820000231266022,
+  "4": 1033.10205078125,
+  "5": 326.55999755859375,
+  "6": 0.8449000120162964,
+  "7": 806.2135009765625,
+  "8": 71.75,
+  "9": 0.13120000064373016,
+  "20": 0.7254120707511902,
+  "21": 0,
+  "22": 2.0887999534606934,
+  "23": 1,
+  "26": 0,
+  "27": 0,
+  "28": 0,
+  "29": 0,
+  "30": 0,
+  "40": 0,
+  "41": 0,
+  "42": 0,
+  "43": 0,
+  "44": 0,
+  "45": 0,
+  "46": 0.6159999966621399,
+  "50": 0,
+  "51": 0,
+  "52": 0,
+  "53": 0,
+  "54": 0,
+  "55": 0,
+  "56": 0,
+  "77": 100,
+  "78": 50,
+  "81": 0,
+  "1007": 0,
+  "1010": 19927.353515625,
+  "2000": 19927.353515625,
+  "2001": 2232.530029296875,
+  "2002": 983.7386474609375,
+  "2003": 0,
+  "2004": 0,
+  "2005": 0,
+  "2020": 0,
+  "3004": 0,
+  "3010": 0,
+  "3014": 0,
+  "3023": 0,
+  "3045": 0,
+  "3046": 1
+},[
+  1142101,
+  1142201,
+  1142301
+],{
+  "11141": 6,
+  "11142": 10,
+  "11145": 10
+},{
+  "11432": 1
+},[
+  "130",
+  "131",
+  "132",
+  "133",
+  "134",
+  "61"
+],{
+  "expLevel": 10
+},{
+  "_data": "135",
+  "enka": "1",
+  "id": 210244,
+  "name": "136",
+  "description": "137",
+  "icon": "138",
+  "pictures": "139",
+  "itemType": "140",
+  "materialType": "141",
+  "stars": 4
+},{
+  "enka": "1",
+  "_data": "142",
+  "id": 114600,
+  "characterId": 10000114,
+  "_nameId": "29",
+  "birthday": "143",
+  "location": "144",
+  "vision": "145",
+  "constellation": "146",
+  "constellationIcon": "147",
+  "title": "148",
+  "description": "149",
+  "cv": "150"
+},{
+  "AADKFCLMMJK": 0,
+  "AMGOELBBAKI": 0,
+  "ANGCFHEBKDM": 0,
+  "animatorConfigPathHash": 4927855004125076000,
+  "attackBase": 27.93,
+  "avatarIdentityType": "151",
+  "avatarPromoteId": 114,
+  "avatarPromoteRewardIdList": "152",
+  "avatarPromoteRewardLevelList": "153",
+  "BBDNJALMIII": 0,
+  "BFDGBEOINBD": 0,
+  "BGMANMLLPMI": "154",
+  "bodyType": "26",
+  "BPILPJPADMA": 0,
+  "CABCKOJOMHO": "155",
+  "campID": 0,
+  "candSkillDepotIds": "156",
+  "CDMPIOGPOBL": 0,
+  "chargeEfficiency": 1,
+  "combatConfigHash": 11303049104175153000,
+  "controllerPathHash": 4797819260240325000,
+  "controllerPathRemoteHash": 10515192432876878000,
+  "coopPicNameHash": 15911142479408828000,
+  "critical": 0.05,
+  "criticalHurt": 0.5,
+  "defenseBase": 62.76167,
+  "deformationMeshPathHash": 16843554909179270000,
+  "descTextMapHash": 1734350449,
+  "EDPAKGEPEBE": 0,
+  "EKICEFEFGCK": 0,
+  "elecSubHurt": 0,
+  "elementMastery": 0,
+  "EMJAOBHMGOK": 0,
+  "featureTagGroupID": 10000114,
+  "FIHDBFNFPOO": 15649848368929980000,
+  "fireSubHurt": 0,
+  "gachaCardNameHash": 4273342930983866000,
+  "gachaImageNameHash": 11366955088873013000,
+  "GINOMMAHHMK": 0,
+  "GNPJACNEIGH": 0,
+  "grassSubHurt": 0,
+  "HNLBDAIOHGK": 9168170619308446000,
+  "hpBase": 966.6665,
+  "iceSubHurt": 0,
+  "iconName": "157",
+  "id": 10000114,
+  "IIALDNDHGFJ": 0,
+  "imageName": "158",
+  "initialWeapon": 11101,
+  "isRangeAttack": false,
+  "KGAFLJJDGFI": 16042086233591214000,
+  "KMECMLKIONG": 0,
+  "KNCIMMMNLOI": 0,
+  "LHPKKALDJPP": 0,
+  "lodPatternName": "159",
+  "MAHOPIJFOGG": false,
+  "manekinJsonConfigHash": 8364568326758968000,
+  "manekinMotionConfig": 103,
+  "manekinPathHash": 6990908030137387000,
+  "MBOMMBHFOCH": "159",
+  "MHBIACGCDGJ": 1734350449,
+  "MMOPHNANNGA": 1011401,
+  "nameTextMapHash": 123650890,
+  "NKONDODKKFB": "160",
+  "ONECAJELMLP": false,
+  "physicalSubHurt": 0,
+  "PMBMGKBLHJF": 0,
+  "prefabPathHash": 7288014620845932000,
+  "prefabPathRagdollHash": 14335238893467075000,
+  "prefabPathRemoteHash": 348326104689839500,
+  "propGrowCurves": "161",
+  "qualityType": "37",
+  "rockSubHurt": 0,
+  "scriptDataPathHash": 17851432353698654000,
+  "sideIconName": "162",
+  "skillDepotId": 11401,
+  "specialDeformationMeshPathHash": 0,
+  "staminaRecoverSpeed": 25,
+  "tags": "163",
+  "useType": "164",
+  "waterSubHurt": 0,
+  "weaponType": "27",
+  "windSubHurt": 0
+},{
+  "id": 123650890,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1734350449,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"BODY_GIRL","WEAPON_SWORD_ONE_HAND","FEMALE","SkirkNew",{
+  "enka": "1",
+  "name": "157",
+  "imageBaseUrl": "165",
+  "url": "166",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "name": "162",
+  "imageBaseUrl": "167",
+  "url": "168",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "name": "169",
+  "imageBaseUrl": "165",
+  "url": "170",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "name": "171",
+  "imageBaseUrl": "172",
+  "url": "173",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "name": "174",
+  "imageBaseUrl": "167",
+  "url": "175",
+  "isAvailable": true
+},{
+  "avatarId": 10000114,
+  "beginTime": "176",
+  "hideWhenDontHave": false,
+  "HOIALLKLCPF": false,
+  "sortFactor": 100,
+  "sortId": 100
+},"2025-06-16T16:00:00.000Z","QUALITY_ORANGE",[
+  "4"
+],{
+  "attackModeSkill": 0,
+  "energySkill": 11145,
+  "extraAbilities": "177",
+  "FECDDOLDHBL": "178",
+  "FNALIDLMNKP": 0,
+  "id": 11401,
+  "JHKJEJMFKIJ": 0,
+  "JPGJHGDGBOF": "40",
+  "leaderTalent": 0,
+  "LLALJAIDKPI": "179",
+  "ONFKOELKBFP": 0,
+  "skillDepotAbilityGroup": "159",
+  "skills": "180",
+  "subSkills": "181",
+  "talents": "182",
+  "talentStarName": "183"
+},"None",{
+  "enka": "1",
+  "_data": "184",
+  "id": 11145,
+  "name": "185",
+  "description": "186",
+  "icon": "187",
+  "maxCharge": 100,
+  "cooldown": 15,
+  "costElemType": "42",
+  "costElemVal": 0,
+  "requiredCharge": 50
+},{
+  "_data": "188",
+  "enka": "1",
+  "id": "189",
+  "name": "190"
+},[
+  "45",
+  "44",
+  "41"
+],{
+  "enka": "1",
+  "_data": "191",
+  "id": 11142,
+  "name": "192",
+  "description": "193",
+  "icon": "194",
+  "maxCharge": 1,
+  "cooldown": 8
+},{
+  "enka": "1",
+  "_data": "195",
+  "id": 11141,
+  "name": "196",
+  "description": "197",
+  "icon": "198"
+},[
+  "110",
+  "111",
+  "112"
+],[
+  "199",
+  "200",
+  "201",
+  "202",
+  "203",
+  "204"
+],{
+  "animatorConfigPathHash": 0,
+  "characterId": 10000114,
+  "CJPALFADNOC": 0,
+  "controllerPathHash": 0,
+  "controllerRemotePathHash": 0,
+  "descTextMapHash": 1977553594,
+  "EKBEEPPBEPC": false,
+  "frontIconName": "159",
+  "GJAKFKJMKAD": 0,
+  "GMIJGOMCGOC": false,
+  "hide": false,
+  "ILEFLNPBGKA": false,
+  "imageNameHash": 0,
+  "indexID": 0,
+  "isDefault": true,
+  "itemId": 0,
+  "jsonName": "159",
+  "KGAFLJJDGFI": 0,
+  "KJNEBKBDNJI": 1439005098,
+  "LJAIFCIPKFL": 0,
+  "nameTextMapHash": 1717594946,
+  "prefabManekinPathHash": 0,
+  "prefabNpcPathHash": 0,
+  "prefabPathHash": 0,
+  "prefabRemotePathHash": 0,
+  "quality": 0,
+  "sideIconName": "159",
+  "skinId": 211400
+},{
+  "id": 1717594946,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1977553594,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "157",
+  "imageBaseUrl": "165",
+  "url": "166",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "name": "162",
+  "imageBaseUrl": "167",
+  "url": "168",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "name": "169",
+  "imageBaseUrl": "165",
+  "url": "170",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "name": "205",
+  "imageBaseUrl": "167",
+  "url": "206",
+  "isAvailable": true
+},{
+  "location": "60",
+  "enka": "1",
+  "_data": "130",
+  "artifactData": "207",
+  "level": 21,
+  "mainstat": "208",
+  "substats": "209"
+},{
+  "location": "60",
+  "enka": "1",
+  "_data": "131",
+  "artifactData": "210",
+  "level": 21,
+  "mainstat": "211",
+  "substats": "212"
+},{
+  "location": "60",
+  "enka": "1",
+  "_data": "132",
+  "artifactData": "213",
+  "level": 21,
+  "mainstat": "214",
+  "substats": "215"
+},{
+  "location": "60",
+  "enka": "1",
+  "_data": "133",
+  "artifactData": "216",
+  "level": 21,
+  "mainstat": "217",
+  "substats": "218"
+},{
+  "location": "60",
+  "enka": "1",
+  "_data": "134",
+  "artifactData": "219",
+  "level": 21,
+  "mainstat": "220",
+  "substats": "221"
+},"Skirk",{
+  "itemId": 11517,
+  "weapon": "222",
+  "flat": "223"
+},{
+  "_data": "224",
+  "enka": "1",
+  "id": 11517,
+  "name": "225",
+  "description": "226",
+  "_nameId": "227",
+  "icon": "228",
+  "awakenIcon": "229",
+  "splashImage": "230",
+  "stars": 5,
+  "weaponType": "27",
+  "_weaponTypeData": "231",
+  "weaponTypeName": "232",
+  "refinements": "233"
+},{
+  "_data": "234",
+  "enka": "1",
+  "id": 111517,
+  "level": 1,
+  "name": "235",
+  "description": "236",
+  "addProps": "237",
+  "paramList": "238"
+},[
+  "239",
+  "240",
+  "241",
+  "242",
+  "243"
+],{
+  "fightProp": "244",
+  "enka": "1",
+  "_propData": "245",
+  "fightPropName": "246",
+  "isPercent": false,
+  "rawValue": 12417.3544921875,
+  "value": 12417.35449219
+},{
+  "fightProp": "247",
+  "enka": "1",
+  "_propData": "248",
+  "fightPropName": "249",
+  "isPercent": false,
+  "rawValue": 5048.8798828125,
+  "value": 5048.87988281
+},{
+  "fightProp": "250",
+  "enka": "1",
+  "_propData": "251",
+  "fightPropName": "252",
+  "isPercent": true,
+  "rawValue": 0.19820000231266022,
+  "value": 0.1982
+},{
+  "fightProp": "253",
+  "enka": "1",
+  "_propData": "254",
+  "fightPropName": "255",
+  "isPercent": false,
+  "rawValue": 1033.10205078125,
+  "value": 1033.10205078
+},{
+  "fightProp": "256",
+  "enka": "1",
+  "_propData": "257",
+  "fightPropName": "258",
+  "isPercent": false,
+  "rawValue": 326.55999755859375,
+  "value": 326.55999756
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "260",
+  "isPercent": true,
+  "rawValue": 0.8449000120162964,
+  "value": 0.84490001
+},{
+  "fightProp": "261",
+  "enka": "1",
+  "_propData": "262",
+  "fightPropName": "263",
+  "isPercent": false,
+  "rawValue": 806.2135009765625,
+  "value": 806.21350098
+},{
+  "fightProp": "264",
+  "enka": "1",
+  "_propData": "265",
+  "fightPropName": "266",
+  "isPercent": false,
+  "rawValue": 71.75,
+  "value": 71.75
+},{
+  "fightProp": "267",
+  "enka": "1",
+  "_propData": "268",
+  "fightPropName": "269",
+  "isPercent": true,
+  "rawValue": 0.13120000064373016,
+  "value": 0.1312
+},{
+  "fightProp": "270",
+  "enka": "1",
+  "_propData": "271",
+  "fightPropName": "272",
+  "isPercent": false,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "273",
+  "enka": "1",
+  "_propData": "274",
+  "fightPropName": "275",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "277",
+  "isPercent": true,
+  "rawValue": 0.7254120707511902,
+  "value": 0.72541207
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "279",
+  "isPercent": true,
+  "rawValue": 2.0887999534606934,
+  "value": 2.08879995
+},{
+  "fightProp": "280",
+  "enka": "1",
+  "_propData": "281",
+  "fightPropName": "282",
+  "isPercent": true,
+  "rawValue": 1,
+  "value": 1
+},{
+  "fightProp": "283",
+  "enka": "1",
+  "_propData": "284",
+  "fightPropName": "285",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "286",
+  "enka": "1",
+  "_propData": "287",
+  "fightPropName": "288",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "289",
+  "enka": "1",
+  "_propData": "290",
+  "fightPropName": "291",
+  "isPercent": false,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "292",
+  "enka": "1",
+  "_propData": "293",
+  "fightPropName": "294",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "295",
+  "enka": "1",
+  "_propData": "296",
+  "fightPropName": "297",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "298",
+  "enka": "1",
+  "_propData": "299",
+  "fightPropName": "300",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "301",
+  "enka": "1",
+  "_propData": "302",
+  "fightPropName": "303",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "304",
+  "enka": "1",
+  "_propData": "305",
+  "fightPropName": "306",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "307",
+  "enka": "1",
+  "_propData": "308",
+  "fightPropName": "309",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "310",
+  "enka": "1",
+  "_propData": "311",
+  "fightPropName": "312",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "313",
+  "enka": "1",
+  "_propData": "314",
+  "fightPropName": "315",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "316",
+  "enka": "1",
+  "_propData": "317",
+  "fightPropName": "318",
+  "isPercent": true,
+  "rawValue": 0.6159999966621399,
+  "value": 0.616
+},{
+  "fightProp": "319",
+  "enka": "1",
+  "_propData": "320",
+  "fightPropName": "321",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "322",
+  "enka": "1",
+  "_propData": "323",
+  "fightPropName": "324",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "325",
+  "enka": "1",
+  "_propData": "326",
+  "fightPropName": "327",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "328",
+  "enka": "1",
+  "_propData": "329",
+  "fightPropName": "330",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "331",
+  "enka": "1",
+  "_propData": "332",
+  "fightPropName": "333",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "334",
+  "enka": "1",
+  "_propData": "335",
+  "fightPropName": "336",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "337",
+  "enka": "1",
+  "_propData": "338",
+  "fightPropName": "339",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},[
+  "90"
+],{
+  "fightProp": "340",
+  "enka": "1",
+  "_propData": "341",
+  "fightPropName": "342",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "343",
+  "enka": "1",
+  "_propData": "344",
+  "fightPropName": "345",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "346",
+  "enka": "1",
+  "_propData": "347",
+  "fightPropName": "348",
+  "isPercent": false,
+  "rawValue": 19927.353515625,
+  "value": 19927.35351563
+},{
+  "fightProp": "349",
+  "enka": "1",
+  "_propData": "350",
+  "fightPropName": "351",
+  "isPercent": false,
+  "rawValue": 19927.353515625,
+  "value": 19927.35351563
+},{
+  "fightProp": "352",
+  "enka": "1",
+  "_propData": "353",
+  "fightPropName": "354",
+  "isPercent": false,
+  "rawValue": 2232.530029296875,
+  "value": 2232.5300293
+},{
+  "fightProp": "355",
+  "enka": "1",
+  "_propData": "356",
+  "fightPropName": "357",
+  "isPercent": false,
+  "rawValue": 983.7386474609375,
+  "value": 983.73864746
+},{
+  "fightProp": "358",
+  "enka": "1",
+  "_propData": "359",
+  "fightPropName": "360",
+  "isPercent": false,
+  "rawValue": 0,
+  "value": 0
+},[
+  "65",
+  "66",
+  "67",
+  "68",
+  "69",
+  "70",
+  "71",
+  "72",
+  "73",
+  "74",
+  "75",
+  "76",
+  "77",
+  "78",
+  "79",
+  "80",
+  "81",
+  "82",
+  "83",
+  "84",
+  "85",
+  "86",
+  "87",
+  "88",
+  "89",
+  "90",
+  "91",
+  "92",
+  "93",
+  "94",
+  "95",
+  "96",
+  "97",
+  "90",
+  "99",
+  "100",
+  "101",
+  "102",
+  "103",
+  "104",
+  "105"
+],{
+  "skill": "45",
+  "level": "361"
+},{
+  "skill": "44",
+  "level": "362"
+},{
+  "skill": "41",
+  "level": "363"
+},{
+  "_data": "364",
+  "enka": "1",
+  "id": 1142101,
+  "name": "365",
+  "description": "366",
+  "icon": "367",
+  "requiredAscension": 1,
+  "addProps": "368",
+  "isHidden": false
+},{
+  "_data": "369",
+  "enka": "1",
+  "id": 1142201,
+  "name": "370",
+  "description": "371",
+  "icon": "372",
+  "requiredAscension": 4,
+  "addProps": "373",
+  "isHidden": false
+},{
+  "_data": "374",
+  "enka": "1",
+  "id": 1142301,
+  "name": "375",
+  "description": "376",
+  "icon": "377",
+  "requiredAscension": 0,
+  "addProps": "378",
+  "isHidden": false
+},{
+  "_idleTimeout": 32000,
+  "_idlePrev": "379",
+  "_idleNext": "379",
+  "_idleStart": 662,
+  "_repeat": null,
+  "_destroyed": false
+},"https://enka.network",[
+  "165",
+  "167",
+  "172",
+  "380"
+],"Mozilla/5.0","en",{
+  "paramList": "381",
+  "userInfo": null
+},{
+  "isEnabled": true,
+  "getter": null,
+  "setter": null,
+  "deleter": null
+},"https://gitlab.com/Dimbreath/AnimeGameData/-/raw/master",{
+  "libraryMap": "382",
+  "options": "383"
+},"c:\\Users\\nairo\\Documents\\WorkSpace\\genshin\\artefact_optim\\backend\\node_modules\\enka-network-api\\cache",{
+  "type": 1001,
+  "ival": "384"
+},{
+  "type": 1002,
+  "ival": "385",
+  "val": "385"
+},{
+  "type": 1003,
+  "ival": "384"
+},{
+  "type": 1004,
+  "ival": "384"
+},{
+  "type": 4001,
+  "ival": "386",
+  "val": "386"
+},{
+  "type": 10010,
+  "ival": "387",
+  "val": "387"
+},{
+  "type": 10049,
+  "ival": "388",
+  "val": "388"
+},{
+  "itemId": 40543,
+  "reliquary": "389",
+  "flat": "390"
+},{
+  "itemId": 40523,
+  "reliquary": "391",
+  "flat": "392"
+},{
+  "itemId": 40554,
+  "reliquary": "393",
+  "flat": "394"
+},{
+  "itemId": 40514,
+  "reliquary": "395",
+  "flat": "396"
+},{
+  "itemId": 38534,
+  "reliquary": "397",
+  "flat": "398"
+},{
+  "AOGIAIHDPIM": false,
+  "cdGroup": 0,
+  "cdTime": 0,
+  "closeBagAfterUsed": false,
+  "descTextMapHash": 1583763245,
+  "destroyReturnMaterial": "399",
+  "destroyReturnMaterialCount": "400",
+  "destroyRule": "401",
+  "DKJOPHKFKCB": false,
+  "DNNJPKPOPIP": "402",
+  "dropable": false,
+  "effectDescTextMapHash": 3445429647,
+  "effectGadgetID": 0,
+  "effectIcon": "159",
+  "effectName": "159",
+  "foodQuality": "403",
+  "gadgetId": 0,
+  "globalItemLimit": 0,
+  "icon": "404",
+  "id": 210244,
+  "interactionTitleTextMapHash": 2901139199,
+  "isForceGetHint": true,
+  "isHidden": false,
+  "isSplitDrop": false,
+  "itemType": "140",
+  "itemUse": "405",
+  "LPDPGIAEFCJ": "40",
+  "materialType": "141",
+  "maxUseCount": 99,
+  "nameTextMapHash": 1663572636,
+  "noFirstGetHint": true,
+  "OINJKJDDLAI": "406",
+  "picPath": "407",
+  "playGainEffect": false,
+  "rank": 0,
+  "rankLevel": 4,
+  "satiationParams": "408",
+  "setID": 0,
+  "specialDescTextMapHash": 3084592129,
+  "stackLimit": 1000,
+  "typeDescTextMapHash": 2497952878,
+  "useLevel": 0,
+  "useOnGain": true,
+  "useTarget": "409",
+  "weight": 0
+},{
+  "id": 1663572636,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1583763245,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "404",
+  "imageBaseUrl": "167",
+  "url": "410",
+  "isAvailable": true
+},[
+  "411",
+  "412"
+],"ITEM_MATERIAL","MATERIAL_NAMECARD",{
+  "avatarAssocType": "413",
+  "avatarConstellationAfterTextMapHash": 3355158347,
+  "avatarConstellationBeforTextMapHash": 3774689962,
+  "avatarDetailTextMapHash": 3716714802,
+  "avatarId": 10000114,
+  "avatarNativeTextMapHash": 1897389881,
+  "avatarTitleTextMapHash": 1444421514,
+  "avatarVisionAfterTextMapHash": 541238193,
+  "avatarVisionBeforTextMapHash": 1723833716,
+  "BJFDDEAIELE": 2389758066,
+  "cvChineseTextMapHash": 4070951942,
+  "cvEnglishTextMapHash": 1361932772,
+  "cvJapaneseTextMapHash": 3489119184,
+  "cvKoreanTextMapHash": 1859617327,
+  "fetterId": 114600,
+  "finishConds": "414",
+  "infoBirthDay": 5,
+  "infoBirthMonth": 11,
+  "isHiden": false,
+  "MJBCCNOJAAM": 4252609488,
+  "openConds": "415"
+},{
+  "month": 11,
+  "day": 5
+},{
+  "id": 1897389881,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1723833716,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3774689962,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "416",
+  "imageBaseUrl": "172",
+  "url": "417",
+  "isAvailable": true
+},{
+  "id": 1444421514,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3716714802,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "chinese": "418",
+  "japanese": "419",
+  "english": "420",
+  "korean": "421"
+},"AVATAR_IDENTITY_NORMAL",[
+  901011,
+  901013,
+  901015
+],[
+  1,
+  3,
+  5
+],"FIGHT_PROP_CRITICAL_HURT","FIGHT_PROP_CRITICAL",[],"UI_AvatarIcon_SkirkNew","AvatarImage_Forward_SkirkNew","","FIGHT_PROP_ATTACK_PERCENT",[
+  "422",
+  "423",
+  "424"
+],"UI_AvatarIcon_Side_SkirkNew",[
+  "40"
+],"AVATAR_FORMAL",{
+  "url": "425",
+  "priority": 12,
+  "format": "426",
+  "regexList": "427"
+},"https://homdgcat.wiki/homdgcat-res/Avatar/UI_AvatarIcon_SkirkNew.png",{
+  "url": "428",
+  "priority": 10,
+  "format": "426",
+  "regexList": "429"
+},"https://enka.network/ui/UI_AvatarIcon_Side_SkirkNew.png","UI_Gacha_AvatarImg_SkirkNew","https://homdgcat.wiki/homdgcat-res/Gacha/UI_Gacha_AvatarImg_SkirkNew.png","UI_Gacha_AvatarIcon_SkirkNew",{
+  "url": "430",
+  "priority": 3,
+  "format": "426",
+  "regexList": "431"
+},"https://gi.yatta.moe/assets/UI/UI_Gacha_AvatarIcon_SkirkNew.png","UI_AvatarIcon_SkirkNew_Card","https://enka.network/ui/UI_AvatarIcon_SkirkNew_Card.png","2025-06-17 00:00:00",[
+  "159",
+  "159",
+  "159"
+],[
+  "432",
+  "433",
+  "434",
+  "435",
+  "436"
+],[
+  "437",
+  "438"
+],[
+  11141,
+  11142,
+  0,
+  0
+],[
+  10001,
+  5114010,
+  11146,
+  11147
+],[
+  1141,
+  1142,
+  1143,
+  1144,
+  1145,
+  1146
+],"Talent_SkirkNew",{
+  "abilityName": "159",
+  "BGINCKANIGF": false,
+  "buffIcon": "159",
+  "cdSlot": 0,
+  "cdTime": 15,
+  "CGJLEIHOKLN": "40",
+  "costElemType": "189",
+  "costElemVal": 0,
+  "costStamina": 0,
+  "DAHEPAIKAJE": false,
+  "DEAEBMEIFLO": "439",
+  "descTextMapHash": 2572444728,
+  "dragType": "440",
+  "EFHHGFKPGJO": false,
+  "energyMin": 0,
+  "extraDescTextMapHash": 675140071,
+  "FOJNHEKGGCB": false,
+  "GLGOMNEPNDH": false,
+  "globalValueKey": "159",
+  "HOBKGMMNHLI": false,
+  "IACNAENANDH": 23730395,
+  "id": 11145,
+  "isAttackCameraLock": true,
+  "LGHAEDLLNFF": 50,
+  "LLINBJLCONJ": false,
+  "lockShape": "441",
+  "lockWeightParams": "442",
+  "maxChargeNum": 1,
+  "MHLANHFCMBJ": false,
+  "MIFFDPCHFID": false,
+  "nameTextMapHash": 55552885,
+  "needMonitor": "443",
+  "OKLOMDDKDMJ": false,
+  "PHBLMBKDEOG": 100,
+  "proudSkillGroupId": 11439,
+  "shareCDID": 0,
+  "skillIcon": "444",
+  "triggerID": 5
+},{
+  "id": 55552885,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 2572444728,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null,
+  "dynamicData": "445"
+},{
+  "enka": "1",
+  "name": "444",
+  "imageBaseUrl": "165",
+  "url": "446",
+  "isAvailable": true
+},{
+  "paramTypes": "447",
+  "textMapContentTextMapHash": 3168728290,
+  "textMapId": "189"
+},"Ice",{
+  "id": 3168728290,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "abilityName": "159",
+  "BGINCKANIGF": false,
+  "buffIcon": "159",
+  "cdSlot": 0,
+  "cdTime": 8,
+  "CGJLEIHOKLN": "40",
+  "costElemType": "40",
+  "costElemVal": 0,
+  "costStamina": 0,
+  "DAHEPAIKAJE": false,
+  "DEAEBMEIFLO": "448",
+  "descTextMapHash": 3740181008,
+  "dragType": "440",
+  "EFHHGFKPGJO": false,
+  "energyMin": 0,
+  "extraDescTextMapHash": 996305431,
+  "FOJNHEKGGCB": false,
+  "GLGOMNEPNDH": false,
+  "globalValueKey": "159",
+  "HOBKGMMNHLI": false,
+  "IACNAENANDH": 2243332643,
+  "id": 11142,
+  "isAttackCameraLock": true,
+  "LGHAEDLLNFF": 0,
+  "LLINBJLCONJ": false,
+  "lockShape": "441",
+  "lockWeightParams": "449",
+  "maxChargeNum": 1,
+  "MHLANHFCMBJ": false,
+  "MIFFDPCHFID": false,
+  "nameTextMapHash": 3456500781,
+  "needMonitor": "443",
+  "OKLOMDDKDMJ": false,
+  "PHBLMBKDEOG": 0,
+  "proudSkillGroupId": 11432,
+  "shareCDID": 0,
+  "skillIcon": "450",
+  "triggerID": 2
+},{
+  "id": 3456500781,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3740181008,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null,
+  "dynamicData": "451"
+},{
+  "enka": "1",
+  "name": "450",
+  "imageBaseUrl": "165",
+  "url": "452",
+  "isAvailable": true
+},{
+  "abilityName": "453",
+  "BGINCKANIGF": false,
+  "buffIcon": "159",
+  "cdSlot": 0,
+  "cdTime": 0,
+  "CGJLEIHOKLN": "40",
+  "costElemType": "40",
+  "costElemVal": 0,
+  "costStamina": 0,
+  "DAHEPAIKAJE": false,
+  "DEAEBMEIFLO": "448",
+  "descTextMapHash": 2425463048,
+  "dragType": "440",
+  "EFHHGFKPGJO": false,
+  "energyMin": 0,
+  "extraDescTextMapHash": 1176726063,
+  "FOJNHEKGGCB": false,
+  "GLGOMNEPNDH": false,
+  "globalValueKey": "159",
+  "HOBKGMMNHLI": false,
+  "IACNAENANDH": 1966924827,
+  "id": 11141,
+  "isAttackCameraLock": true,
+  "LGHAEDLLNFF": 0,
+  "LLINBJLCONJ": false,
+  "lockShape": "454",
+  "lockWeightParams": "455",
+  "maxChargeNum": 1,
+  "MHLANHFCMBJ": false,
+  "MIFFDPCHFID": false,
+  "nameTextMapHash": 3714723941,
+  "needMonitor": "443",
+  "OKLOMDDKDMJ": false,
+  "PHBLMBKDEOG": 0,
+  "proudSkillGroupId": 11431,
+  "shareCDID": 0,
+  "skillIcon": "456",
+  "triggerID": 0
+},{
+  "id": 3714723941,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 2425463048,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null,
+  "dynamicData": "457"
+},{
+  "enka": "1",
+  "name": "456",
+  "imageBaseUrl": "165",
+  "url": "458",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "_data": "459",
+  "id": 1141,
+  "name": "460",
+  "description": "461",
+  "icon": "462",
+  "addProps": "463",
+  "paramList": "464"
+},{
+  "enka": "1",
+  "_data": "465",
+  "id": 1142,
+  "name": "466",
+  "description": "467",
+  "icon": "468",
+  "addProps": "469",
+  "paramList": "470"
+},{
+  "enka": "1",
+  "_data": "471",
+  "id": 1143,
+  "name": "472",
+  "description": "473",
+  "icon": "474",
+  "addProps": "475",
+  "paramList": "476"
+},{
+  "enka": "1",
+  "_data": "477",
+  "id": 1144,
+  "name": "478",
+  "description": "479",
+  "icon": "480",
+  "addProps": "481",
+  "paramList": "482"
+},{
+  "enka": "1",
+  "_data": "483",
+  "id": 1145,
+  "name": "484",
+  "description": "485",
+  "icon": "486",
+  "addProps": "487",
+  "paramList": "488"
+},{
+  "enka": "1",
+  "_data": "489",
+  "id": 1146,
+  "name": "490",
+  "description": "491",
+  "icon": "492",
+  "addProps": "493",
+  "paramList": "494"
+},"UI_AvatarIcon_Costume_Card","https://enka.network/ui/UI_AvatarIcon_Costume_Card.png",{
+  "enka": "1",
+  "_data": "495",
+  "id": 40543,
+  "name": "496",
+  "description": "497",
+  "equipType": "498",
+  "_equipTypeData": "499",
+  "equipTypeName": "500",
+  "icon": "501",
+  "stars": 5,
+  "set": "502"
+},{
+  "fightProp": "247",
+  "enka": "1",
+  "_propData": "248",
+  "fightPropName": "503",
+  "isPercent": false,
+  "rawValue": 4780,
+  "value": 4780
+},{
+  "total": "504",
+  "split": "505"
+},{
+  "enka": "1",
+  "_data": "506",
+  "id": 40523,
+  "name": "507",
+  "description": "508",
+  "equipType": "509",
+  "_equipTypeData": "510",
+  "equipTypeName": "511",
+  "icon": "512",
+  "stars": 5,
+  "set": "513"
+},{
+  "fightProp": "256",
+  "enka": "1",
+  "_propData": "257",
+  "fightPropName": "514",
+  "isPercent": false,
+  "rawValue": 311,
+  "value": 311
+},{
+  "total": "515",
+  "split": "516"
+},{
+  "enka": "1",
+  "_data": "517",
+  "id": 40554,
+  "name": "518",
+  "description": "519",
+  "equipType": "520",
+  "_equipTypeData": "521",
+  "equipTypeName": "522",
+  "icon": "523",
+  "stars": 5,
+  "set": "524"
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "525",
+  "isPercent": true,
+  "rawValue": 0.466,
+  "value": 0.466
+},{
+  "total": "526",
+  "split": "527"
+},{
+  "enka": "1",
+  "_data": "528",
+  "id": 40514,
+  "name": "529",
+  "description": "530",
+  "equipType": "531",
+  "_equipTypeData": "532",
+  "equipTypeName": "533",
+  "icon": "534",
+  "stars": 5,
+  "set": "535"
+},{
+  "fightProp": "316",
+  "enka": "1",
+  "_propData": "317",
+  "fightPropName": "536",
+  "isPercent": true,
+  "rawValue": 0.466,
+  "value": 0.466
+},{
+  "total": "537",
+  "split": "538"
+},{
+  "enka": "1",
+  "_data": "539",
+  "id": 38534,
+  "name": "540",
+  "description": "541",
+  "equipType": "542",
+  "_equipTypeData": "543",
+  "equipTypeName": "544",
+  "icon": "545",
+  "stars": 5,
+  "set": "546"
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "547",
+  "isPercent": true,
+  "rawValue": 0.622,
+  "value": 0.622
+},{
+  "total": "548",
+  "split": "549"
+},{
+  "level": 90,
+  "promoteLevel": 6,
+  "affixMap": "550"
+},{
+  "nameTextMapHash": "551",
+  "rankLevel": 5,
+  "itemType": "552",
+  "icon": "553",
+  "weaponStats": "554"
+},{
+  "awakenCosts": "555",
+  "awakenIcon": "556",
+  "awakenLightMapTexture": "557",
+  "awakenMaterial": 0,
+  "awakenTexture": "558",
+  "DELFBHBPPLO": "40",
+  "descTextMapHash": 782350597,
+  "destroyReturnMaterial": "559",
+  "destroyReturnMaterialCount": "560",
+  "destroyRule": "401",
+  "dropable": false,
+  "gachaCardNameHash": 14584399136198517000,
+  "gadgetId": 50011517,
+  "globalItemLimit": 0,
+  "HHADJJPNFPB": false,
+  "icon": "553",
+  "id": 11517,
+  "initialLockState": 1,
+  "itemType": "552",
+  "KJHLOKPFKGI": 0,
+  "materialType": "561",
+  "nameTextMapHash": 1479741275,
+  "rank": 10,
+  "rankLevel": 5,
+  "skillAffix": "562",
+  "storyId": 191517,
+  "unRotate": false,
+  "useLevel": 0,
+  "weaponBaseExp": 300000,
+  "weaponPromoteId": 11517,
+  "weaponProp": "563",
+  "weaponType": "27",
+  "weight": 1
+},{
+  "id": 1479741275,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 782350597,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"Sword_OuterSword",{
+  "enka": "1",
+  "name": "553",
+  "imageBaseUrl": "165",
+  "url": "564",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "name": "556",
+  "imageBaseUrl": "165",
+  "url": "565",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "name": "566",
+  "imageBaseUrl": "172",
+  "url": "567",
+  "isAvailable": true
+},{
+  "paramTypes": "568",
+  "textMapContentTextMapHash": 1338971918,
+  "textMapId": "27"
+},{
+  "id": 1338971918,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[
+  "63",
+  "569",
+  "570",
+  "571",
+  "572"
+],{
+  "addProps": "573",
+  "affixId": 1115170,
+  "descTextMapHash": 326303073,
+  "id": 111517,
+  "level": 0,
+  "nameTextMapHash": 1741516659,
+  "openConfig": "574",
+  "paramList": "575"
+},{
+  "id": 1741516659,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 326303073,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[],[
+  0.24,
+  12,
+  0.24,
+  0.4,
+  0,
+  0,
+  0,
+  0
+],{
+  "fightProp": "253",
+  "enka": "1",
+  "_propData": "254",
+  "fightPropName": "576",
+  "isPercent": false,
+  "rawValue": 674.3345459999999,
+  "value": 674.334546
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "577",
+  "isPercent": true,
+  "rawValue": 0.220512,
+  "value": 0.220512
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "578",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "280",
+  "enka": "1",
+  "_propData": "281",
+  "fightPropName": "579",
+  "isPercent": true,
+  "rawValue": 0,
+  "value": 0
+},{
+  "fightProp": "289",
+  "enka": "1",
+  "_propData": "290",
+  "fightPropName": "580",
+  "isPercent": false,
+  "rawValue": 0,
+  "value": 0
+},"FIGHT_PROP_BASE_HP",{
+  "paramTypes": "581",
+  "textMapContentTextMapHash": 931326071,
+  "textMapId": "244"
+},{
+  "id": 931326071,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_HP",{
+  "paramTypes": "582",
+  "textMapContentTextMapHash": 1377450402,
+  "textMapId": "247"
+},{
+  "id": 1377450402,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_HP_PERCENT",{
+  "paramTypes": "583",
+  "textMapContentTextMapHash": 2404061249,
+  "textMapId": "250"
+},{
+  "id": 2404061249,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_BASE_ATTACK",{
+  "paramTypes": "584",
+  "textMapContentTextMapHash": 2334963823,
+  "textMapId": "253"
+},{
+  "id": 2334963823,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_ATTACK",{
+  "paramTypes": "585",
+  "textMapContentTextMapHash": 1756301290,
+  "textMapId": "256"
+},{
+  "id": 1756301290,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "paramTypes": "586",
+  "textMapContentTextMapHash": 4097315912,
+  "textMapId": "160"
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_BASE_DEFENSE",{
+  "paramTypes": "587",
+  "textMapContentTextMapHash": 466638175,
+  "textMapId": "261"
+},{
+  "id": 466638175,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_DEFENSE",{
+  "paramTypes": "588",
+  "textMapContentTextMapHash": 3591287138,
+  "textMapId": "264"
+},{
+  "id": 3591287138,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_DEFENSE_PERCENT",{
+  "paramTypes": "589",
+  "textMapContentTextMapHash": 527947494,
+  "textMapId": "267"
+},{
+  "id": 527947494,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_BASE_SPEED",{
+  "paramTypes": "590",
+  "textMapContentTextMapHash": 4069199863,
+  "textMapId": "270"
+},{
+  "id": 4069199863,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_SPEED_PERCENT",{
+  "paramTypes": "591",
+  "textMapContentTextMapHash": 573781492,
+  "textMapId": "273"
+},{
+  "id": 573781492,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "paramTypes": "592",
+  "textMapContentTextMapHash": 1916797986,
+  "textMapId": "155"
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "paramTypes": "593",
+  "textMapContentTextMapHash": 4137936461,
+  "textMapId": "154"
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_CHARGE_EFFICIENCY",{
+  "paramTypes": "594",
+  "textMapContentTextMapHash": 1735465728,
+  "textMapId": "280"
+},{
+  "id": 1735465728,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_HEAL_ADD",{
+  "paramTypes": "595",
+  "textMapContentTextMapHash": 3911103831,
+  "textMapId": "283"
+},{
+  "id": 3911103831,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_HEALED_ADD",{
+  "paramTypes": "596",
+  "textMapContentTextMapHash": 3392845215,
+  "textMapId": "286"
+},{
+  "id": 3392845215,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_ELEMENT_MASTERY",{
+  "paramTypes": "597",
+  "textMapContentTextMapHash": 3421163681,
+  "textMapId": "289"
+},{
+  "id": 3421163681,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_PHYSICAL_SUB_HURT",{
+  "paramTypes": "598",
+  "textMapContentTextMapHash": 2073208032,
+  "textMapId": "292"
+},{
+  "id": 2073208032,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_PHYSICAL_ADD_HURT",{
+  "paramTypes": "599",
+  "textMapContentTextMapHash": 3763864883,
+  "textMapId": "295"
+},{
+  "id": 3763864883,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_FIRE_ADD_HURT",{
+  "paramTypes": "600",
+  "textMapContentTextMapHash": 999734248,
+  "textMapId": "298"
+},{
+  "id": 999734248,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_ELEC_ADD_HURT",{
+  "paramTypes": "601",
+  "textMapContentTextMapHash": 3514877774,
+  "textMapId": "301"
+},{
+  "id": 3514877774,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_WATER_ADD_HURT",{
+  "paramTypes": "602",
+  "textMapContentTextMapHash": 3619239513,
+  "textMapId": "304"
+},{
+  "id": 3619239513,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_GRASS_ADD_HURT",{
+  "paramTypes": "603",
+  "textMapContentTextMapHash": 1824382851,
+  "textMapId": "307"
+},{
+  "id": 1824382851,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_WIND_ADD_HURT",{
+  "paramTypes": "604",
+  "textMapContentTextMapHash": 312842903,
+  "textMapId": "310"
+},{
+  "id": 312842903,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_ROCK_ADD_HURT",{
+  "paramTypes": "605",
+  "textMapContentTextMapHash": 2557985416,
+  "textMapId": "313"
+},{
+  "id": 2557985416,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_ICE_ADD_HURT",{
+  "paramTypes": "606",
+  "textMapContentTextMapHash": 4054347456,
+  "textMapId": "316"
+},{
+  "id": 4054347456,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_FIRE_SUB_HURT",{
+  "paramTypes": "607",
+  "textMapContentTextMapHash": 570007818,
+  "textMapId": "319"
+},{
+  "id": 570007818,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_ELEC_SUB_HURT",{
+  "paramTypes": "608",
+  "textMapContentTextMapHash": 1580778495,
+  "textMapId": "322"
+},{
+  "id": 1580778495,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_WATER_SUB_HURT",{
+  "paramTypes": "609",
+  "textMapContentTextMapHash": 1406081734,
+  "textMapId": "325"
+},{
+  "id": 1406081734,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_GRASS_SUB_HURT",{
+  "paramTypes": "610",
+  "textMapContentTextMapHash": 2809766539,
+  "textMapId": "328"
+},{
+  "id": 2809766539,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_WIND_SUB_HURT",{
+  "paramTypes": "611",
+  "textMapContentTextMapHash": 675300986,
+  "textMapId": "331"
+},{
+  "id": 675300986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_ROCK_SUB_HURT",{
+  "paramTypes": "612",
+  "textMapContentTextMapHash": 3363551926,
+  "textMapId": "334"
+},{
+  "id": 3363551926,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_ICE_SUB_HURT",{
+  "paramTypes": "613",
+  "textMapContentTextMapHash": 2221516638,
+  "textMapId": "337"
+},{
+  "id": 2221516638,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_SKILL_CD_MINUS_RATIO",{
+  "paramTypes": "614",
+  "textMapContentTextMapHash": 1083556685,
+  "textMapId": "340"
+},{
+  "id": 1083556685,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_SHIELD_COST_MINUS_RATIO",{
+  "paramTypes": "615",
+  "textMapContentTextMapHash": 195785769,
+  "textMapId": "343"
+},{
+  "id": 195785769,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_CUR_HP",{
+  "paramTypes": "616",
+  "textMapContentTextMapHash": 2738216570,
+  "textMapId": "346"
+},{
+  "id": 2738216570,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_MAX_HP",{
+  "paramTypes": "617",
+  "textMapContentTextMapHash": 3366286741,
+  "textMapId": "349"
+},{
+  "id": 3366286741,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_CUR_ATTACK",{
+  "paramTypes": "618",
+  "textMapContentTextMapHash": 638981362,
+  "textMapId": "352"
+},{
+  "id": 638981362,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_CUR_DEFENSE",{
+  "paramTypes": "619",
+  "textMapContentTextMapHash": 1575853882,
+  "textMapId": "355"
+},{
+  "id": 1575853882,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"FIGHT_PROP_CUR_SPEED",{
+  "paramTypes": "620",
+  "textMapContentTextMapHash": 96988362,
+  "textMapId": "358"
+},{
+  "id": 96988362,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "base": 6,
+  "extra": 0,
+  "value": 6
+},{
+  "base": 10,
+  "extra": 1,
+  "value": 11
+},{
+  "base": 10,
+  "extra": 0,
+  "value": 10
+},{
+  "addProps": "621",
+  "breakLevel": 1,
+  "coinCost": 0,
+  "costItems": "622",
+  "descTextMapHash": 3118452763,
+  "filterConds": "623",
+  "IACNAENANDH": 388118252,
+  "icon": "624",
+  "IFBLICKNGFI": "625",
+  "isHideLifeProudSkill": false,
+  "LCNAOPBKNGP": "626",
+  "level": 1,
+  "lifeEffectParams": "627",
+  "lifeEffectType": "628",
+  "LPNPFAMOHIH": 760579012,
+  "MLMBNEJOEHI": "629",
+  "nameTextMapHash": 1667685149,
+  "ONKBFEMNPCE": "630",
+  "openConfig": "631",
+  "paramDescList": "632",
+  "paramList": "633",
+  "proudSkillGroupId": 11421,
+  "proudSkillId": 1142101,
+  "proudSkillType": 2,
+  "unlockDescTextMapHash": 3151034170
+},{
+  "id": 1667685149,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3118452763,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "624",
+  "imageBaseUrl": "172",
+  "url": "634",
+  "isAvailable": true
+},[],{
+  "addProps": "635",
+  "breakLevel": 4,
+  "coinCost": 0,
+  "costItems": "636",
+  "descTextMapHash": 635611931,
+  "filterConds": "637",
+  "IACNAENANDH": 1110622404,
+  "icon": "638",
+  "IFBLICKNGFI": "639",
+  "isHideLifeProudSkill": false,
+  "LCNAOPBKNGP": "640",
+  "level": 1,
+  "lifeEffectParams": "641",
+  "lifeEffectType": "628",
+  "LPNPFAMOHIH": 1528311436,
+  "MLMBNEJOEHI": "642",
+  "nameTextMapHash": 2035329917,
+  "ONKBFEMNPCE": "630",
+  "openConfig": "643",
+  "paramDescList": "644",
+  "paramList": "645",
+  "proudSkillGroupId": 11422,
+  "proudSkillId": 1142201,
+  "proudSkillType": 2,
+  "unlockDescTextMapHash": 3417120994
+},{
+  "id": 2035329917,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 635611931,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "638",
+  "imageBaseUrl": "172",
+  "url": "646",
+  "isAvailable": true
+},[],{
+  "addProps": "647",
+  "breakLevel": 0,
+  "coinCost": 0,
+  "costItems": "648",
+  "descTextMapHash": 1714270491,
+  "filterConds": "649",
+  "IACNAENANDH": 1385593756,
+  "icon": "650",
+  "IFBLICKNGFI": "651",
+  "isHideLifeProudSkill": false,
+  "LCNAOPBKNGP": "652",
+  "level": 1,
+  "lifeEffectParams": "653",
+  "lifeEffectType": "628",
+  "LPNPFAMOHIH": 3704981004,
+  "MLMBNEJOEHI": "654",
+  "nameTextMapHash": 940882805,
+  "ONKBFEMNPCE": "655",
+  "openConfig": "656",
+  "paramDescList": "657",
+  "paramList": "658",
+  "proudSkillGroupId": 11423,
+  "proudSkillId": 1142301,
+  "proudSkillType": 2,
+  "unlockDescTextMapHash": 1765012002
+},{
+  "id": 940882805,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1714270491,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "650",
+  "imageBaseUrl": "172",
+  "url": "659",
+  "isAvailable": true
+},[],{
+  "_idleNext": "113",
+  "_idlePrev": "113",
+  "expiry": 32662,
+  "id": -9007199254740988,
+  "msecs": 32000,
+  "priorityQueuePosition": 3
+},{
+  "url": "660",
+  "priority": 2,
+  "format": "661",
+  "regexList": "662"
+},[],{},{
+  "enkaApiUrl": "114",
+  "requestTimeout": 3000,
+  "userAgent": "663"
+},"0","6","90","24000","12000",{
+  "level": 21,
+  "mainPropId": 14001,
+  "appendPropIdList": "664"
+},{
+  "nameTextMapHash": "665",
+  "rankLevel": 5,
+  "itemType": "666",
+  "icon": "667",
+  "equipType": "498",
+  "setId": 15040,
+  "setNameTextMapHash": "668",
+  "reliquarySubstats": "669",
+  "reliquaryMainstat": "670"
+},{
+  "level": 21,
+  "mainPropId": 12001,
+  "appendPropIdList": "671"
+},{
+  "nameTextMapHash": "672",
+  "rankLevel": 5,
+  "itemType": "666",
+  "icon": "673",
+  "equipType": "509",
+  "setId": 15040,
+  "setNameTextMapHash": "668",
+  "reliquarySubstats": "674",
+  "reliquaryMainstat": "675"
+},{
+  "level": 21,
+  "mainPropId": 10004,
+  "appendPropIdList": "676"
+},{
+  "nameTextMapHash": "677",
+  "rankLevel": 5,
+  "itemType": "666",
+  "icon": "678",
+  "equipType": "520",
+  "setId": 15040,
+  "setNameTextMapHash": "668",
+  "reliquarySubstats": "679",
+  "reliquaryMainstat": "680"
+},{
+  "level": 21,
+  "mainPropId": 15010,
+  "appendPropIdList": "681"
+},{
+  "nameTextMapHash": "682",
+  "rankLevel": 5,
+  "itemType": "666",
+  "icon": "683",
+  "equipType": "531",
+  "setId": 15040,
+  "setNameTextMapHash": "668",
+  "reliquarySubstats": "684",
+  "reliquaryMainstat": "685"
+},{
+  "level": 21,
+  "mainPropId": 13008,
+  "appendPropIdList": "686"
+},{
+  "nameTextMapHash": "687",
+  "rankLevel": 5,
+  "itemType": "666",
+  "icon": "688",
+  "equipType": "542",
+  "setId": 15038,
+  "setNameTextMapHash": "689",
+  "reliquarySubstats": "690",
+  "reliquaryMainstat": "691"
+},[],[],"DESTROY_NONE","MATERIAL_SYS_TYPE_NONE","FOOD_QUALITY_NONE","UI_NameCardIcon_SkirkNew",[
+  "692",
+  "693",
+  "694"
+],"Filter_OTHER",[
+  "695",
+  "696"
+],[],"ITEM_USE_TARGET_NONE","https://enka.network/ui/UI_NameCardIcon_SkirkNew.png",{
+  "enka": "1",
+  "name": "695",
+  "imageBaseUrl": "167",
+  "url": "697",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "name": "696",
+  "imageBaseUrl": "165",
+  "url": "698",
+  "isAvailable": true
+},"ASSOC_TYPE_OMNI_SCOURGE",[
+  "699"
+],[],"Eff_UI_Talent_SkirkNew","https://gi.yatta.moe/assets/UI/Eff_UI_Talent_SkirkNew.png",{
+  "id": 4070951942,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3489119184,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1361932772,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1859617327,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "growCurve": "700",
+  "type": "244"
+},{
+  "growCurve": "701",
+  "type": "253"
+},{
+  "growCurve": "700",
+  "type": "261"
+},"https://homdgcat.wiki/homdgcat-res","PNG",[
+  "702",
+  "703",
+  "704",
+  "705",
+  "706"
+],"https://enka.network/ui",[
+  "707",
+  "708"
+],"https://gi.yatta.moe/assets/UI",[
+  "709"
+],{
+  "LKJNHHPJKIA": 1,
+  "proudSkillGroupId": 11421
+},{
+  "LKJNHHPJKIA": 4,
+  "proudSkillGroupId": 11422
+},{
+  "LKJNHHPJKIA": 0,
+  "proudSkillGroupId": 11423
+},{
+  "LKJNHHPJKIA": 0,
+  "proudSkillGroupId": 0
+},{
+  "LKJNHHPJKIA": 0,
+  "proudSkillGroupId": 0
+},{
+  "AFMEMNMEABG": "710",
+  "KLHCAFHKLNI": "711",
+  "proudSkillGroupId": 0
+},{
+  "AFMEMNMEABG": "712",
+  "KLHCAFHKLNI": "711",
+  "proudSkillGroupId": 0
+},"SPECIAL_ENERGY_SKIRK","DRAG_NONE","CircleLockEnemyR15H10HC",[
+  1,
+  1,
+  0.3,
+  0
+],"MONITOR_NEVER","Skill_E_SkirkNew_01",{
+  "paramList": "381",
+  "userInfo": null
+},"https://homdgcat.wiki/homdgcat-res/AvatarSkill/Skill_E_SkirkNew_01.png",[
+  "713"
+],"SPECIAL_ENERGY_NONE",[
+  1,
+  1,
+  0.3,
+  0
+],"Skill_S_SkirkNew_01",{
+  "paramList": "381",
+  "userInfo": null
+},"https://homdgcat.wiki/homdgcat-res/AvatarSkill/Skill_S_SkirkNew_01.png","Avatar_SkirkNew_ExtraAttack","CircleLockEnemyR8H6HC",[
+  1,
+  1,
+  0.3,
+  0
+],"Skill_A_01",{
+  "paramList": "381",
+  "userInfo": null
+},"https://homdgcat.wiki/homdgcat-res/AvatarSkill/Skill_A_01.png",{
+  "addProps": "714",
+  "descTextMapHash": 383348735,
+  "HBFJKIDGJMA": 0,
+  "IACNAENANDH": 1610061173,
+  "icon": "715",
+  "mainCostItemCount": 1,
+  "mainCostItemId": 5114,
+  "nameTextMapHash": 1457353817,
+  "openConfig": "716",
+  "paramList": "717",
+  "PJKOKKHOFAP": 0,
+  "prevTalent": 0,
+  "talentId": 1141
+},{
+  "id": 1457353817,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 383348735,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "715",
+  "imageBaseUrl": "172",
+  "url": "718",
+  "isAvailable": true
+},[],[
+  5,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "addProps": "719",
+  "descTextMapHash": 1387754415,
+  "HBFJKIDGJMA": 0,
+  "IACNAENANDH": 409239645,
+  "icon": "720",
+  "mainCostItemCount": 1,
+  "mainCostItemId": 5114,
+  "nameTextMapHash": 3069934217,
+  "openConfig": "721",
+  "paramList": "722",
+  "PJKOKKHOFAP": 0,
+  "prevTalent": 1141,
+  "talentId": 1142
+},{
+  "id": 3069934217,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1387754415,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "720",
+  "imageBaseUrl": "172",
+  "url": "723",
+  "isAvailable": true
+},[],[
+  10,
+  12.5,
+  0.7,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "addProps": "724",
+  "descTextMapHash": 2324481711,
+  "HBFJKIDGJMA": 0,
+  "IACNAENANDH": 975844093,
+  "icon": "725",
+  "mainCostItemCount": 1,
+  "mainCostItemId": 5114,
+  "nameTextMapHash": 1540870457,
+  "openConfig": "726",
+  "paramList": "727",
+  "PJKOKKHOFAP": 0,
+  "prevTalent": 1142,
+  "talentId": 1143
+},{
+  "id": 1540870457,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 2324481711,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "725",
+  "imageBaseUrl": "172",
+  "url": "728",
+  "isAvailable": true
+},[],[
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "addProps": "729",
+  "descTextMapHash": 3471676255,
+  "HBFJKIDGJMA": 0,
+  "IACNAENANDH": 721183189,
+  "icon": "730",
+  "mainCostItemCount": 1,
+  "mainCostItemId": 5114,
+  "nameTextMapHash": 1525981953,
+  "openConfig": "731",
+  "paramList": "732",
+  "PJKOKKHOFAP": 0,
+  "prevTalent": 1143,
+  "talentId": 1144
+},{
+  "id": 1525981953,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3471676255,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "730",
+  "imageBaseUrl": "172",
+  "url": "733",
+  "isAvailable": true
+},[],[
+  0.1,
+  0.2,
+  0.4,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "addProps": "734",
+  "descTextMapHash": 3117826535,
+  "HBFJKIDGJMA": 0,
+  "IACNAENANDH": 2666521229,
+  "icon": "735",
+  "mainCostItemCount": 1,
+  "mainCostItemId": 5114,
+  "nameTextMapHash": 814493897,
+  "openConfig": "736",
+  "paramList": "737",
+  "PJKOKKHOFAP": 0,
+  "prevTalent": 1144,
+  "talentId": 1145
+},{
+  "id": 814493897,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3117826535,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "735",
+  "imageBaseUrl": "172",
+  "url": "738",
+  "isAvailable": true
+},[],[
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "addProps": "739",
+  "descTextMapHash": 2778184447,
+  "HBFJKIDGJMA": 0,
+  "IACNAENANDH": 241512997,
+  "icon": "740",
+  "mainCostItemCount": 1,
+  "mainCostItemId": 5114,
+  "nameTextMapHash": 1189601753,
+  "openConfig": "741",
+  "paramList": "742",
+  "PJKOKKHOFAP": 0,
+  "prevTalent": 1145,
+  "talentId": 1146
+},{
+  "id": 1189601753,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 2778184447,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "740",
+  "imageBaseUrl": "172",
+  "url": "743",
+  "isAvailable": true
+},[],[
+  15,
+  7.5,
+  1.8,
+  0.8,
+  1.8,
+  0,
+  0,
+  0
+],{
+  "addPropLevels": "744",
+  "appendPropDepotId": 501,
+  "appendPropNum": 3,
+  "baseConvExp": 3780,
+  "descTextMapHash": 3151942904,
+  "destroyReturnMaterial": "745",
+  "destroyReturnMaterialCount": "746",
+  "destroyRule": "401",
+  "dropable": false,
+  "equipType": "498",
+  "gadgetId": 70600045,
+  "globalItemLimit": 0,
+  "icon": "667",
+  "id": 40543,
+  "initialLockState": 0,
+  "itemType": "666",
+  "mainPropDepotId": 4000,
+  "maxLevel": 21,
+  "nameTextMapHash": 2552750436,
+  "rank": 10,
+  "rankLevel": 5,
+  "setId": 15040,
+  "showPic": "747",
+  "storyId": 185404,
+  "useLevel": 0,
+  "weight": 1
+},{
+  "id": 2552750436,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3151942904,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"EQUIP_BRACER",{
+  "paramTypes": "748",
+  "textMapContentTextMapHash": 2511636352,
+  "textMapId": "498"
+},{
+  "id": 2511636352,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "667",
+  "imageBaseUrl": "165",
+  "url": "749",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "_data": "750",
+  "id": 15040,
+  "_setBonusData": "751",
+  "setBonus": "752",
+  "icon": "753",
+  "name": "754"
+},{
+  "id": 1377450402,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[
+  "755",
+  "756",
+  "757",
+  "758"
+],[
+  "759",
+  "760",
+  "761",
+  "762",
+  "763",
+  "764",
+  "765",
+  "766"
+],{
+  "addPropLevels": "767",
+  "appendPropDepotId": 501,
+  "appendPropNum": 3,
+  "baseConvExp": 3780,
+  "descTextMapHash": 1503646024,
+  "destroyReturnMaterial": "768",
+  "destroyReturnMaterialCount": "769",
+  "destroyRule": "401",
+  "dropable": false,
+  "equipType": "509",
+  "gadgetId": 70600045,
+  "globalItemLimit": 0,
+  "icon": "673",
+  "id": 40523,
+  "initialLockState": 0,
+  "itemType": "666",
+  "mainPropDepotId": 2000,
+  "maxLevel": 21,
+  "nameTextMapHash": 1161873292,
+  "rank": 10,
+  "rankLevel": 5,
+  "setId": 15040,
+  "showPic": "770",
+  "storyId": 185402,
+  "useLevel": 0,
+  "weight": 1
+},{
+  "id": 1161873292,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1503646024,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"EQUIP_NECKLACE",{
+  "paramTypes": "771",
+  "textMapContentTextMapHash": 2498820160,
+  "textMapId": "509"
+},{
+  "id": 2498820160,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "673",
+  "imageBaseUrl": "165",
+  "url": "772",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "_data": "750",
+  "id": 15040,
+  "_setBonusData": "751",
+  "setBonus": "773",
+  "icon": "774",
+  "name": "775"
+},{
+  "id": 1756301290,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[
+  "776",
+  "777",
+  "778",
+  "779"
+],[
+  "780",
+  "781",
+  "782",
+  "783",
+  "784",
+  "785",
+  "786",
+  "787"
+],{
+  "addPropLevels": "788",
+  "appendPropDepotId": 501,
+  "appendPropNum": 4,
+  "baseConvExp": 3780,
+  "descTextMapHash": 2847032776,
+  "destroyReturnMaterial": "789",
+  "destroyReturnMaterialCount": "790",
+  "destroyRule": "401",
+  "dropable": false,
+  "equipType": "520",
+  "gadgetId": 70600045,
+  "globalItemLimit": 0,
+  "icon": "678",
+  "id": 40554,
+  "initialLockState": 0,
+  "itemType": "666",
+  "mainPropDepotId": 1000,
+  "maxLevel": 21,
+  "nameTextMapHash": 3369144676,
+  "rank": 10,
+  "rankLevel": 5,
+  "setId": 15040,
+  "showPic": "791",
+  "storyId": 185405,
+  "useLevel": 0,
+  "weight": 1
+},{
+  "id": 3369144676,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 2847032776,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"EQUIP_SHOES",{
+  "paramTypes": "792",
+  "textMapContentTextMapHash": 3886070176,
+  "textMapId": "520"
+},{
+  "id": 3886070176,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "678",
+  "imageBaseUrl": "165",
+  "url": "793",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "_data": "750",
+  "id": 15040,
+  "_setBonusData": "751",
+  "setBonus": "794",
+  "icon": "795",
+  "name": "796"
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[
+  "797",
+  "798",
+  "799",
+  "800"
+],[
+  "801",
+  "802",
+  "803",
+  "804",
+  "805",
+  "806",
+  "807",
+  "808",
+  "809"
+],{
+  "addPropLevels": "810",
+  "appendPropDepotId": 501,
+  "appendPropNum": 4,
+  "baseConvExp": 3780,
+  "descTextMapHash": 2992451208,
+  "destroyReturnMaterial": "811",
+  "destroyReturnMaterialCount": "812",
+  "destroyRule": "401",
+  "dropable": false,
+  "equipType": "531",
+  "gadgetId": 70600045,
+  "globalItemLimit": 0,
+  "icon": "683",
+  "id": 40514,
+  "initialLockState": 0,
+  "itemType": "666",
+  "mainPropDepotId": 5000,
+  "maxLevel": 21,
+  "nameTextMapHash": 2761922676,
+  "rank": 10,
+  "rankLevel": 5,
+  "setId": 15040,
+  "showPic": "813",
+  "storyId": 185401,
+  "useLevel": 0,
+  "weight": 1
+},{
+  "id": 2761922676,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 2992451208,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"EQUIP_RING",{
+  "paramTypes": "814",
+  "textMapContentTextMapHash": 2587857504,
+  "textMapId": "531"
+},{
+  "id": 2587857504,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "683",
+  "imageBaseUrl": "165",
+  "url": "815",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "_data": "750",
+  "id": 15040,
+  "_setBonusData": "751",
+  "setBonus": "816",
+  "icon": "817",
+  "name": "818"
+},{
+  "id": 4054347456,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[
+  "819",
+  "820",
+  "821",
+  "822"
+],[
+  "823",
+  "824",
+  "825",
+  "826",
+  "827",
+  "828",
+  "829",
+  "830",
+  "831"
+],{
+  "addPropLevels": "832",
+  "appendPropDepotId": 501,
+  "appendPropNum": 4,
+  "baseConvExp": 3780,
+  "descTextMapHash": 1224738152,
+  "destroyReturnMaterial": "833",
+  "destroyReturnMaterialCount": "834",
+  "destroyRule": "401",
+  "dropable": false,
+  "equipType": "542",
+  "gadgetId": 70600045,
+  "globalItemLimit": 0,
+  "icon": "688",
+  "id": 38534,
+  "initialLockState": 0,
+  "itemType": "666",
+  "mainPropDepotId": 3000,
+  "maxLevel": 21,
+  "nameTextMapHash": 3105804884,
+  "rank": 10,
+  "rankLevel": 5,
+  "setId": 15038,
+  "showPic": "835",
+  "storyId": 185383,
+  "useLevel": 0,
+  "weight": 1
+},{
+  "id": 3105804884,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1224738152,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"EQUIP_DRESS",{
+  "paramTypes": "836",
+  "textMapContentTextMapHash": 89548520,
+  "textMapId": "542"
+},{
+  "id": 89548520,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "name": "688",
+  "imageBaseUrl": "165",
+  "url": "837",
+  "isAvailable": true
+},{
+  "enka": "1",
+  "_data": "838",
+  "id": 15038,
+  "_setBonusData": "839",
+  "setBonus": "840",
+  "icon": "841",
+  "name": "842"
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[
+  "843",
+  "844",
+  "845",
+  "846"
+],[
+  "847",
+  "848",
+  "849",
+  "850",
+  "851",
+  "852",
+  "853",
+  "854",
+  "855"
+],{
+  "111517": 0
+},"1479741275","ITEM_WEAPON","UI_EquipIcon_Sword_OuterSword",[
+  "856",
+  "857"
+],[
+  2000,
+  4000,
+  8000,
+  16000
+],"UI_EquipIcon_Sword_OuterSword_Awaken","ART/Equip/AvatarEquip/Equip_Sword_OuterSword/Equip_Sword_OuterSword_OverrideTexture/Equip_Sword_OuterSword_02_Tex_Lightmap","ART/Equip/AvatarEquip/Equip_Sword_OuterSword/Equip_Sword_OuterSword_OverrideTexture/Equip_Sword_OuterSword_02_Tex_Diffuse",[
+  0
+],[
+  0
+],"WEAPON_MATERIAL_NONE",[
+  111517,
+  0
+],[
+  "858",
+  "859"
+],"https://homdgcat.wiki/homdgcat-res/Weapon/UI_EquipIcon_Sword_OuterSword.png","https://homdgcat.wiki/homdgcat-res/Weapon/UI_EquipIcon_Sword_OuterSword_Awaken.png","UI_Gacha_EquipIcon_Sword_OuterSword","https://gi.yatta.moe/assets/UI/UI_Gacha_EquipIcon_Sword_OuterSword.png",[
+  "713"
+],{
+  "_data": "860",
+  "enka": "1",
+  "id": 111517,
+  "level": 2,
+  "name": "861",
+  "description": "862",
+  "addProps": "863",
+  "paramList": "864"
+},{
+  "_data": "865",
+  "enka": "1",
+  "id": 111517,
+  "level": 3,
+  "name": "866",
+  "description": "867",
+  "addProps": "868",
+  "paramList": "869"
+},{
+  "_data": "870",
+  "enka": "1",
+  "id": 111517,
+  "level": 4,
+  "name": "871",
+  "description": "872",
+  "addProps": "873",
+  "paramList": "874"
+},{
+  "_data": "875",
+  "enka": "1",
+  "id": 111517,
+  "level": 5,
+  "name": "876",
+  "description": "877",
+  "addProps": "878",
+  "paramList": "879"
+},[
+  "880",
+  "881",
+  "882"
+],"Weapon_Sword_OuterSword",[
+  0.24,
+  12,
+  0.24,
+  0.4,
+  0,
+  0,
+  0,
+  0
+],{
+  "id": 2334963823,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1735465728,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3421163681,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "713"
+],[
+  "883",
+  "884"
+],[
+  "885",
+  "886",
+  "887",
+  "888"
+],[
+  "889",
+  "889"
+],"UI_Talent_S_SkirkNew_05",[],{
+  "value": 214
+},[
+  "159",
+  "159",
+  "159",
+  "159",
+  "159"
+],"PROUD_EFFECT_NONE",[],"PROUD_SKILL_DISPLAY_BREAK","SkirkNew_PermanentSkill_1",[
+  76817798,
+  1888151494,
+  2129351655,
+  2600777895,
+  433791926,
+  2205281698,
+  3140187903,
+  181119549,
+  3854508508,
+  2403508279,
+  3071438852,
+  2563692931,
+  3409782295,
+  3286314395,
+  159698806,
+  3743715365
+],[
+  8,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],"https://gi.yatta.moe/assets/UI/UI_Talent_S_SkirkNew_05.png",[
+  "890",
+  "891"
+],[
+  "892",
+  "893",
+  "894",
+  "895"
+],[
+  "889",
+  "889"
+],"UI_Talent_S_SkirkNew_06",[],{
+  "value": 214
+},[
+  "159",
+  "159",
+  "159",
+  "159",
+  "159"
+],[],"SkirkNew_PermanentSkill_2",[
+  1861835806,
+  4259947918,
+  2984571935,
+  3918043879,
+  413581638,
+  3682106658,
+  1957084503,
+  3828256109,
+  2817584124,
+  3111178799,
+  2634533708,
+  3129999651,
+  3813836783,
+  1994273611,
+  741255238,
+  1166095309
+],[
+  20,
+  0.1,
+  0.2,
+  0.7,
+  0.05,
+  0.15,
+  0.6,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],"https://gi.yatta.moe/assets/UI/UI_Talent_S_SkirkNew_06.png",[
+  "896",
+  "897"
+],[
+  "898",
+  "899",
+  "900",
+  "901"
+],[
+  "889",
+  "889"
+],"UI_Talent_S_SkirkNew_08",[],{
+  "value": 214
+},[
+  "159",
+  "159",
+  "159",
+  "159",
+  "159"
+],[],"PROUD_SKILL_DISPLAY_DEFAULT","SkirkNew_PermanentSkill_3",[
+  998899518,
+  2280525982,
+  1307461935,
+  2457343895,
+  3676834942,
+  1442374458,
+  3409873527,
+  3242056437,
+  1204429700,
+  401421031,
+  4204723772,
+  4064462531,
+  3424740559,
+  501452771,
+  368140846,
+  2953623885
+],[
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],"https://gi.yatta.moe/assets/UI/UI_Talent_S_SkirkNew_08.png","https://api.hakush.in/gi/UI","WEBP",[
+  "902"
+],"enka-system@0.3.7",[
+  501034,
+  501064,
+  501223,
+  501203,
+  501202,
+  501221,
+  501201,
+  501061
+],"2552750436","ITEM_RELIQUARY","UI_RelicIcon_15040_4","2177723555",[
+  "903",
+  "904",
+  "905",
+  "906"
+],{
+  "mainPropId": "247",
+  "statValue": 4780
+},[
+  501064,
+  501082,
+  501202,
+  501221,
+  501203,
+  501201,
+  501083,
+  501201
+],"1161873292","UI_RelicIcon_15040_2",[
+  "907",
+  "908",
+  "909",
+  "910"
+],{
+  "mainPropId": "256",
+  "statValue": 311
+},[
+  501202,
+  501224,
+  501033,
+  501023,
+  501031,
+  501204,
+  501221,
+  501032,
+  501223
+],"3369144676","UI_RelicIcon_15040_5",[
+  "911",
+  "912",
+  "913",
+  "914"
+],{
+  "mainPropId": "160",
+  "statValue": 46.6
+},[
+  501204,
+  501222,
+  501061,
+  501081,
+  501061,
+  501224,
+  501201,
+  501222,
+  501081
+],"2761922676","UI_RelicIcon_15040_1",[
+  "915",
+  "916",
+  "917",
+  "918"
+],{
+  "mainPropId": "316",
+  "statValue": 46.6
+},[
+  501052,
+  501202,
+  501093,
+  501063,
+  501062,
+  501203,
+  501204,
+  501093,
+  501061
+],"3105804884","UI_RelicIcon_15038_3","1774579403",[
+  "919",
+  "920",
+  "921",
+  "922"
+],{
+  "mainPropId": "154",
+  "statValue": 62.2
+},{
+  "useOp": "923",
+  "useParam": "924"
+},{
+  "useOp": "925",
+  "useParam": "926"
+},{
+  "useOp": "925",
+  "useParam": "927"
+},"UI_NameCardPic_SkirkNew_Alpha","UI_NameCardPic_SkirkNew_P","https://enka.network/ui/UI_NameCardPic_SkirkNew_Alpha.png","https://homdgcat.wiki/homdgcat-res/Avatar/UI_NameCardPic_SkirkNew_P.png",{
+  "condType": "928",
+  "paramList": "929"
+},"GROW_CURVE_HP_S5","GROW_CURVE_ATTACK_S5",{},{},{},{},{},{},{},{},[],"SPECIAL_PROUD_SKILL_OPEN_CONDITION_TYPE_NONE",[],"TEXT_PARAM_NONE",[
+  "930",
+  "931"
+],"UI_Talent_S_SkirkNew_01","SkirkNew_Constellation_1",[
+  5,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],"https://gi.yatta.moe/assets/UI/UI_Talent_S_SkirkNew_01.png",[
+  "932",
+  "933"
+],"UI_Talent_S_SkirkNew_02","SkirkNew_Constellation_2",[
+  10,
+  12.5,
+  0.7,
+  0,
+  0,
+  0,
+  0,
+  0
+],"https://gi.yatta.moe/assets/UI/UI_Talent_S_SkirkNew_02.png",[
+  "934",
+  "935"
+],"UI_Talent_U_SkirkNew_01","SkirkNew_Constellation_3",[
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],"https://gi.yatta.moe/assets/UI/UI_Talent_U_SkirkNew_01.png",[
+  "936",
+  "937"
+],"UI_Talent_S_SkirkNew_03","SkirkNew_Constellation_4",[
+  0.1,
+  0.2,
+  0.4,
+  0,
+  0,
+  0,
+  0,
+  0
+],"https://gi.yatta.moe/assets/UI/UI_Talent_S_SkirkNew_03.png",[
+  "938",
+  "939"
+],"UI_Talent_U_SkirkNew_02","SkirkNew_Constellation_5",[
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],"https://gi.yatta.moe/assets/UI/UI_Talent_U_SkirkNew_02.png",[
+  "940",
+  "941"
+],"UI_Talent_S_SkirkNew_04","SkirkNew_Constellation_6",[
+  15,
+  7.5,
+  1.8,
+  0.8,
+  1.8,
+  0,
+  0,
+  0
+],"https://gi.yatta.moe/assets/UI/UI_Talent_S_SkirkNew_04.png",[
+  5,
+  9,
+  13,
+  17,
+  21
+],[],[],"Eff_UI_RelicIcon_15040_4",[
+  "713"
+],"https://homdgcat.wiki/homdgcat-res/Relic/UI_RelicIcon_15040_4.png",{
+  "bagSortValue": 55,
+  "containsList": "942",
+  "disableFilter": 0,
+  "DOCANAGEDMO": 5,
+  "dungeonGroup": "943",
+  "equipAffixId": 215040,
+  "setIcon": "667",
+  "setId": 15040,
+  "setNeedNum": "944",
+  "textList": "945"
+},{
+  "0": "946",
+  "1": "947"
+},[
+  "948",
+  "949"
+],{
+  "enka": "1",
+  "name": "667",
+  "imageBaseUrl": "165",
+  "url": "749",
+  "isAvailable": true
+},{
+  "id": 2003142275,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "fightProp": "250",
+  "enka": "1",
+  "_propData": "251",
+  "fightPropName": "950",
+  "isPercent": true,
+  "rawValue": 0.0583,
+  "value": 0.0583
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "951",
+  "isPercent": true,
+  "rawValue": 0.0991,
+  "value": 0.0991
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "952",
+  "isPercent": true,
+  "rawValue": 0.1243,
+  "value": 0.1243
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "953",
+  "isPercent": true,
+  "rawValue": 0.09330000000000001,
+  "value": 0.0933
+},{
+  "fightProp": "250",
+  "enka": "1",
+  "_propData": "251",
+  "fightPropName": "954",
+  "isPercent": true,
+  "rawValue": 0.0583,
+  "value": 0.0583,
+  "_data": "955"
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "956",
+  "isPercent": true,
+  "rawValue": 0.0583,
+  "value": 0.0583,
+  "_data": "957"
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "958",
+  "isPercent": true,
+  "rawValue": 0.0699,
+  "value": 0.0699,
+  "_data": "959"
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "960",
+  "isPercent": true,
+  "rawValue": 0.035,
+  "value": 0.035,
+  "_data": "961"
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "962",
+  "isPercent": true,
+  "rawValue": 0.0311,
+  "value": 0.0311,
+  "_data": "963"
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "964",
+  "isPercent": true,
+  "rawValue": 0.0544,
+  "value": 0.0544,
+  "_data": "965"
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "966",
+  "isPercent": true,
+  "rawValue": 0.0272,
+  "value": 0.0272,
+  "_data": "967"
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "968",
+  "isPercent": true,
+  "rawValue": 0.0408,
+  "value": 0.0408,
+  "_data": "969"
+},[
+  5,
+  9,
+  13,
+  17,
+  21
+],[],[],"Eff_UI_RelicIcon_15040_2",[
+  "713"
+],"https://homdgcat.wiki/homdgcat-res/Relic/UI_RelicIcon_15040_2.png",[
+  "970",
+  "971"
+],{
+  "enka": "1",
+  "name": "667",
+  "imageBaseUrl": "165",
+  "url": "749",
+  "isAvailable": true
+},{
+  "id": 2003142275,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "972",
+  "isPercent": true,
+  "rawValue": 0.0583,
+  "value": 0.0583
+},{
+  "fightProp": "264",
+  "enka": "1",
+  "_propData": "265",
+  "fightPropName": "973",
+  "isPercent": false,
+  "rawValue": 39.349999999999994,
+  "value": 39.35
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "974",
+  "isPercent": true,
+  "rawValue": 0.12050000000000001,
+  "value": 0.1205
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "975",
+  "isPercent": true,
+  "rawValue": 0.0544,
+  "value": 0.0544
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "976",
+  "isPercent": true,
+  "rawValue": 0.0583,
+  "value": 0.0583,
+  "_data": "957"
+},{
+  "fightProp": "264",
+  "enka": "1",
+  "_propData": "265",
+  "fightPropName": "977",
+  "isPercent": false,
+  "rawValue": 18.52,
+  "value": 18.52,
+  "_data": "978"
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "979",
+  "isPercent": true,
+  "rawValue": 0.0311,
+  "value": 0.0311,
+  "_data": "963"
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "980",
+  "isPercent": true,
+  "rawValue": 0.0544,
+  "value": 0.0544,
+  "_data": "965"
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "981",
+  "isPercent": true,
+  "rawValue": 0.035,
+  "value": 0.035,
+  "_data": "961"
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "982",
+  "isPercent": true,
+  "rawValue": 0.0272,
+  "value": 0.0272,
+  "_data": "967"
+},{
+  "fightProp": "264",
+  "enka": "1",
+  "_propData": "265",
+  "fightPropName": "983",
+  "isPercent": false,
+  "rawValue": 20.83,
+  "value": 20.83,
+  "_data": "984"
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "985",
+  "isPercent": true,
+  "rawValue": 0.0272,
+  "value": 0.0272,
+  "_data": "967"
+},[
+  5,
+  9,
+  13,
+  17,
+  21
+],[],[],"Eff_UI_RelicIcon_15040_5",[
+  "713"
+],"https://homdgcat.wiki/homdgcat-res/Relic/UI_RelicIcon_15040_5.png",[
+  "986",
+  "987"
+],{
+  "enka": "1",
+  "name": "667",
+  "imageBaseUrl": "165",
+  "url": "749",
+  "isAvailable": true
+},{
+  "id": 2003142275,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "988",
+  "isPercent": true,
+  "rawValue": 0.06999999999999999,
+  "value": 0.07
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "989",
+  "isPercent": true,
+  "rawValue": 0.202,
+  "value": 0.202
+},{
+  "fightProp": "250",
+  "enka": "1",
+  "_propData": "251",
+  "fightPropName": "990",
+  "isPercent": true,
+  "rawValue": 0.1399,
+  "value": 0.1399
+},{
+  "fightProp": "247",
+  "enka": "1",
+  "_propData": "248",
+  "fightPropName": "991",
+  "isPercent": false,
+  "rawValue": 268.88,
+  "value": 268.88
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "992",
+  "isPercent": true,
+  "rawValue": 0.0311,
+  "value": 0.0311,
+  "_data": "963"
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "993",
+  "isPercent": true,
+  "rawValue": 0.0777,
+  "value": 0.0777,
+  "_data": "994"
+},{
+  "fightProp": "250",
+  "enka": "1",
+  "_propData": "251",
+  "fightPropName": "995",
+  "isPercent": true,
+  "rawValue": 0.0525,
+  "value": 0.0525,
+  "_data": "996"
+},{
+  "fightProp": "247",
+  "enka": "1",
+  "_propData": "248",
+  "fightPropName": "997",
+  "isPercent": false,
+  "rawValue": 268.88,
+  "value": 268.88,
+  "_data": "998"
+},{
+  "fightProp": "250",
+  "enka": "1",
+  "_propData": "251",
+  "fightPropName": "999",
+  "isPercent": true,
+  "rawValue": 0.0408,
+  "value": 0.0408,
+  "_data": "1000"
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "1001",
+  "isPercent": true,
+  "rawValue": 0.0389,
+  "value": 0.0389,
+  "_data": "1002"
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "1003",
+  "isPercent": true,
+  "rawValue": 0.0544,
+  "value": 0.0544,
+  "_data": "965"
+},{
+  "fightProp": "250",
+  "enka": "1",
+  "_propData": "251",
+  "fightPropName": "1004",
+  "isPercent": true,
+  "rawValue": 0.0466,
+  "value": 0.0466,
+  "_data": "1005"
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "1006",
+  "isPercent": true,
+  "rawValue": 0.0699,
+  "value": 0.0699,
+  "_data": "959"
+},[
+  5,
+  9,
+  13,
+  17,
+  21
+],[],[],"Eff_UI_RelicIcon_15040_1",[
+  "713"
+],"https://homdgcat.wiki/homdgcat-res/Relic/UI_RelicIcon_15040_1.png",[
+  "1007",
+  "1008"
+],{
+  "enka": "1",
+  "name": "667",
+  "imageBaseUrl": "165",
+  "url": "749",
+  "isAvailable": true
+},{
+  "id": 2003142275,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "1009",
+  "isPercent": true,
+  "rawValue": 0.06609999999999999,
+  "value": 0.0661
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "1010",
+  "isPercent": true,
+  "rawValue": 0.2021,
+  "value": 0.2021
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "1011",
+  "isPercent": true,
+  "rawValue": 0.0816,
+  "value": 0.0816
+},{
+  "fightProp": "264",
+  "enka": "1",
+  "_propData": "265",
+  "fightPropName": "1012",
+  "isPercent": false,
+  "rawValue": 32.4,
+  "value": 32.4
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "1013",
+  "isPercent": true,
+  "rawValue": 0.0389,
+  "value": 0.0389,
+  "_data": "1002"
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "1014",
+  "isPercent": true,
+  "rawValue": 0.0622,
+  "value": 0.0622,
+  "_data": "1015"
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "1016",
+  "isPercent": true,
+  "rawValue": 0.0408,
+  "value": 0.0408,
+  "_data": "969"
+},{
+  "fightProp": "264",
+  "enka": "1",
+  "_propData": "265",
+  "fightPropName": "1017",
+  "isPercent": false,
+  "rawValue": 16.2,
+  "value": 16.2,
+  "_data": "1018"
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "1019",
+  "isPercent": true,
+  "rawValue": 0.0408,
+  "value": 0.0408,
+  "_data": "969"
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "1020",
+  "isPercent": true,
+  "rawValue": 0.0777,
+  "value": 0.0777,
+  "_data": "994"
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "1021",
+  "isPercent": true,
+  "rawValue": 0.0272,
+  "value": 0.0272,
+  "_data": "967"
+},{
+  "fightProp": "154",
+  "enka": "1",
+  "_propData": "278",
+  "fightPropName": "1022",
+  "isPercent": true,
+  "rawValue": 0.0622,
+  "value": 0.0622,
+  "_data": "1015"
+},{
+  "fightProp": "264",
+  "enka": "1",
+  "_propData": "265",
+  "fightPropName": "1023",
+  "isPercent": false,
+  "rawValue": 16.2,
+  "value": 16.2,
+  "_data": "1018"
+},[
+  5,
+  9,
+  13,
+  17,
+  21
+],[],[],"Eff_UI_RelicIcon_15038_3",[
+  "713"
+],"https://homdgcat.wiki/homdgcat-res/Relic/UI_RelicIcon_15038_3.png",{
+  "bagSortValue": 53,
+  "containsList": "1024",
+  "disableFilter": 0,
+  "DOCANAGEDMO": 5,
+  "dungeonGroup": "1025",
+  "equipAffixId": 215038,
+  "setIcon": "1026",
+  "setId": 15038,
+  "setNeedNum": "1027",
+  "textList": "1028"
+},{
+  "0": "1029",
+  "1": "1030"
+},[
+  "1031",
+  "1032"
+],{
+  "enka": "1",
+  "name": "1026",
+  "imageBaseUrl": "165",
+  "url": "1033",
+  "isAvailable": true
+},{
+  "id": 2725855635,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "fightProp": "256",
+  "enka": "1",
+  "_propData": "257",
+  "fightPropName": "1034",
+  "isPercent": false,
+  "rawValue": 15.56,
+  "value": 15.56
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "1035",
+  "isPercent": true,
+  "rawValue": 0.10500000000000001,
+  "value": 0.105
+},{
+  "fightProp": "267",
+  "enka": "1",
+  "_propData": "268",
+  "fightPropName": "1036",
+  "isPercent": true,
+  "rawValue": 0.1312,
+  "value": 0.1312
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "1037",
+  "isPercent": true,
+  "rawValue": 0.1399,
+  "value": 0.1399
+},{
+  "fightProp": "256",
+  "enka": "1",
+  "_propData": "257",
+  "fightPropName": "1038",
+  "isPercent": false,
+  "rawValue": 15.56,
+  "value": 15.56,
+  "_data": "1039"
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "1040",
+  "isPercent": true,
+  "rawValue": 0.0311,
+  "value": 0.0311,
+  "_data": "963"
+},{
+  "fightProp": "267",
+  "enka": "1",
+  "_propData": "268",
+  "fightPropName": "1041",
+  "isPercent": true,
+  "rawValue": 0.0656,
+  "value": 0.0656,
+  "_data": "1042"
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "1043",
+  "isPercent": true,
+  "rawValue": 0.0525,
+  "value": 0.0525,
+  "_data": "1044"
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "1045",
+  "isPercent": true,
+  "rawValue": 0.0466,
+  "value": 0.0466,
+  "_data": "1046"
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "1047",
+  "isPercent": true,
+  "rawValue": 0.035,
+  "value": 0.035,
+  "_data": "961"
+},{
+  "fightProp": "155",
+  "enka": "1",
+  "_propData": "276",
+  "fightPropName": "1048",
+  "isPercent": true,
+  "rawValue": 0.0389,
+  "value": 0.0389,
+  "_data": "1002"
+},{
+  "fightProp": "267",
+  "enka": "1",
+  "_propData": "268",
+  "fightPropName": "1049",
+  "isPercent": true,
+  "rawValue": 0.0656,
+  "value": 0.0656,
+  "_data": "1042"
+},{
+  "fightProp": "160",
+  "enka": "1",
+  "_propData": "259",
+  "fightPropName": "1050",
+  "isPercent": true,
+  "rawValue": 0.0408,
+  "value": 0.0408,
+  "_data": "969"
+},{
+  "appendPropId": "253",
+  "statValue": 674
+},{
+  "appendPropId": "155",
+  "statValue": 22.1
+},{
+  "initValue": 47.537,
+  "propType": "253",
+  "type": "1051"
+},{
+  "initValue": 0.048,
+  "propType": "155",
+  "type": "1052"
+},{
+  "addProps": "1053",
+  "affixId": 1115171,
+  "descTextMapHash": 1877621929,
+  "id": 111517,
+  "level": 1,
+  "nameTextMapHash": 472801787,
+  "openConfig": "574",
+  "paramList": "1054"
+},{
+  "id": 472801787,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1877621929,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[],[
+  0.3,
+  12,
+  0.3,
+  0.5,
+  0,
+  0,
+  0,
+  0
+],{
+  "addProps": "1055",
+  "affixId": 1115172,
+  "descTextMapHash": 533242921,
+  "id": 111517,
+  "level": 2,
+  "nameTextMapHash": 841616203,
+  "openConfig": "574",
+  "paramList": "1056"
+},{
+  "id": 841616203,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 533242921,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[],[
+  0.36,
+  12,
+  0.36,
+  0.6,
+  0,
+  0,
+  0,
+  0
+],{
+  "addProps": "1057",
+  "affixId": 1115173,
+  "descTextMapHash": 3452673025,
+  "id": 111517,
+  "level": 3,
+  "nameTextMapHash": 2628967507,
+  "openConfig": "574",
+  "paramList": "1058"
+},{
+  "id": 2628967507,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3452673025,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[],[
+  0.42,
+  12,
+  0.42,
+  0.7,
+  0,
+  0,
+  0,
+  0
+],{
+  "addProps": "1059",
+  "affixId": 1115174,
+  "descTextMapHash": 3230953409,
+  "id": 111517,
+  "level": 4,
+  "nameTextMapHash": 3445371443,
+  "openConfig": "574",
+  "paramList": "1060"
+},{
+  "id": 3445371443,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3230953409,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[],[
+  0.48,
+  12,
+  0.48,
+  0.8,
+  0,
+  0,
+  0,
+  0
+],{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "count": 0,
+  "id": 0
+},{
+  "count": 0,
+  "id": 0
+},{
+  "count": 0,
+  "id": 0
+},{
+  "count": 0,
+  "id": 0
+},"TALENT_FILTER_NONE",{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "count": 0,
+  "id": 0
+},{
+  "count": 0,
+  "id": 0
+},{
+  "count": 0,
+  "id": 0
+},{
+  "count": 0,
+  "id": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "count": 0,
+  "id": 0
+},{
+  "count": 0,
+  "id": 0
+},{
+  "count": 0,
+  "id": 0
+},{
+  "count": 0,
+  "id": 0
+},{},{
+  "appendPropId": "250",
+  "statValue": 5.8
+},{
+  "appendPropId": "160",
+  "statValue": 9.9
+},{
+  "appendPropId": "154",
+  "statValue": 12.4
+},{
+  "appendPropId": "155",
+  "statValue": 9.3
+},{
+  "appendPropId": "160",
+  "statValue": 5.8
+},{
+  "appendPropId": "264",
+  "statValue": 39
+},{
+  "appendPropId": "155",
+  "statValue": 12.1
+},{
+  "appendPropId": "154",
+  "statValue": 5.4
+},{
+  "appendPropId": "155",
+  "statValue": 7
+},{
+  "appendPropId": "154",
+  "statValue": 20.2
+},{
+  "appendPropId": "250",
+  "statValue": 14
+},{
+  "appendPropId": "247",
+  "statValue": 269
+},{
+  "appendPropId": "155",
+  "statValue": 6.6
+},{
+  "appendPropId": "154",
+  "statValue": 20.2
+},{
+  "appendPropId": "160",
+  "statValue": 8.2
+},{
+  "appendPropId": "264",
+  "statValue": 32
+},{
+  "appendPropId": "256",
+  "statValue": 16
+},{
+  "appendPropId": "155",
+  "statValue": 10.5
+},{
+  "appendPropId": "267",
+  "statValue": 13.1
+},{
+  "appendPropId": "160",
+  "statValue": 14
+},"ITEM_USE_GAIN_NAME_CARD",[
+  "159",
+  "159",
+  "159",
+  "159",
+  "159"
+],"ITEM_USE_NONE",[
+  "159",
+  "159"
+],[
+  "159",
+  "159"
+],"FETTER_COND_NOT_OPEN",[],{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},[
+  40442,
+  40422,
+  40452,
+  40412,
+  40432
+],[
+  5024,
+  5025
+],[
+  2,
+  4
+],[
+  748688758,
+  3686884347
+],{
+  "addProps": "1062",
+  "affixId": 2150400,
+  "descTextMapHash": 1943771001,
+  "id": 215040,
+  "level": 0,
+  "nameTextMapHash": 2003142275,
+  "openConfig": "159",
+  "paramList": "1063"
+},{
+  "addProps": "1064",
+  "affixId": 2150401,
+  "descTextMapHash": 244898777,
+  "id": 215040,
+  "level": 1,
+  "nameTextMapHash": 2177723555,
+  "openConfig": "1065",
+  "paramList": "1066"
+},{
+  "enka": "1",
+  "_data": "946",
+  "id": 2150400,
+  "needCount": 2,
+  "description": "1067",
+  "addProps": "1068",
+  "paramList": "1069"
+},{
+  "enka": "1",
+  "_data": "947",
+  "id": 2150401,
+  "needCount": 4,
+  "description": "1070",
+  "addProps": "1071",
+  "paramList": "1072"
+},{
+  "id": 2404061249,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 2404061249,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 3,
+  "id": 501034,
+  "propType": "250",
+  "propValue": 0.0583
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 6,
+  "id": 501064,
+  "propType": "160",
+  "propValue": 0.0583
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 22,
+  "id": 501223,
+  "propType": "154",
+  "propValue": 0.0699
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 20,
+  "id": 501203,
+  "propType": "155",
+  "propValue": 0.035
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 20,
+  "id": 501202,
+  "propType": "155",
+  "propValue": 0.0311
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 22,
+  "id": 501221,
+  "propType": "154",
+  "propValue": 0.0544
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 20,
+  "id": 501201,
+  "propType": "155",
+  "propValue": 0.0272
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 6,
+  "id": 501061,
+  "propType": "160",
+  "propValue": 0.0408
+},{
+  "enka": "1",
+  "_data": "946",
+  "id": 2150400,
+  "needCount": 2,
+  "description": "1073",
+  "addProps": "1074",
+  "paramList": "1075"
+},{
+  "enka": "1",
+  "_data": "947",
+  "id": 2150401,
+  "needCount": 4,
+  "description": "1076",
+  "addProps": "1077",
+  "paramList": "1078"
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3591287138,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3591287138,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 8,
+  "id": 501082,
+  "propType": "264",
+  "propValue": 18.52
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3591287138,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 8,
+  "id": 501083,
+  "propType": "264",
+  "propValue": 20.83
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "_data": "946",
+  "id": 2150400,
+  "needCount": 2,
+  "description": "1079",
+  "addProps": "1080",
+  "paramList": "1081"
+},{
+  "enka": "1",
+  "_data": "947",
+  "id": 2150401,
+  "needCount": 4,
+  "description": "1082",
+  "addProps": "1083",
+  "paramList": "1084"
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 2404061249,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1377450402,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 22,
+  "id": 501224,
+  "propType": "154",
+  "propValue": 0.0777
+},{
+  "id": 2404061249,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 3,
+  "id": 501033,
+  "propType": "250",
+  "propValue": 0.0525
+},{
+  "id": 1377450402,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 2,
+  "id": 501023,
+  "propType": "247",
+  "propValue": 268.88
+},{
+  "id": 2404061249,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 3,
+  "id": 501031,
+  "propType": "250",
+  "propValue": 0.0408
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 20,
+  "id": 501204,
+  "propType": "155",
+  "propValue": 0.0389
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 2404061249,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 3,
+  "id": 501032,
+  "propType": "250",
+  "propValue": 0.0466
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "enka": "1",
+  "_data": "946",
+  "id": 2150400,
+  "needCount": 2,
+  "description": "1085",
+  "addProps": "1086",
+  "paramList": "1087"
+},{
+  "enka": "1",
+  "_data": "947",
+  "id": 2150401,
+  "needCount": 4,
+  "description": "1088",
+  "addProps": "1089",
+  "paramList": "1090"
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3591287138,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 22,
+  "id": 501222,
+  "propType": "154",
+  "propValue": 0.0622
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3591287138,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 8,
+  "id": 501081,
+  "propType": "264",
+  "propValue": 16.2
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4137936461,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 3591287138,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[
+  38442,
+  38422,
+  38452,
+  38412,
+  38432
+],[
+  5020,
+  5021
+],"UI_RelicIcon_15038_4",[
+  2,
+  4
+],[
+  2364224526,
+  730276251
+],{
+  "addProps": "1091",
+  "affixId": 2150380,
+  "descTextMapHash": 2857779545,
+  "id": 215038,
+  "level": 0,
+  "nameTextMapHash": 2725855635,
+  "openConfig": "1092",
+  "paramList": "1093"
+},{
+  "addProps": "1094",
+  "affixId": 2150381,
+  "descTextMapHash": 3301228329,
+  "id": 215038,
+  "level": 1,
+  "nameTextMapHash": 1774579403,
+  "openConfig": "1095",
+  "paramList": "1096"
+},{
+  "enka": "1",
+  "_data": "1029",
+  "id": 2150380,
+  "needCount": 2,
+  "description": "1097",
+  "addProps": "1098",
+  "paramList": "1099"
+},{
+  "enka": "1",
+  "_data": "1030",
+  "id": 2150381,
+  "needCount": 4,
+  "description": "1100",
+  "addProps": "1101",
+  "paramList": "1102"
+},"https://homdgcat.wiki/homdgcat-res/Relic/UI_RelicIcon_15038_4.png",{
+  "id": 1756301290,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 527947494,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1756301290,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 5,
+  "id": 501052,
+  "propType": "256",
+  "propValue": 15.56
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 527947494,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 9,
+  "id": 501093,
+  "propType": "267",
+  "propValue": 0.0656
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 6,
+  "id": 501063,
+  "propType": "160",
+  "propValue": 0.0525
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "depotId": 501,
+  "groupId": 6,
+  "id": 501062,
+  "propType": "160",
+  "propValue": 0.0466
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 1916797986,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 527947494,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4097315912,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},"GROW_CURVE_ATTACK_302","GROW_CURVE_CRITICAL_301",[
+  "1103",
+  "1104",
+  "1105"
+],[
+  0.3,
+  12,
+  0.3,
+  0.5,
+  0,
+  0,
+  0,
+  0
+],[
+  "1106",
+  "1107",
+  "1108"
+],[
+  0.36,
+  12,
+  0.36,
+  0.6,
+  0,
+  0,
+  0,
+  0
+],[
+  "1109",
+  "1110",
+  "1111"
+],[
+  0.42,
+  12,
+  0.42,
+  0.7,
+  0,
+  0,
+  0,
+  0
+],[
+  "1112",
+  "1113",
+  "1114"
+],[
+  0.48,
+  12,
+  0.48,
+  0.8,
+  0,
+  0,
+  0,
+  0
+],"FIGHT_PROP_NONE",[
+  "1115",
+  "1116",
+  "1117"
+],[
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],[
+  "1118",
+  "1119",
+  "1120"
+],"Relic_SpiralAbyss",[
+  0.6,
+  0.6,
+  6,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "id": 1943771001,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[
+  "1121"
+],[
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "id": 244898777,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[],[
+  0.6,
+  0.6,
+  6,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "id": 1943771001,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[
+  "1122"
+],[
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "id": 244898777,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[],[
+  0.6,
+  0.6,
+  6,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "id": 1943771001,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[
+  "1123"
+],[
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "id": 244898777,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[],[
+  0.6,
+  0.6,
+  6,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "id": 1943771001,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[
+  "1124"
+],[
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "id": 244898777,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[],[
+  0.6,
+  0.6,
+  6,
+  0,
+  0,
+  0,
+  0,
+  0
+],[
+  "1125",
+  "1126",
+  "1127"
+],"Relic_InNyxState_2",[
+  0.15,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],[
+  "1128",
+  "1129",
+  "1130"
+],"Relic_InNyxState_4",[
+  1,
+  0.4,
+  6,
+  1,
+  0,
+  0,
+  0,
+  0
+],{
+  "id": 2857779545,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[],[
+  0.15,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+],{
+  "id": 3301228329,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},[],[
+  1,
+  0.4,
+  6,
+  1,
+  0,
+  0,
+  0,
+  0
+],{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "316",
+  "value": 0.15
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "fightProp": "316",
+  "enka": "1",
+  "_propData": "317",
+  "fightPropName": "1131",
+  "isPercent": true,
+  "rawValue": 0.15,
+  "value": 0.15
+},{
+  "fightProp": "316",
+  "enka": "1",
+  "_propData": "317",
+  "fightPropName": "1132",
+  "isPercent": true,
+  "rawValue": 0.15,
+  "value": 0.15
+},{
+  "fightProp": "316",
+  "enka": "1",
+  "_propData": "317",
+  "fightPropName": "1133",
+  "isPercent": true,
+  "rawValue": 0.15,
+  "value": 0.15
+},{
+  "fightProp": "316",
+  "enka": "1",
+  "_propData": "317",
+  "fightPropName": "1134",
+  "isPercent": true,
+  "rawValue": 0.15,
+  "value": 0.15
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "propType": "1061",
+  "value": 0
+},{
+  "id": 4054347456,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4054347456,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4054347456,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+},{
+  "id": 4054347456,
+  "enka": "1",
+  "convertToHtmlFormat": false,
+  "directory": null
+}]
