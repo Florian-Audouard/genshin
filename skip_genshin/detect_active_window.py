@@ -35,7 +35,7 @@ def is_genshin_active() -> bool:
     """
     window_title = get_active_window_title()
     # Genshin Impact window title is typically "Genshin Impact"
-    return "Genshin Impact" in window_title
+    return "Genshin Impact" == window_title
 
 
 def test_active_window_detection():
