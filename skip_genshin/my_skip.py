@@ -7,6 +7,7 @@ import sys
 import os
 from detect_dialogue import is_dialogue_detected
 from detect_active_window import is_genshin_active
+from detect_page import is_page_detected
 from utils import track_changes
 
 pyautogui.PAUSE = 0  # Small pause between actions
@@ -42,7 +43,9 @@ daemon_mode = (
     False  # True = daemon mode (separate thread), False = normal mode (same thread)
 )
 
-conditions_met = False  # Shared variable updated by daemon thread
+genshin_active = False  # Shared variable updated by daemon thread
+dialogue_active = False  # Shared variable updated by daemon thread
+page_active = False  # Shared variable updated by daemon thread
 debug_mode = False  # Debug mode to display spam speed
 spam_count = 0  # Counter for spam speed calculation
 
@@ -77,17 +80,14 @@ def get_debug_mode():
     return debug_mode
 
 
-def check_conditions():
-    """Check if Genshin is active and dialogue is detected."""
-    return is_genshin_active() and is_dialogue_detected()
-
-
 def condition_checker_daemon():
     """Daemon thread that continuously checks conditions and updates the shared variable."""
-    global conditions_met
+    global genshin_active, dialogue_active, page_active, daemon_mode
     while True:
         if daemon_mode:
-            conditions_met = check_conditions()
+            genshin_active = is_genshin_active()
+            dialogue_active = is_dialogue_detected()
+            page_active = is_page_detected()
         time.sleep(0.05)  # Check conditions frequently
 
 
@@ -97,10 +97,17 @@ def do_spam():
     try:
         pyautogui.press("e")
         pyautogui.press("space")
-        time.sleep(PAUSE_BETWEEN_SPAMS)
         spam_count += 1
     except pyautogui.FailSafeException as e:
         pass  # Ignore errors during spamming
+
+
+def close_page():
+    """Handle page closing action."""
+    try:
+        pyautogui.press("escape")
+    except pyautogui.FailSafeException as e:
+        pass  # Ignore errors during page closing
 
 
 def debug_speed_tracker():
@@ -136,14 +143,22 @@ def spam_keys():
         if running:
             if daemon_mode:
                 # Daemon mode: read the pre-computed condition from the daemon thread
-                if conditions_met:
-                    do_spam()
+                if genshin_active:
+                    if dialogue_active:
+                        do_spam()
+                    if page_active:
+                        close_page()
+                    time.sleep(PAUSE_BETWEEN_SPAMS)
                 else:
                     time.sleep(0.1)
             else:
                 # Normal mode: check conditions in this thread
-                if check_conditions():
-                    do_spam()
+                if is_genshin_active():
+                    if is_dialogue_detected():
+                        do_spam()
+                    if is_page_detected():
+                        close_page()
+                    time.sleep(PAUSE_BETWEEN_SPAMS)
                 else:
                     time.sleep(0.1)
         else:
