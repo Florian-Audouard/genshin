@@ -3,37 +3,95 @@ import numpy as np
 import mss
 import time
 import os
+from typing import Dict, Any, Optional, Tuple
 from utils import track_changes
 
-DEBUG_SAVED = False  # Flag to save debug image only once
+DEBUG_SAVED = {}  # Flag to save debug image only once per image
 DEBUG = False
-
-# Path to the template image for the page indicator/icon
-PAGE_TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "img", "template_page.png")
-
-# Region of interest (ROI) where the page indicator lives
-# Format: (left, top, width, height)
-ROI_PAGE = {
-    "left": 79,
-    "top": 32,
-    "width": 34,
-    "height": 37,
-}
-
-# Detection threshold (0.0 to 1.0) - higher = more strict matching
-THRESHOLD = 0.95
 
 # Check interval in seconds
 CHECK_INTERVAL = 0.1
 
+# Default threshold
+DEFAULT_THRESHOLD = 0.95
 
-def load_template():
-    """Load the template image with alpha channel for masking transparency, resized to ROI."""
-    template_bgra = cv2.imread(PAGE_TEMPLATE_PATH, cv2.IMREAD_UNCHANGED)
+# 1920 x 1080
+# ROI_PAGE_1 = {"left": 79, "top": 32, "width": 34, "height": 37}
+
+# 3440 x 1440
+ROI_PAGE_1 = {"left": 201, "top": 42, "width": 46, "height": 50}
+
+# 1920 x 1080
+# ROI_PAGE_2 = {"left": 946, "top": 1006, "width": 28, "height": 28}
+
+# 3440 x 1440
+ROI_PAGE_2 = {"left": 1701, "top": 1354, "width": 38, "height": 38}
+
+# 1920 x 1080
+ROI_PAGE_3 = {"left": 29, "top": 668, "width": 32, "height": 26}
+
+# 3440 x 1440
+ROI_PAGE_3 = {"left": 1701, "top": 1341, "width": 37, "height": 38}
+
+
+# 1920 x 1080
+ROI_PAGE_4 = {"left": 946, "top": 1006, "width": 28, "height": 28}
+
+# 3440 x 1440
+ROI_PAGE_4 = {"left": 1701, "top": 1341, "width": 38, "height": 38}
+
+
+# Page detection configurations
+# Each page has: template_path, roi, threshold
+PAGE_CONFIGS: Dict[str, Dict[str, Any]] = {
+    "PAGE_1": {
+        "template": os.path.join(os.path.dirname(__file__), "img", "template_page.png"),
+        "roi": ROI_PAGE_1,
+        "threshold": 0.9,
+    },
+    "PAGE_2": {
+        "template": os.path.join(
+            os.path.dirname(__file__), "img", "template_page_2.png"
+        ),
+        "roi": ROI_PAGE_2,
+        "threshold": 0.9,
+    },
+    "PAGE_3": {
+        "template": os.path.join(
+            os.path.dirname(__file__), "img", "template_page_3.png"
+        ),
+        "roi": ROI_PAGE_3,
+        "threshold": 0.98,
+    },
+    "PAGE_4": {
+        "template": os.path.join(
+            os.path.dirname(__file__), "img", "template_page_4.png"
+        ),
+        "roi": ROI_PAGE_4,
+        "threshold": 0.85,
+    },
+}
+
+# Template cache: {page_name: (template, mask)}
+_template_cache: Dict[str, Tuple[np.ndarray, Optional[np.ndarray]]] = {}
+
+
+def load_template_for_page(page_name: str) -> Tuple[np.ndarray, Optional[np.ndarray]]:
+    """Load template image for a given page configuration."""
+    if page_name not in PAGE_CONFIGS:
+        raise ValueError(
+            f"Unknown page: {page_name}. Available: {list(PAGE_CONFIGS.keys())}"
+        )
+
+    config = PAGE_CONFIGS[page_name]
+    template_path = config["template"]
+    roi = config["roi"]
+
+    template_bgra = cv2.imread(template_path, cv2.IMREAD_UNCHANGED)
     if template_bgra is None:
-        raise FileNotFoundError(f"Template not found at: {PAGE_TEMPLATE_PATH}")
+        raise FileNotFoundError(f"Template not found at: {template_path}")
 
-    target_size = (ROI_PAGE["width"], ROI_PAGE["height"])
+    target_size = (roi["width"], roi["height"])
     template_bgra = cv2.resize(template_bgra, target_size, interpolation=cv2.INTER_AREA)
 
     if template_bgra.shape[2] == 4:
@@ -45,54 +103,88 @@ def load_template():
         return template_bgra, None
 
 
-def save_debug_image(img, filename="debug_capture_page.png"):
+def get_cached_template(page_name: str) -> Tuple[np.ndarray, Optional[np.ndarray]]:
+    """Get cached template for a page, loading if necessary."""
+    if page_name not in _template_cache:
+        _template_cache[page_name] = load_template_for_page(page_name)
+    return _template_cache[page_name]
+
+
+def save_debug_image(img, filename):
     """Save the captured region for debugging purposes (once)."""
     global DEBUG_SAVED
-    if not DEBUG_SAVED:
+    if filename not in DEBUG_SAVED:
         debug_path = os.path.join(os.path.dirname(__file__), filename)
         cv2.imwrite(debug_path, img)
         print(f"DEBUG: Saved captured region to {debug_path}")
-        DEBUG_SAVED = True
+        DEBUG_SAVED[filename] = True
 
 
-def capture_screen(region=None):
+def capture_screen(config=None):
     """Capture the screen or a specific region in color."""
+    region = config["roi"] if config else None
     with mss.mss() as sct:
         monitor = region if region else sct.monitors[1]
         screenshot = sct.grab(monitor)
         img = np.array(screenshot)
         bgr = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)
         if DEBUG:
-            save_debug_image(bgr)
+            save_debug_image(bgr, filename=f"debug_capture_{config['page_name']}.png")
         return bgr
 
 
-# Cached template data for the simple function mode
-_cached_template = None
-_cached_mask = None
+def _is_page_detected_generic(
+    page_name: str, threshold: Optional[float] = None
+) -> bool:
+    """Generic page detection for any configured page."""
+    if page_name not in PAGE_CONFIGS:
+        raise ValueError(
+            f"Unknown page: {page_name}. Available: {list(PAGE_CONFIGS.keys())}"
+        )
 
+    config = PAGE_CONFIGS[page_name]
+    config["page_name"] = page_name
+    if threshold is None:
+        threshold = config["threshold"]
 
-def _get_cached_template():
-    """Load and cache the template for reuse."""
-    global _cached_template, _cached_mask
-    if _cached_template is None:
-        _cached_template, _cached_mask = load_template()
-    return _cached_template, _cached_mask
-
-
-@track_changes(name="PAGE", true_message="DETECTED", false_message="CLEARED")
-def is_page_detected(threshold: float = THRESHOLD) -> bool:
     try:
-        template, mask = _get_cached_template()
-        screen = capture_screen(ROI_PAGE)
+        template, mask = get_cached_template(page_name)
+        screen = capture_screen(config)
         return detect_icon(screen, template, mask, threshold)
     except Exception as e:
         if DEBUG:
-            print(f"Detection error: {e}")
+            print(f"Detection error ({page_name}): {e}")
         return False
 
 
-def detect_icon(screen, template, mask=None, threshold: float = THRESHOLD) -> bool:
+# Create decorated detection functions for each page
+@track_changes(name="PAGE_1", true_message="DETECTED", false_message="CLEARED")
+def is_page_detected_1(threshold: Optional[float] = None) -> bool:
+    """Detect PAGE_1 template."""
+    return _is_page_detected_generic("PAGE_1", threshold)
+
+
+@track_changes(name="PAGE_2", true_message="DETECTED", false_message="CLEARED")
+def is_page_detected_2(threshold: Optional[float] = None) -> bool:
+    """Detect PAGE_2 template."""
+    return _is_page_detected_generic("PAGE_2", threshold)
+
+
+@track_changes(name="PAGE_3", true_message="DETECTED", false_message="CLEARED")
+def is_page_detected_3(threshold: Optional[float] = None) -> bool:
+    """Detect PAGE_3 template."""
+    return _is_page_detected_generic("PAGE_3", threshold)
+
+
+@track_changes(name="PAGE_4", true_message="DETECTED", false_message="CLEARED")
+def is_page_detected_4(threshold: Optional[float] = None) -> bool:
+    """Detect PAGE_4 template."""
+    return _is_page_detected_generic("PAGE_4", threshold)
+
+
+def detect_icon(
+    screen, template, mask=None, threshold: float = DEFAULT_THRESHOLD
+) -> bool:
     """
     Detect if the template icon is present in the screen.
     Uses mask to ignore transparent pixels in template.
@@ -121,48 +213,53 @@ def detect_icon(screen, template, mask=None, threshold: float = THRESHOLD) -> bo
         _, max_val, _, _ = cv2.minMaxLoc(result)
 
     if DEBUG:
-        print(f"Page detection confidence: {max_val:.3f}")
+        print(f"Page detection confidence: {max_val:.3f} ({threshold})")
     return max_val >= threshold
 
 
-def start_detection_daemon(callback):
-    """
-    Daemon mode: Continuous detection loop (meant to run in a thread).
-    Calls callback(True) when page icon is detected.
-    Calls callback(False) when page icon is not detected.
+def test_page_detection_for_page(page_name: str):
+    """Generic looped test for any configured page."""
+    if page_name not in PAGE_CONFIGS:
+        raise ValueError(
+            f"Unknown page: {page_name}. Available: {list(PAGE_CONFIGS.keys())}"
+        )
 
-    Use this for daemon/thread mode. For simple synchronous checks,
-    use is_page_detected() instead.
-    """
-    print("Loading page template...")
-    template, mask = load_template()
-    print(f"Template loaded: {template.shape}")
-    if mask is not None:
-        print("Transparency mask enabled")
-    print("Starting page detection daemon...")
+    detection_funcs = {
+        "PAGE": is_page_detected,
+        "PAGE_2": is_page_detected_2,
+        "PAGE_3": is_page_detected_3,
+    }
+    detect_func = detection_funcs[page_name]
 
+    print(f"Running simple page detection ({page_name}) test... Press CTRL+C to stop")
     while True:
-        try:
-            screen = capture_screen(ROI_PAGE)
-            detected = detect_icon(screen, template, mask)
-            callback(detected)
-        except Exception as e:
-            print(f"Detection error: {e}")
-            callback(False)
+        detected = detect_func()
+        print(
+            f"\u2713 {page_name} DETECTED"
+            if detected
+            else f"\u2717 No page ({page_name})"
+        )
         time.sleep(CHECK_INTERVAL)
-
-
-# Alias for backwards compatibility/convenience
-on_detect_do_sometthing = start_detection_daemon
 
 
 def test_page_detection():
     """Simple looped test printing detection status every CHECK_INTERVAL seconds."""
-    print("Running simple page detection test... Press CTRL+C to stop")
-    while True:
-        detected = is_page_detected()
-        print("\u2713 PAGE DETECTED" if detected else "\u2717 No page")
-        time.sleep(CHECK_INTERVAL)
+    test_page_detection_for_page("PAGE")
+
+
+def test_page_detection_2():
+    """Simple looped test for PAGE_2."""
+    test_page_detection_for_page("PAGE_2")
+
+
+def test_page_detection_3():
+    """Simple looped test for PAGE_3."""
+    test_page_detection_for_page("PAGE_3")
+
+
+def test_page_detection_4():
+    """Simple looped test for PAGE_4."""
+    test_page_detection_for_page("PAGE_4")
 
 
 if __name__ == "__main__":
@@ -170,12 +267,9 @@ if __name__ == "__main__":
 
     import sys
 
-    if len(sys.argv) > 1 and sys.argv[1] == "--daemon":
-
-        def test_callback(detected):
-            print("\u2713 PAGE DETECTED" if detected else "\u2717 No page")
-
-        print("Running page detection daemon test... Press CTRL+C to stop")
-        start_detection_daemon(test_callback)
+    if len(sys.argv) > 1 and sys.argv[1] == "--test2":
+        test_page_detection_2()
+    elif len(sys.argv) > 1 and sys.argv[1] == "--test3":
+        test_page_detection_3()
     else:
         test_page_detection()

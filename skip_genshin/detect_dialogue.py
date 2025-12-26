@@ -15,21 +15,13 @@ DIALOGUE_TEMPLATE_PATH = os.path.join(
 
 # Region of interest (ROI) - adjust these values to match where the icon appears
 # Format: (left, top, width, height)
-# Set to None to scan the full screen, or specify coordinates for better performance
-ROI_DIALOGUE = {
-    "left": 270,
-    "top": 28,
-    "width": 40,
-    "height": 40,
-}  # Example: {"left": 1800, "top": 100, "width": 100, "height": 100}
 
-ROI_PAGE = {
-    "left": 79,
-    "top": 32,
-    "width": 34,
-    "height": 37,
-}
 
+# 1920 x 1080
+# ROI_DIALOGUE = {"left": 270, "top": 28, "width": 40, "height": 40}
+
+# 3440 x 1440
+ROI_DIALOGUE = {"left": 551, "top": 37, "width": 54, "height": 54}
 
 # Detection threshold (0.0 to 1.0) - higher = more strict matching
 THRESHOLD = 0.95
@@ -168,67 +160,14 @@ def detect_icon(screen, template, mask=None, threshold=THRESHOLD):
     return max_val >= threshold
 
 
-def start_detection_daemon(callback):
-    """
-    Daemon mode: Continuous detection loop (meant to run in a thread).
-    Calls callback(True) when dialogue icon is detected.
-    Calls callback(False) when dialogue icon is not detected.
-
-    Use this for daemon/thread mode. For simple synchronous checks,
-    use is_dialogue_detected() instead.
-    """
-    print("Loading template...")
-    template, mask = load_template()
-    print(f"Template loaded: {template.shape}")
-    if mask is not None:
-        print("Transparency mask enabled")
-    print("Starting dialogue detection daemon...")
-
-    while True:
-        try:
-            # Capture screen
-            screen = capture_screen(ROI_DIALOGUE)
-
-            # Detect the icon
-            detected = detect_icon(screen, template, mask)
-
-            # Call the callback with detection result
-            callback(detected)
-
-        except Exception as e:
-            print(f"Detection error: {e}")
-            callback(False)
-
-        time.sleep(CHECK_INTERVAL)
-
-
-# Alias for backwards compatibility
-on_detect_do_sometthing = start_detection_daemon
-
-
 if __name__ == "__main__":
     DEBUG = True
 
-    import sys
-
-    if len(sys.argv) > 1 and sys.argv[1] == "--daemon":
-        # Daemon mode test
-        def test_callback(detected):
-            if detected:
-                print("✓ DIALOGUE DETECTED")
-            else:
-                print("✗ No dialogue")
-
-        print("Running detection daemon test... Press CTRL+C to stop")
-        start_detection_daemon(test_callback)
-    else:
-        # Simple function mode test
-        print("Running simple detection test... Press CTRL+C to stop")
-        print("Use --daemon flag to test daemon mode")
-        while True:
-            detected = is_dialogue_detected()
-            if detected:
-                print("✓ DIALOGUE DETECTED")
-            else:
-                print("✗ No dialogue")
-            time.sleep(CHECK_INTERVAL)
+    print("Running dialogue detection test... Press CTRL+C to stop")
+    while True:
+        detected = is_dialogue_detected()
+        if detected:
+            print("✓ DIALOGUE DETECTED")
+        else:
+            print("✗ No dialogue")
+        time.sleep(CHECK_INTERVAL)
