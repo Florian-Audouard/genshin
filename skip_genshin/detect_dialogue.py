@@ -58,7 +58,9 @@ def save_debug_image(img, filename="debug_capture.png"):
     """Save the captured region for debugging purposes."""
     global DEBUG_SAVED
     if not DEBUG_SAVED:
-        debug_path = os.path.join(os.path.dirname(__file__), filename)
+        debug_folder = os.path.join(os.path.dirname(__file__), "debug")
+        os.makedirs(debug_folder, exist_ok=True)
+        debug_path = os.path.join(debug_folder, filename)
         cv2.imwrite(debug_path, img)
         print(f"DEBUG: Saved captured region to {debug_path}")
         DEBUG_SAVED = True
@@ -158,6 +160,11 @@ def detect_icon(screen, template, mask=None, threshold=THRESHOLD):
     if DEBUG:
         print(f"Detection confidence: {max_val:.3f}")
     return max_val >= threshold
+
+
+def toggle_debug_dialogue():
+    global DEBUG
+    DEBUG = not DEBUG
 
 
 if __name__ == "__main__":

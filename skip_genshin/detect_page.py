@@ -27,6 +27,9 @@ ROI_PAGE_1 = {"left": 201, "top": 42, "width": 46, "height": 50}
 # 3440 x 1440
 ROI_PAGE_2 = {"left": 1701, "top": 1354, "width": 38, "height": 38}
 
+# 3440 x 1440
+ROI_PAGE_2_ALT = {"left": 1701, "top": 1341, "width": 38, "height": 38}
+
 # 1920 x 1080
 ROI_PAGE_3 = {"left": 29, "top": 668, "width": 32, "height": 26}
 
@@ -54,6 +57,13 @@ PAGE_CONFIGS: Dict[str, Dict[str, Any]] = {
             os.path.dirname(__file__), "img", "template_page_2.png"
         ),
         "roi": ROI_PAGE_2,
+        "threshold": 0.9,
+    },
+    "PAGE_2_ALT": {
+        "template": os.path.join(
+            os.path.dirname(__file__), "img", "template_page_2.png"
+        ),
+        "roi": ROI_PAGE_2_ALT,
         "threshold": 0.9,
     },
     "PAGE_3": {
@@ -114,7 +124,9 @@ def save_debug_image(img, filename):
     """Save the captured region for debugging purposes (once)."""
     global DEBUG_SAVED
     if filename not in DEBUG_SAVED:
-        debug_path = os.path.join(os.path.dirname(__file__), filename)
+        debug_folder = os.path.join(os.path.dirname(__file__), "debug")
+        os.makedirs(debug_folder, exist_ok=True)
+        debug_path = os.path.join(debug_folder, filename)
         cv2.imwrite(debug_path, img)
         print(f"DEBUG: Saved captured region to {debug_path}")
         DEBUG_SAVED[filename] = True
@@ -150,7 +162,7 @@ def _is_page_detected_generic(
     try:
         template, mask = get_cached_template(page_name)
         screen = capture_screen(config)
-        return detect_icon(screen, template, mask, threshold)
+        return detect_icon(page_name, screen, template, mask, threshold)
     except Exception as e:
         if DEBUG:
             print(f"Detection error ({page_name}): {e}")
@@ -167,7 +179,9 @@ def is_page_detected_1(threshold: Optional[float] = None) -> bool:
 @track_changes(name="PAGE_2", true_message="DETECTED", false_message="CLEARED")
 def is_page_detected_2(threshold: Optional[float] = None) -> bool:
     """Detect PAGE_2 template."""
-    return _is_page_detected_generic("PAGE_2", threshold)
+    return _is_page_detected_generic("PAGE_2", threshold) or _is_page_detected_generic(
+        "PAGE_2_ALT", threshold
+    )
 
 
 @track_changes(name="PAGE_3", true_message="DETECTED", false_message="CLEARED")
@@ -183,7 +197,7 @@ def is_page_detected_4(threshold: Optional[float] = None) -> bool:
 
 
 def detect_icon(
-    screen, template, mask=None, threshold: float = DEFAULT_THRESHOLD
+    page_name, screen, template, mask=None, threshold: float = DEFAULT_THRESHOLD
 ) -> bool:
     """
     Detect if the template icon is present in the screen.
@@ -213,7 +227,7 @@ def detect_icon(
         _, max_val, _, _ = cv2.minMaxLoc(result)
 
     if DEBUG:
-        print(f"Page detection confidence: {max_val:.3f} ({threshold})")
+        print(f"{page_name} detection confidence: {max_val:.3f} ({threshold})")
     return max_val >= threshold
 
 
@@ -225,7 +239,7 @@ def test_page_detection_for_page(page_name: str):
         )
 
     detection_funcs = {
-        "PAGE": is_page_detected,
+        "PAGE": is_page_detected_1,
         "PAGE_2": is_page_detected_2,
         "PAGE_3": is_page_detected_3,
     }
@@ -260,6 +274,11 @@ def test_page_detection_3():
 def test_page_detection_4():
     """Simple looped test for PAGE_4."""
     test_page_detection_for_page("PAGE_4")
+
+
+def toggle_debug_page():
+    global DEBUG
+    DEBUG = not DEBUG
 
 
 if __name__ == "__main__":

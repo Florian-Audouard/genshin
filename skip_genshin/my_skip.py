@@ -5,13 +5,14 @@ import pyautogui
 import ctypes
 import sys
 import os
-from detect_dialogue import is_dialogue_detected
+from detect_dialogue import is_dialogue_detected, toggle_debug_dialogue
 from detect_active_window import is_genshin_active
 from detect_page import (
     is_page_detected_1,
     is_page_detected_2,
     is_page_detected_3,
     is_page_detected_4,
+    toggle_debug_page,
 )
 from utils import track_changes
 
@@ -130,7 +131,7 @@ def spam_keys():
             if is_genshin_active():
                 if is_dialogue_detected():
                     do_spam()
-                elif is_page_detected_2():
+                if is_page_detected_2():
                     close_page_2()
                 if is_page_detected_1() or is_page_detected_3():
                     close_page()
@@ -153,6 +154,8 @@ def toggle():
 def toggle_debug():
     global debug_mode
     debug_mode = not debug_mode
+    toggle_debug_dialogue()
+    toggle_debug_page()
     get_debug_mode()  # Trigger the change tracker
 
 
