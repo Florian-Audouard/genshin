@@ -522,6 +522,9 @@ class GenshinSkipperGUI:
         self.roi_height = tk.IntVar(value=100)
         self.threshold_var = tk.DoubleVar(value=0.95)
         
+        # Flag to prevent autosave during detection config loading
+        self._loading_detection_config = False
+        
         # Detection enable/disable checkbuttons
         self.detection_vars: Dict[str, tk.BooleanVar] = {}
         
@@ -955,6 +958,9 @@ Hotkeys:
     
     def autosave_roi(self):
         """Auto-save ROI settings for the selected detection."""
+        # Skip autosave if we're currently loading detection config
+        if self._loading_detection_config:
+            return
         try:
             name = self.selected_detection.get()
             roi = {
@@ -1068,13 +1074,19 @@ Hotkeys:
         name = self.selected_detection.get()
         det_config = self.config.get("detections", name)
         if det_config:
-            roi = det_config.get("roi", {})
-            self.roi_left.set(roi.get("left", 0))
-            self.roi_top.set(roi.get("top", 0))
-            self.roi_width.set(roi.get("width", 100))
-            self.roi_height.set(roi.get("height", 100))
-            self.threshold_var.set(det_config.get("threshold", 0.95))
-            self.threshold_label.config(text=f"{det_config.get('threshold', 0.95):.2f}")
+            # Set flag to prevent autosave during loading
+            self._loading_detection_config = True
+            try:
+                roi = det_config.get("roi", {})
+                self.roi_left.set(roi.get("left", 0))
+                self.roi_top.set(roi.get("top", 0))
+                self.roi_width.set(roi.get("width", 100))
+                self.roi_height.set(roi.get("height", 100))
+                self.threshold_var.set(det_config.get("threshold", 0.95))
+                self.threshold_label.config(text=f"{det_config.get('threshold', 0.95):.2f}")
+            finally:
+                # Clear flag after loading is complete
+                self._loading_detection_config = False
     
     def on_detection_changed(self, event):
         """Handle detection selection change."""

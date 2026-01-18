@@ -27,7 +27,7 @@
                 "width": 46,
                 "height": 50
             },
-            "threshold": 0.95,
+            "threshold": 0.97,
             "template": "img/template_page.png",
             "action": "close_escape"
         },
@@ -35,11 +35,11 @@
             "enabled": true,
             "roi": {
                 "left": 1701,
-                "top": 1354,
+                "top": 1341,
                 "width": 38,
                 "height": 38
             },
-            "threshold": 0.95,
+            "threshold": 0.9,
             "template": "img/template_page_2.png",
             "action": "close_space_click"
         },
@@ -51,7 +51,7 @@
                 "width": 38,
                 "height": 38
             },
-            "threshold": 0.85,
+            "threshold": 0.84,
             "template": "img/template_page_2_alt.png",
             "action": "close_space_click"
         },
