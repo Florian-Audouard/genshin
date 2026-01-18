@@ -8,12 +8,15 @@ from utils import track_changes
 
 DEBUG_SAVED = {}  # Flag to save debug image only once per image
 DEBUG = False
-
 # Check interval in seconds
 CHECK_INTERVAL = 0.1
 
 # Default threshold
 DEFAULT_THRESHOLD = 0.95
+
+# Color tolerance for HDR/transparent icons (0-255)
+# Higher value = more lenient color matching
+DEFAULT_COLOR_TOLERANCE = 15
 
 # 1920 x 1080
 # ROI_PAGE_1 = {"left": 79, "top": 32, "width": 34, "height": 37}
@@ -30,12 +33,6 @@ ROI_PAGE_2 = {"left": 1701, "top": 1354, "width": 38, "height": 38}
 # 3440 x 1440
 ROI_PAGE_2_ALT = {"left": 1701, "top": 1341, "width": 38, "height": 38}
 
-# 1920 x 1080
-ROI_PAGE_3 = {"left": 29, "top": 668, "width": 32, "height": 26}
-
-# 3440 x 1440
-ROI_PAGE_3 = {"left": 1701, "top": 1341, "width": 37, "height": 38}
-
 
 # 1920 x 1080
 ROI_PAGE_4 = {"left": 946, "top": 1006, "width": 28, "height": 28}
@@ -43,6 +40,8 @@ ROI_PAGE_4 = {"left": 946, "top": 1006, "width": 28, "height": 28}
 # 3440 x 1440
 ROI_PAGE_4 = {"left": 1701, "top": 1341, "width": 38, "height": 38}
 
+# 3440 x 1440
+ROI_PAGE_4_ALT = {"left": 1701, "top": 1373, "width": 38, "height": 38}
 
 # Page detection configurations
 # Each page has: template_path, roi, threshold
@@ -50,35 +49,35 @@ PAGE_CONFIGS: Dict[str, Dict[str, Any]] = {
     "PAGE_1": {
         "template": os.path.join(os.path.dirname(__file__), "img", "template_page.png"),
         "roi": ROI_PAGE_1,
-        "threshold": 0.9,
+        "threshold": DEFAULT_THRESHOLD,
     },
     "PAGE_2": {
         "template": os.path.join(
             os.path.dirname(__file__), "img", "template_page_2.png"
         ),
         "roi": ROI_PAGE_2,
-        "threshold": 0.9,
+        "threshold": DEFAULT_THRESHOLD,
     },
     "PAGE_2_ALT": {
         "template": os.path.join(
             os.path.dirname(__file__), "img", "template_page_2.png"
         ),
         "roi": ROI_PAGE_2_ALT,
-        "threshold": 0.9,
-    },
-    "PAGE_3": {
-        "template": os.path.join(
-            os.path.dirname(__file__), "img", "template_page_3.png"
-        ),
-        "roi": ROI_PAGE_3,
-        "threshold": 0.98,
+        "threshold": DEFAULT_THRESHOLD,
     },
     "PAGE_4": {
         "template": os.path.join(
             os.path.dirname(__file__), "img", "template_page_4.png"
         ),
         "roi": ROI_PAGE_4,
-        "threshold": 0.85,
+        "threshold": DEFAULT_THRESHOLD,
+    },
+    "PAGE_4_ALT": {
+        "template": os.path.join(
+            os.path.dirname(__file__), "img", "template_page_2.png"
+        ),
+        "roi": ROI_PAGE_4_ALT,
+        "threshold": DEFAULT_THRESHOLD,
     },
 }
 
@@ -193,15 +192,24 @@ def is_page_detected_3(threshold: Optional[float] = None) -> bool:
 @track_changes(name="PAGE_4", true_message="DETECTED", false_message="CLEARED")
 def is_page_detected_4(threshold: Optional[float] = None) -> bool:
     """Detect PAGE_4 template."""
-    return _is_page_detected_generic("PAGE_4", threshold)
+    return _is_page_detected_generic("PAGE_4", threshold) or _is_page_detected_generic(
+        "PAGE_4_ALT", threshold
+    )
 
 
 def detect_icon(
-    page_name, screen, template, mask=None, threshold: float = DEFAULT_THRESHOLD
+    page_name,
+    screen,
+    template,
+    mask=None,
+    threshold: float = DEFAULT_THRESHOLD,
+    color_tolerance: int = DEFAULT_COLOR_TOLERANCE,
 ) -> bool:
     """
     Detect if the template icon is present in the screen.
     Uses mask to ignore transparent pixels in template.
+    color_tolerance: pixels within this difference (0-255) are considered matching.
+                     Higher values are more lenient for HDR/transparent icons.
     Returns True if detected, False otherwise.
     """
     if screen.shape[:2] == template.shape[:2]:
@@ -209,8 +217,10 @@ def detect_icon(
             mask_norm = mask.astype(np.float32) / 255.0
             mask_3ch = np.stack([mask_norm] * 3, axis=-1)
             diff = np.abs(screen.astype(np.float32) - template.astype(np.float32))
+            # Apply color tolerance: differences below tolerance are zeroed out
+            diff = np.maximum(diff - color_tolerance, 0.0)
             masked_diff = diff * mask_3ch
-            max_error = np.sum(mask_3ch) * 255.0
+            max_error = np.sum(mask_3ch) * (255.0 - color_tolerance)
             if max_error > 0:
                 error = np.sum(masked_diff) / max_error
                 max_val = 1.0 - error
@@ -218,7 +228,9 @@ def detect_icon(
                 max_val = 0.0
         else:
             diff = np.abs(screen.astype(np.float32) - template.astype(np.float32))
-            max_val = 1.0 - (np.mean(diff) / 255.0)
+            # Apply color tolerance: differences below tolerance are zeroed out
+            diff = np.maximum(diff - color_tolerance, 0.0)
+            max_val = 1.0 - (np.mean(diff) / (255.0 - color_tolerance))
     else:
         if mask is not None:
             result = cv2.matchTemplate(screen, template, cv2.TM_CCORR_NORMED, mask=mask)

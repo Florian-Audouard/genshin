@@ -1,0 +1,91 @@
+{
+    "general": {
+        "pause_between_spams": 0.05,
+        "check_interval": 0.1,
+        "default_color_tolerance": 15,
+        "skip_dialogue_key": "space",
+        "choose_option_key": "e"
+    },
+    "detections": {
+        "DIALOGUE": {
+            "enabled": true,
+            "roi": {
+                "left": 551,
+                "top": 37,
+                "width": 54,
+                "height": 54
+            },
+            "threshold": 0.98,
+            "template": "img/template_dialogue.png",
+            "action": "spam"
+        },
+        "PAGE_1": {
+            "enabled": true,
+            "roi": {
+                "left": 201,
+                "top": 42,
+                "width": 46,
+                "height": 50
+            },
+            "threshold": 0.95,
+            "template": "img/template_page.png",
+            "action": "close_escape"
+        },
+        "PAGE_2": {
+            "enabled": true,
+            "roi": {
+                "left": 1701,
+                "top": 1354,
+                "width": 38,
+                "height": 38
+            },
+            "threshold": 0.95,
+            "template": "img/template_page_2.png",
+            "action": "close_space_click"
+        },
+        "PAGE_2_ALT": {
+            "enabled": true,
+            "roi": {
+                "left": 1701,
+                "top": 1341,
+                "width": 38,
+                "height": 38
+            },
+            "threshold": 0.85,
+            "template": "img/template_page_2_alt.png",
+            "action": "close_space_click"
+        },
+        "PAGE_4": {
+            "enabled": true,
+            "roi": {
+                "left": 1701,
+                "top": 1341,
+                "width": 38,
+                "height": 38
+            },
+            "threshold": 0.9,
+            "template": "img/template_page_4.png",
+            "action": "click_only"
+        },
+        "PAGE_4_ALT": {
+            "enabled": true,
+            "roi": {
+                "left": 1701,
+                "top": 1373,
+                "width": 38,
+                "height": 38
+            },
+            "threshold": 0.95,
+            "template": "img/template_page_2.png",
+            "action": "click_only"
+        }
+    },
+    "click_position": {
+        "x": 1687,
+        "y": 715
+    },
+    "hotkeys": {
+        "toggle_spam": "F7",
+        "toggle_debug": "F8"
+    }
+}

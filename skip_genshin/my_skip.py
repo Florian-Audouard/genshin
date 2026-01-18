@@ -10,7 +10,6 @@ from detect_active_window import is_genshin_active
 from detect_page import (
     is_page_detected_1,
     is_page_detected_2,
-    is_page_detected_3,
     is_page_detected_4,
     toggle_debug_page,
 )
@@ -18,6 +17,9 @@ from utils import track_changes
 
 pyautogui.PAUSE = 0  # Small pause between actions
 PAUSE_BETWEEN_SPAMS = 0.05  # Pause between spam actions
+
+skip_dialogue_key = "space"
+choose_option_key = "e"
 
 
 def is_admin():
@@ -72,8 +74,8 @@ def do_spam():
     """Execute the spam action and track for debug."""
     global spam_count
     try:
-        pyautogui.press("e")
-        pyautogui.press("space")
+        pyautogui.press(choose_option_key)
+        pyautogui.press(skip_dialogue_key)
         spam_count += 1
     except pyautogui.FailSafeException as e:
         pass  # Ignore errors during spamming
@@ -82,7 +84,7 @@ def do_spam():
 def close_page():
     """Handle page closing action."""
     try:
-        pyautogui.press("escape")
+        pyautogui.press(skip_dialogue_key)
     except pyautogui.FailSafeException as e:
         pass  # Ignore errors during page closing
 
@@ -90,7 +92,8 @@ def close_page():
 def close_page_2():
     """Handle page closing action."""
     try:
-        pyautogui.press("space")
+        pyautogui.press(skip_dialogue_key)
+        pyautogui.click(1687, 715)
     except pyautogui.FailSafeException as e:
         pass  # Ignore errors during page closing
 
@@ -131,9 +134,9 @@ def spam_keys():
             if is_genshin_active():
                 if is_dialogue_detected():
                     do_spam()
-                if is_page_detected_2():
+                elif is_page_detected_2():
                     close_page_2()
-                if is_page_detected_1() or is_page_detected_3():
+                if is_page_detected_1():
                     close_page()
                 if is_page_detected_4():
                     click_page_4()

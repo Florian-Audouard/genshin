@@ -25,6 +25,7 @@ from detect_page import (
     get_cached_template as get_page_template,
     detect_icon as detect_page_icon,
     DEFAULT_THRESHOLD as PAGE_DEFAULT_THRESHOLD,
+    DEFAULT_COLOR_TOLERANCE,
 )
 
 # Default ROI
@@ -46,7 +47,9 @@ for page_name, config in PAGE_CONFIGS.items():
         "roi": config["roi"],
         "threshold": config["threshold"],
         "get_template": lambda pn=page_name: get_page_template(pn),
-        "detect_func": lambda pn, s, t, m, th: detect_page_icon(pn, s, t, m, th),
+        "detect_func": lambda pn, s, t, m, th, ct=DEFAULT_COLOR_TOLERANCE: detect_page_icon(
+            pn, s, t, m, th, ct
+        ),
         "page_name": page_name,
     }
 
@@ -70,12 +73,9 @@ class ROIHelperGUI:
 
         # Detection comparison
         self.selected_detection = tk.StringVar(value="DIALOGUE")
-        self.comparison_enabled = tk.BooleanVar(value=False)
+        self.comparison_enabled = tk.BooleanVar(value=True)
         self.current_confidence = tk.StringVar(value="N/A")
         self.detection_status = tk.StringVar(value="---")
-        self.override_roi = tk.BooleanVar(
-            value=True
-        )  # Use current ROI instead of detection ROI
 
         self.setup_ui()
         self.setup_keyboard_listener()
@@ -173,13 +173,6 @@ class ROIHelperGUI:
         ttk.Button(
             compare_frame, text="Apply Detection ROI", command=self.apply_detection_roi
         ).grid(row=0, column=3, padx=5)
-
-        # Override ROI checkbox (use current ROI for comparison)
-        ttk.Checkbutton(
-            compare_frame,
-            text="Use Current ROI",
-            variable=self.override_roi,
-        ).grid(row=0, column=4, sticky=tk.W, padx=5)
 
         # Threshold and confidence display
         info_frame = ttk.Frame(compare_frame)
@@ -310,8 +303,12 @@ class ROIHelperGUI:
             self.log_message(f"Applied ROI from {detection_name}: {roi}")
             self.status_var.set(f"Applied ROI from {detection_name}")
 
-    def calculate_confidence(self, screen, template, mask=None):
-        """Calculate match confidence between screen and template."""
+    def calculate_confidence(
+        self, screen, template, mask=None, color_tolerance=DEFAULT_COLOR_TOLERANCE
+    ):
+        """Calculate match confidence between screen and template.
+        color_tolerance: pixels within this difference (0-255) are considered matching.
+        """
         if screen.shape[:2] != template.shape[:2]:
             # Resize screen to match template
             screen = cv2.resize(
@@ -324,8 +321,10 @@ class ROIHelperGUI:
             mask_norm = mask.astype(np.float32) / 255.0
             mask_3ch = np.stack([mask_norm] * 3, axis=-1)
             diff = np.abs(screen.astype(np.float32) - template.astype(np.float32))
+            # Apply color tolerance: differences below tolerance are zeroed out
+            diff = np.maximum(diff - color_tolerance, 0.0)
             masked_diff = diff * mask_3ch
-            max_error = np.sum(mask_3ch) * 255.0
+            max_error = np.sum(mask_3ch) * (255.0 - color_tolerance)
             if max_error > 0:
                 error = np.sum(masked_diff) / max_error
                 confidence = 1.0 - error
@@ -333,7 +332,9 @@ class ROIHelperGUI:
                 confidence = 0.0
         else:
             diff = np.abs(screen.astype(np.float32) - template.astype(np.float32))
-            confidence = 1.0 - (np.mean(diff) / 255.0)
+            # Apply color tolerance: differences below tolerance are zeroed out
+            diff = np.maximum(diff - color_tolerance, 0.0)
+            confidence = 1.0 - (np.mean(diff) / (255.0 - color_tolerance))
 
         return confidence
 
@@ -700,16 +701,7 @@ class ROIHelperGUI:
 
                 # Update comparison if enabled
                 if self.comparison_enabled.get():
-                    if self.override_roi.get():
-                        # Use current ROI capture for comparison
-                        self.update_comparison(img)
-                    else:
-                        # Use detection's own ROI for comparison
-                        detection_name = self.selected_detection.get()
-                        if detection_name in DETECTION_CONFIGS:
-                            detection_roi = DETECTION_CONFIGS[detection_name]["roi"]
-                            detection_img = self.capture_screen(detection_roi)
-                            self.update_comparison(detection_img)
+                    self.update_comparison(img)
 
         except Exception as e:
             pass  # Ignore errors during preview update
