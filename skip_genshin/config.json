@@ -1,10 +1,10 @@
 {
     "general": {
         "pause_between_spams": 0.05,
-        "check_interval": 0.1,
         "default_color_tolerance": 15,
         "skip_dialogue_key": "space",
-        "choose_option_key": "e"
+        "choose_option_key": "e",
+        "check_interval": 0.1
     },
     "detections": {
         "DIALOGUE": {
@@ -17,7 +17,8 @@
             },
             "threshold": 0.98,
             "template": "img/template_dialogue.png",
-            "action": "spam"
+            "action": "spam",
+            "uniform_color_protection": false
         },
         "PAGE_1": {
             "enabled": true,
@@ -29,7 +30,8 @@
             },
             "threshold": 0.97,
             "template": "img/template_page.png",
-            "action": "close_escape"
+            "action": "close_escape",
+            "uniform_color_protection": true
         },
         "PAGE_2": {
             "enabled": true,
@@ -39,9 +41,10 @@
                 "width": 38,
                 "height": 38
             },
-            "threshold": 0.9,
+            "threshold": 0.94,
             "template": "img/template_page_2.png",
-            "action": "close_space_click"
+            "action": "close_space_click",
+            "uniform_color_protection": false
         },
         "PAGE_2_ALT": {
             "enabled": true,
@@ -51,9 +54,10 @@
                 "width": 38,
                 "height": 38
             },
-            "threshold": 0.84,
+            "threshold": 0.95,
             "template": "img/template_page_2_alt.png",
-            "action": "close_space_click"
+            "action": "close_space_click",
+            "uniform_color_protection": true
         },
         "PAGE_4": {
             "enabled": true,
@@ -65,7 +69,8 @@
             },
             "threshold": 0.9,
             "template": "img/template_page_4.png",
-            "action": "click_only"
+            "action": "click_only",
+            "uniform_color_protection": true
         },
         "PAGE_4_ALT": {
             "enabled": true,
@@ -77,7 +82,8 @@
             },
             "threshold": 0.95,
             "template": "img/template_page_2.png",
-            "action": "click_only"
+            "action": "click_only",
+            "uniform_color_protection": true
         }
     },
     "click_position": {
