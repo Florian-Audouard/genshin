@@ -18,71 +18,6 @@
             "uniform_color_protection": false,
             "action_sequence": "space\ne"
         },
-        "PAGE_1": {
-            "enabled": true,
-            "roi": {
-                "left": 201,
-                "top": 42,
-                "width": 46,
-                "height": 50
-            },
-            "threshold": 0.97,
-            "template": "img/template_page.png",
-            "uniform_color_protection": true,
-            "action_sequence": "escape"
-        },
-        "PAGE_2": {
-            "enabled": true,
-            "roi": {
-                "left": 1701,
-                "top": 1341,
-                "width": 38,
-                "height": 38
-            },
-            "threshold": 0.94,
-            "template": "img/template_page_2.png",
-            "uniform_color_protection": false,
-            "action_sequence": "e\nclick"
-        },
-        "PAGE_2_ALT": {
-            "enabled": true,
-            "roi": {
-                "left": 1701,
-                "top": 1341,
-                "width": 38,
-                "height": 38
-            },
-            "threshold": 0.9,
-            "template": "img/template_page_2_alt.png",
-            "uniform_color_protection": true,
-            "action_sequence": "e\nclick"
-        },
-        "PAGE_4": {
-            "enabled": true,
-            "roi": {
-                "left": 1701,
-                "top": 1341,
-                "width": 38,
-                "height": 38
-            },
-            "threshold": 0.9,
-            "template": "img/template_page_4.png",
-            "uniform_color_protection": true,
-            "action_sequence": "click"
-        },
-        "PAGE_4_ALT": {
-            "enabled": true,
-            "roi": {
-                "left": 1701,
-                "top": 1373,
-                "width": 38,
-                "height": 38
-            },
-            "threshold": 0.95,
-            "template": "img/template_page_2.png",
-            "uniform_color_protection": true,
-            "action_sequence": "click"
-        },
         "CHARACTER": {
             "enabled": true,
             "roi": {
@@ -95,6 +30,32 @@
             "template": "img/template_character.png",
             "action_sequence": "click",
             "uniform_color_protection": true
+        },
+        "PAGE": {
+            "enabled": true,
+            "roi": {
+                "left": 201,
+                "top": 42,
+                "width": 46,
+                "height": 50
+            },
+            "threshold": 0.97,
+            "template": "img/template_page.png",
+            "uniform_color_protection": true,
+            "action_sequence": "escape"
+        },
+        "TUTORIEL": {
+            "enabled": true,
+            "roi": {
+                "left": 1701,
+                "top": 1341,
+                "width": 38,
+                "height": 38
+            },
+            "threshold": 0.9,
+            "template": "img/template_tutoriel.png",
+            "uniform_color_protection": true,
+            "action_sequence": "click"
         }
     },
     "click_position": {

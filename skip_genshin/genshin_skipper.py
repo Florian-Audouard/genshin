@@ -23,7 +23,7 @@ import numpy as np
 import pyautogui
 import win32clipboard
 import tkinter as tk
-from tkinter import ttk, scrolledtext, simpledialog, messagebox, filedialog
+from tkinter import ttk, scrolledtext, filedialog, messagebox
 from PIL import Image, ImageTk
 from datetime import datetime
 from typing import Dict
@@ -718,13 +718,10 @@ Hotkeys:
         roi = self.get_current_roi()
         img = self.detection.capture_screen(roi)
         
-        # Ask if user wants to remove background
-        if messagebox.askyesno("Remove Background", 
-                              "Do you want to select a background color to make transparent?\n\n"
-                              "This will open a window where you can click on the color to remove."):
-            img = self.remove_background_interactive(img)
-            if img is None:
-                return  # User cancelled
+        # Automatically open background removal window
+        img = self.remove_background_interactive(img)
+        if img is None:
+            return  # User cancelled
         
         # Save to template path
         template_path = det_config.get("template", f"img/template_{name.lower()}.png")
@@ -744,6 +741,7 @@ Hotkeys:
         tolerance = [30]
         selected_colors = []  # List of (color, tolerance) tuples
         preview_image = [img.copy()]  # Current preview with transparency applied
+        mode = [False]  # False = Blacklist (remove selected), True = Whitelist (keep selected)
         
         # Create preview window
         preview_window = tk.Toplevel(self.root)
@@ -751,11 +749,33 @@ Hotkeys:
         preview_window.configure(bg=self.DARK_BG)
         preview_window.transient(self.root)
         preview_window.grab_set()
-        preview_window.geometry("700x600")
+        preview_window.geometry("750x650")
         
-        # Instructions
-        ttk.Label(preview_window, text="Click on colors to make them transparent. You can select multiple colors.", 
-                 font=("Consolas", 10)).pack(pady=5)
+        # Instructions label (will be updated based on mode)
+        instructions_var = tk.StringVar(value="BLACKLIST MODE: Click on colors to REMOVE (make transparent)")
+        instructions_label = ttk.Label(preview_window, textvariable=instructions_var, font=("Consolas", 10))
+        instructions_label.pack(pady=5)
+        
+        # Mode toggle frame
+        mode_frame = ttk.Frame(preview_window)
+        mode_frame.pack(fill=tk.X, padx=10, pady=5)
+        
+        mode_var = tk.BooleanVar(value=False)
+        
+        def on_mode_change():
+            mode[0] = mode_var.get()
+            if mode[0]:
+                instructions_var.set("WHITELIST MODE: Click on colors to KEEP (everything else becomes transparent)")
+                colors_frame.config(text="Colors to KEEP (click to remove)")
+            else:
+                instructions_var.set("BLACKLIST MODE: Click on colors to REMOVE (make transparent)")
+                colors_frame.config(text="Colors to REMOVE (click to remove)")
+            update_preview()
+        
+        ttk.Radiobutton(mode_frame, text="Blacklist (remove selected colors)", 
+                       variable=mode_var, value=False, command=on_mode_change).pack(side=tk.LEFT, padx=10)
+        ttk.Radiobutton(mode_frame, text="Whitelist (keep only selected colors)", 
+                       variable=mode_var, value=True, command=on_mode_change).pack(side=tk.LEFT, padx=10)
         
         # Top controls frame
         controls_frame = ttk.Frame(preview_window)
@@ -821,7 +841,7 @@ Hotkeys:
         preview_canvas.pack(padx=5, pady=5)
         
         # Selected colors list
-        colors_frame = ttk.LabelFrame(preview_window, text="Selected Colors (click to remove)")
+        colors_frame = ttk.LabelFrame(preview_window, text="Colors to REMOVE (click to remove)")
         colors_frame.pack(fill=tk.X, padx=10, pady=5)
         
         colors_inner = ttk.Frame(colors_frame)
@@ -855,7 +875,10 @@ Hotkeys:
                     mask = cv2.inRange(img[:, :, :3], lower, upper)
                     combined_mask = cv2.bitwise_or(combined_mask, mask)
                 
-                img_bgra[:, :, 3] = np.where(combined_mask > 0, 0, 255)
+                if mode[0]:  # Whitelist mode - keep selected colors, remove everything else
+                    img_bgra[:, :, 3] = np.where(combined_mask > 0, 255, 0)
+                else:  # Blacklist mode - remove selected colors
+                    img_bgra[:, :, 3] = np.where(combined_mask > 0, 0, 255)
                 preview_image[0] = img_bgra
             
             # Update preview canvas with checkerboard background
@@ -1003,16 +1026,13 @@ Hotkeys:
     
     def create_new_detection(self):
         """Create a new detection with a custom name."""
-        name = simpledialog.askstring("New Detection", "Enter detection name:", parent=self.root)
-        if not name:
-            return
-        
-        name = name.upper().replace(" ", "_")
-        
-        # Check if already exists
-        if name in self.config.get("detections", default={}):
-            messagebox.showerror("Error", f"Detection '{name}' already exists!", parent=self.root)
-            return
+        # Generate automatic name
+        existing = self.config.get("detections", default={})
+        counter = 1
+        name = f"DETECTION_{counter}"
+        while name in existing:
+            counter += 1
+            name = f"DETECTION_{counter}"
         
         # Create new detection config
         template_path = f"img/template_{name.lower()}.png"
@@ -1036,44 +1056,16 @@ Hotkeys:
         self.refresh_detection_toggles()
         
         self.log_message(f"Created new detection: {name}")
-        
-        # Ask if user wants to capture template now
-        if messagebox.askyesno("Capture Template", 
-                              "Do you want to capture a template for this detection now?\n\n"
-                              "1. Position ROI over the target area\n"
-                              "2. Click 'Capture & Save Template'",
-                              parent=self.root):
-            pass  # User will capture manually
+        self.status_var.set(f"Created new detection: {name}. Position ROI and click 'Capture & Save Template'")
     
     def rename_detection(self):
-        """Rename the selected detection."""
+        """Rename the selected detection - prompt in log with inline edit."""
         old_name = self.selected_detection.get()
         if not old_name:
+            self.log_message("No detection selected to rename")
             return
         
-        new_name = simpledialog.askstring("Rename Detection", 
-                                         f"Enter new name for '{old_name}':", 
-                                         initialvalue=old_name,
-                                         parent=self.root)
-        if not new_name or new_name == old_name:
-            return
-        
-        new_name = new_name.upper().replace(" ", "_")
-        
-        if new_name in self.config.get("detections", default={}):
-            messagebox.showerror("Error", f"Detection '{new_name}' already exists!", parent=self.root)
-            return
-        
-        # Use ConfigManager's rename method
-        if self.config.rename_detection(old_name, new_name):
-            self.detection.clear_template_cache(old_name)
-            self.refresh_detection_list()
-            self.selected_detection.set(new_name)
-            self.load_detection_config()
-            self.refresh_detection_toggles()
-            self.log_message(f"Renamed detection: {old_name} -> {new_name}")
-        else:
-            messagebox.showerror("Error", "Failed to rename detection!", parent=self.root)
+        self.log_message(f"To rename '{old_name}', delete it and create a new one with the desired name")
     
     def delete_detection(self):
         """Delete the selected detection."""
@@ -1081,10 +1073,8 @@ Hotkeys:
         if not name:
             return
         
-        if not messagebox.askyesno("Confirm Delete", 
-                                   f"Are you sure you want to delete detection '{name}'?\n\n"
-                                   "This will also delete the template image file.",
-                                   parent=self.root):
+        # Confirm deletion
+        if not messagebox.askyesno("Confirm Delete", f"Delete detection '{name}'?"):
             return
         
         # Get template path before deletion

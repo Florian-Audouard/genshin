@@ -20,59 +20,16 @@ import win32gui
 
 CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.json")
 
-DEFAULT_CONFIG = {
+EMPTY_CONFIG = {
     "general": {
         "pause_between_spams": 0.05,
         "default_color_tolerance": 15,
         "check_interval": 0.1
     },
-    "detections": {
-        "DIALOGUE": {
-            "enabled": True,
-            "roi": {"left": 551, "top": 37, "width": 54, "height": 54},
-            "threshold": 0.95,
-            "template": "img/template_dialogue.png",
-            "action_sequence": "space\ne"
-        },
-        "PAGE_1": {
-            "enabled": True,
-            "roi": {"left": 201, "top": 42, "width": 46, "height": 50},
-            "threshold": 0.95,
-            "template": "img/template_page.png",
-            "action_sequence": "escape"
-        },
-        "PAGE_2": {
-            "enabled": True,
-            "roi": {"left": 1701, "top": 1354, "width": 38, "height": 38},
-            "threshold": 0.95,
-            "template": "img/template_page_2.png",
-            "action_sequence": "e\nclick"
-        },
-        "PAGE_2_ALT": {
-            "enabled": True,
-            "roi": {"left": 1701, "top": 1341, "width": 38, "height": 38},
-            "threshold": 0.95,
-            "template": "img/template_page_2.png",
-            "action_sequence": "e\nclick"
-        },
-        "PAGE_4": {
-            "enabled": True,
-            "roi": {"left": 1701, "top": 1341, "width": 38, "height": 38},
-            "threshold": 0.95,
-            "template": "img/template_page_4.png",
-            "action_sequence": "click"
-        },
-        "PAGE_4_ALT": {
-            "enabled": True,
-            "roi": {"left": 1701, "top": 1373, "width": 38, "height": 38},
-            "threshold": 0.95,
-            "template": "img/template_page_2.png",
-            "action_sequence": "click"
-        }
-    },
+    "detections": {},
     "click_position": {
-        "x": 1687,
-        "y": 715
+        "x": 960,
+        "y": 540
     },
     "hotkeys": {
         "toggle_spam": "F7",
@@ -91,23 +48,23 @@ class ConfigManager:
         self.config = self.load()
     
     def load(self) -> dict:
-        """Load configuration from JSON file, or create default if not exists."""
+        """Load configuration from JSON file, or create empty if not exists."""
         if os.path.exists(self.config_path):
             try:
                 with open(self.config_path, 'r') as f:
                     config = json.load(f)
-                # Merge with defaults to ensure all keys exist
+                # Merge with empty config to ensure required keys exist
                 return self._merge_with_defaults(config)
             except (json.JSONDecodeError, IOError) as e:
-                print(f"Error loading config: {e}. Using defaults.")
-                return DEFAULT_CONFIG.copy()
+                print(f"Error loading config: {e}. Using empty config.")
+                return EMPTY_CONFIG.copy()
         else:
-            self.save(DEFAULT_CONFIG)
-            return DEFAULT_CONFIG.copy()
+            self.save(EMPTY_CONFIG)
+            return EMPTY_CONFIG.copy()
     
     def _merge_with_defaults(self, config: dict) -> dict:
-        """Merge loaded config with defaults to ensure all keys exist."""
-        result = DEFAULT_CONFIG.copy()
+        """Merge loaded config with empty config to ensure required keys exist."""
+        result = EMPTY_CONFIG.copy()
         for key, value in config.items():
             if key in result and isinstance(result[key], dict) and isinstance(value, dict):
                 result[key].update(value)
