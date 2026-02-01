@@ -23,7 +23,7 @@ import numpy as np
 import pyautogui
 import win32clipboard
 import tkinter as tk
-from tkinter import ttk, scrolledtext, filedialog, messagebox
+from tkinter import ttk, scrolledtext, filedialog, messagebox, simpledialog
 from PIL import Image, ImageTk
 from datetime import datetime
 from typing import Dict
@@ -1059,13 +1059,71 @@ Hotkeys:
         self.status_var.set(f"Created new detection: {name}. Position ROI and click 'Capture & Save Template'")
     
     def rename_detection(self):
-        """Rename the selected detection - prompt in log with inline edit."""
+        """Rename the selected detection."""
         old_name = self.selected_detection.get()
         if not old_name:
             self.log_message("No detection selected to rename")
             return
         
-        self.log_message(f"To rename '{old_name}', delete it and create a new one with the desired name")
+        # Create custom dialog with uppercase input
+        dialog = tk.Toplevel(self.root)
+        dialog.title("Rename Detection")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        
+        # Center dialog on parent window
+        dialog.geometry("350x120")
+        x = self.root.winfo_x() + (self.root.winfo_width() // 2) - 175
+        y = self.root.winfo_y() + (self.root.winfo_height() // 2) - 60
+        dialog.geometry(f"+{x}+{y}")
+        
+        tk.Label(dialog, text=f"Enter new name for '{old_name}':").pack(pady=5)
+        
+        var = tk.StringVar(value=old_name.upper())
+        entry = tk.Entry(dialog, textvariable=var, width=40)
+        entry.pack(pady=5, padx=10)
+        entry.select_range(0, tk.END)
+        entry.focus()
+        
+        # Convert to uppercase as user types
+        def on_change(*args):
+            current = var.get()
+            uppercase = current.upper()
+            if current != uppercase:
+                var.set(uppercase)
+        
+        var.trace('w', on_change)
+        
+        result = [None]
+        
+        def ok():
+            result[0] = var.get()
+            dialog.destroy()
+        
+        def cancel():
+            dialog.destroy()
+        
+        frame = tk.Frame(dialog)
+        frame.pack(pady=5)
+        tk.Button(frame, text="OK", command=ok).pack(side=tk.LEFT, padx=5)
+        tk.Button(frame, text="Cancel", command=cancel).pack(side=tk.LEFT, padx=5)
+        
+        dialog.wait_window()
+        
+        new_name = result[0]
+        if not new_name or new_name == old_name:
+            return
+        
+        # Rename in config (also renames template file)
+        if self.config.rename_detection(old_name, new_name):
+            self.detection.clear_template_cache(old_name)
+            self.refresh_detection_list()
+            self.selected_detection.set(new_name)
+            self.load_detection_config()
+            self.refresh_detection_toggles()
+            self.log_message(f"Renamed detection: {old_name} -> {new_name}")
+        else:
+            self.log_message(f"Failed to rename detection: {old_name}")
     
     def delete_detection(self):
         """Delete the selected detection."""
@@ -1074,7 +1132,7 @@ Hotkeys:
             return
         
         # Confirm deletion
-        if not messagebox.askyesno("Confirm Delete", f"Delete detection '{name}'?"):
+        if not messagebox.askyesno("Confirm Delete", f"Delete detection '{name}'?", parent=self.root):
             return
         
         # Get template path before deletion

@@ -5,19 +5,6 @@
         "check_interval": 0.1
     },
     "detections": {
-        "DIALOGUE": {
-            "enabled": true,
-            "roi": {
-                "left": 551,
-                "top": 37,
-                "width": 54,
-                "height": 54
-            },
-            "threshold": 0.98,
-            "template": "img/template_dialogue.png",
-            "uniform_color_protection": false,
-            "action_sequence": "space\ne"
-        },
         "CHARACTER": {
             "enabled": true,
             "roi": {
@@ -56,6 +43,19 @@
             "template": "img/template_tutoriel.png",
             "uniform_color_protection": true,
             "action_sequence": "click"
+        },
+        "DIALOGUE": {
+            "enabled": true,
+            "roi": {
+                "left": 551,
+                "top": 37,
+                "width": 54,
+                "height": 54
+            },
+            "threshold": 0.98,
+            "template": "img/template_dialogue.png",
+            "uniform_color_protection": false,
+            "action_sequence": "space\ne"
         }
     },
     "click_position": {
