@@ -2,8 +2,6 @@
     "general": {
         "pause_between_spams": 0.05,
         "default_color_tolerance": 15,
-        "skip_dialogue_key": "space",
-        "choose_option_key": "e",
         "check_interval": 0.1
     },
     "detections": {
@@ -17,8 +15,8 @@
             },
             "threshold": 0.98,
             "template": "img/template_dialogue.png",
-            "action": "spam",
-            "uniform_color_protection": false
+            "uniform_color_protection": false,
+            "action_sequence": "space\ne"
         },
         "PAGE_1": {
             "enabled": true,
@@ -30,8 +28,8 @@
             },
             "threshold": 0.97,
             "template": "img/template_page.png",
-            "action": "close_escape",
-            "uniform_color_protection": true
+            "uniform_color_protection": true,
+            "action_sequence": "escape"
         },
         "PAGE_2": {
             "enabled": true,
@@ -43,8 +41,8 @@
             },
             "threshold": 0.94,
             "template": "img/template_page_2.png",
-            "action": "close_space_click",
-            "uniform_color_protection": false
+            "uniform_color_protection": false,
+            "action_sequence": "e\nclick"
         },
         "PAGE_2_ALT": {
             "enabled": true,
@@ -54,10 +52,10 @@
                 "width": 38,
                 "height": 38
             },
-            "threshold": 0.95,
+            "threshold": 0.9,
             "template": "img/template_page_2_alt.png",
-            "action": "close_space_click",
-            "uniform_color_protection": true
+            "uniform_color_protection": true,
+            "action_sequence": "e\nclick"
         },
         "PAGE_4": {
             "enabled": true,
@@ -69,8 +67,8 @@
             },
             "threshold": 0.9,
             "template": "img/template_page_4.png",
-            "action": "click_only",
-            "uniform_color_protection": true
+            "uniform_color_protection": true,
+            "action_sequence": "click"
         },
         "PAGE_4_ALT": {
             "enabled": true,
@@ -82,7 +80,20 @@
             },
             "threshold": 0.95,
             "template": "img/template_page_2.png",
-            "action": "click_only",
+            "uniform_color_protection": true,
+            "action_sequence": "click"
+        },
+        "CHARACTER": {
+            "enabled": true,
+            "roi": {
+                "left": 0,
+                "top": 528,
+                "width": 50,
+                "height": 377
+            },
+            "threshold": 0.95,
+            "template": "img/template_character.png",
+            "action_sequence": "click",
             "uniform_color_protection": true
         }
     },

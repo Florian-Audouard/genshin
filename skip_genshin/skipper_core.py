@@ -24,8 +24,6 @@ DEFAULT_CONFIG = {
     "general": {
         "pause_between_spams": 0.05,
         "default_color_tolerance": 15,
-        "skip_dialogue_key": "space",
-        "choose_option_key": "e",
         "check_interval": 0.1
     },
     "detections": {
@@ -34,42 +32,42 @@ DEFAULT_CONFIG = {
             "roi": {"left": 551, "top": 37, "width": 54, "height": 54},
             "threshold": 0.95,
             "template": "img/template_dialogue.png",
-            "action": "spam"
+            "action_sequence": "space\ne"
         },
         "PAGE_1": {
             "enabled": True,
             "roi": {"left": 201, "top": 42, "width": 46, "height": 50},
             "threshold": 0.95,
             "template": "img/template_page.png",
-            "action": "close_escape"
+            "action_sequence": "escape"
         },
         "PAGE_2": {
             "enabled": True,
             "roi": {"left": 1701, "top": 1354, "width": 38, "height": 38},
             "threshold": 0.95,
             "template": "img/template_page_2.png",
-            "action": "close_space_click"
+            "action_sequence": "e\nclick"
         },
         "PAGE_2_ALT": {
             "enabled": True,
             "roi": {"left": 1701, "top": 1341, "width": 38, "height": 38},
             "threshold": 0.95,
             "template": "img/template_page_2.png",
-            "action": "close_space_click"
+            "action_sequence": "e\nclick"
         },
         "PAGE_4": {
             "enabled": True,
             "roi": {"left": 1701, "top": 1341, "width": 38, "height": 38},
             "threshold": 0.95,
             "template": "img/template_page_4.png",
-            "action": "click_only"
+            "action_sequence": "click"
         },
         "PAGE_4_ALT": {
             "enabled": True,
             "roi": {"left": 1701, "top": 1373, "width": 38, "height": 38},
             "threshold": 0.95,
             "template": "img/template_page_2.png",
-            "action": "click_only"
+            "action_sequence": "click"
         }
     },
     "click_position": {
@@ -146,6 +144,49 @@ class ConfigManager:
             config = config[key]
         config[keys[-1]] = value
         self.save()
+    
+    def delete(self, *keys):
+        """Delete a nested configuration value."""
+        config = self.config
+        for key in keys[:-1]:
+            if key not in config:
+                return False
+            config = config[key]
+        if keys[-1] in config:
+            del config[keys[-1]]
+            self.save()
+            return True
+        return False
+    
+    def rename_detection(self, old_name: str, new_name: str) -> bool:
+        """Rename a detection and its template file."""
+        if old_name not in self.config.get("detections", {}):
+            return False
+        if new_name in self.config.get("detections", {}):
+            return False
+        
+        det_config = self.config["detections"][old_name]
+        old_template = det_config.get("template", "")
+        
+        # Generate new template path
+        new_template = f"img/template_{new_name.lower().replace(' ', '_')}.png"
+        
+        # Rename physical file if it exists
+        old_path = os.path.join(os.path.dirname(__file__), old_template)
+        new_path = os.path.join(os.path.dirname(__file__), new_template)
+        
+        if os.path.exists(old_path):
+            try:
+                os.rename(old_path, new_path)
+                det_config["template"] = new_template
+            except OSError:
+                pass  # Keep old template path if rename fails
+        
+        # Update config
+        self.config["detections"][new_name] = det_config
+        del self.config["detections"][old_name]
+        self.save()
+        return True
 
 
 # ==================== Detection Engine ====================
@@ -356,52 +397,39 @@ class SpamEngine:
         except Exception:
             return False
     
-    def do_spam(self):
-        """Execute spam action (configurable keys)."""
+    def execute_action(self, action_sequence: str):
+        """Execute a custom action sequence.
+        
+        Supported commands:
+        - click: Click at configured position
+        - Any key name: Press that key (e.g., 'e', 'space', 'escape', 'enter')
+        - wait:N: Wait N milliseconds
+        """
+        if not action_sequence:
+            return
+        
         try:
-            skip_key = self.config.get("general", "skip_dialogue_key", default="space")
-            option_key = self.config.get("general", "choose_option_key", default="e")
-            pyautogui.press(skip_key)
-            pyautogui.press(option_key)
-            self.spam_count += 1
+            lines = action_sequence.strip().split('\n')
+            for line in lines:
+                line = line.strip().lower()
+                if not line:
+                    continue
+                
+                if line == 'click':
+                    click_pos = self.config.get("click_position")
+                    pyautogui.click(click_pos["x"], click_pos["y"])
+                elif line.startswith('wait:'):
+                    try:
+                        ms = int(line.split(':')[1])
+                        time.sleep(ms / 1000.0)
+                    except (ValueError, IndexError):
+                        pass
+                else:
+                    # Treat as key press
+                    pyautogui.press(line)
+                    self.spam_count += 1
         except pyautogui.FailSafeException:
             pass
-    
-    def do_close_escape(self):
-        """Close page with Escape."""
-        try:
-            pyautogui.press("escape")
-        except pyautogui.FailSafeException:
-            pass
-    
-    def do_close_space_click(self):
-        """Close page with Space + Click."""
-        try:
-            click_pos = self.config.get("click_position")
-            option_key = self.config.get("general", "choose_option_key", default="e")
-            pyautogui.press(option_key)
-            pyautogui.click(click_pos["x"], click_pos["y"])
-        except pyautogui.FailSafeException:
-            pass
-    
-    def do_click_only(self):
-        """Just click at the configured position."""
-        try:
-            click_pos = self.config.get("click_position")
-            pyautogui.click(click_pos["x"], click_pos["y"])
-        except pyautogui.FailSafeException:
-            pass
-    
-    def execute_action(self, action: str):
-        """Execute an action based on type."""
-        actions = {
-            "spam": self.do_spam,
-            "close_escape": self.do_close_escape,
-            "close_space_click": self.do_close_space_click,
-            "click_only": self.do_click_only
-        }
-        if action in actions:
-            actions[action]()
     
     def _spam_loop(self):
         """Main spam loop running in background thread."""
@@ -414,7 +442,8 @@ class SpamEngine:
                     if det_config.get("enabled", True):
                         detected, _ = self.detection.is_detected(name)
                         if detected:
-                            self.execute_action(det_config.get("action", "spam"))
+                            action_sequence = det_config.get("action_sequence", "")
+                            self.execute_action(action_sequence)
                 
                 time.sleep(pause)
             else:

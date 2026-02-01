@@ -4,12 +4,16 @@ Provides a graphical interface for the dialogue skipper with:
 - JSON-based configuration storage
 - Modifiable ROIs and thresholds via GUI
 - Toggleable skip actions
+- Custom action sequences per detection
+- Detection management (create, rename, delete)
 """
 
 import io
 import sys
 import ctypes
 import cv2
+import os
+import shutil
 
 # Hide console window on Windows
 if sys.platform == "win32":
@@ -19,7 +23,7 @@ import numpy as np
 import pyautogui
 import win32clipboard
 import tkinter as tk
-from tkinter import ttk, scrolledtext
+from tkinter import ttk, scrolledtext, simpledialog, messagebox, filedialog
 from PIL import Image, ImageTk
 from datetime import datetime
 from typing import Dict
@@ -73,6 +77,7 @@ class GenshinSkipperGUI:
         self.roi_height = tk.IntVar(value=100)
         self.threshold_var = tk.DoubleVar(value=0.95)
         self.uniform_color_protection_var = tk.BooleanVar(value=True)
+        self.action_sequence_var = tk.StringVar(value="")
         
         # Flag to prevent autosave during detection config loading
         self._loading_detection_config = False
@@ -317,13 +322,20 @@ class GenshinSkipperGUI:
         roi_frame = ttk.LabelFrame(main_frame, text="ROI Settings", padding="10")
         roi_frame.pack(fill=tk.X, pady=(0, 10))
         
-        # Detection selector
-        ttk.Label(roi_frame, text="Detection:").grid(row=0, column=0, sticky=tk.W, padx=5)
-        det_combo = ttk.Combobox(roi_frame, textvariable=self.selected_detection,
+        # Detection selector with management buttons
+        det_row = ttk.Frame(roi_frame)
+        det_row.grid(row=0, column=0, columnspan=4, sticky=tk.W, pady=(0, 5))
+        
+        ttk.Label(det_row, text="Detection:").pack(side=tk.LEFT, padx=5)
+        self.det_combo = ttk.Combobox(det_row, textvariable=self.selected_detection,
                                  values=list(self.config.get("detections", default={}).keys()),
                                  state="readonly", width=15)
-        det_combo.grid(row=0, column=1, padx=5)
-        det_combo.bind("<<ComboboxSelected>>", self.on_detection_changed)
+        self.det_combo.pack(side=tk.LEFT, padx=5)
+        self.det_combo.bind("<<ComboboxSelected>>", self.on_detection_changed)
+        
+        ttk.Button(det_row, text="+ New", command=self.create_new_detection, width=8).pack(side=tk.LEFT, padx=2)
+        ttk.Button(det_row, text="Rename", command=self.rename_detection, width=8).pack(side=tk.LEFT, padx=2)
+        ttk.Button(det_row, text="Delete", command=self.delete_detection, width=8).pack(side=tk.LEFT, padx=2)
         
         # ROI values
         ttk.Label(roi_frame, text="Left:").grid(row=1, column=0, sticky=tk.W, padx=5, pady=5)
@@ -347,12 +359,30 @@ class GenshinSkipperGUI:
         btn_frame.grid(row=4, column=0, columnspan=4, pady=10)
         
         ttk.Button(btn_frame, text="Set from Mouse (F9)", command=self.set_roi_from_mouse).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="Capture ROI", command=self.capture_roi).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Capture & Save Template", command=self.capture_and_save_template).pack(side=tk.LEFT, padx=5)
         ttk.Button(btn_frame, text="Copy Image", command=self.copy_image_to_clipboard).pack(side=tk.LEFT, padx=5)
         ttk.Button(btn_frame, text="Copy ROI Code", command=self.copy_roi_code).pack(side=tk.LEFT, padx=5)
         
         ttk.Checkbutton(roi_frame, text="Live Preview", variable=self.live_preview).grid(row=5, column=0, columnspan=2)
         ttk.Checkbutton(roi_frame, text="Uniform Color Protection", variable=self.uniform_color_protection_var).grid(row=5, column=2, columnspan=2)
+        
+        # Action Sequence Editor
+        action_frame = ttk.LabelFrame(main_frame, text="Action Sequence (one command per line)", padding="10")
+        action_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        action_info = ttk.Label(action_frame, text="Commands: click | any key (e, space, escape, enter...) | wait:ms", 
+                               font=("Consolas", 8), foreground="gray")
+        action_info.pack(anchor=tk.W)
+        
+        self.action_text = tk.Text(action_frame, height=4, font=("Consolas", 10),
+                                   bg=self.DARK_BG2, fg=self.DARK_FG,
+                                   insertbackground=self.DARK_FG,
+                                   selectbackground=self.DARK_SELECT,
+                                   relief=tk.FLAT, borderwidth=2, width=50)
+        self.action_text.pack(fill=tk.X, pady=5)
+        self.action_text.bind("<KeyRelease>", self.on_action_sequence_changed)
+        
+        ttk.Button(action_frame, text="Save Action Sequence", command=self.save_action_sequence).pack(anchor=tk.W)
         
         # Comparison info
         compare_frame = ttk.LabelFrame(main_frame, text="Detection Comparison", padding="10")
@@ -433,20 +463,8 @@ class GenshinSkipperGUI:
         self.tolerance_var = tk.IntVar(value=self.config.get("general", "default_color_tolerance", default=15))
         ttk.Spinbox(general_frame, from_=0, to=255, textvariable=self.tolerance_var, width=10).grid(row=1, column=1, padx=5)
         
-        # Key settings
-        keys_frame = ttk.LabelFrame(main_frame, text="Action Keys", padding="10")
-        keys_frame.pack(fill=tk.X, pady=(0, 10))
-        
-        ttk.Label(keys_frame, text="Skip Dialogue Key:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=5)
-        self.skip_dialogue_key_var = tk.StringVar(value=self.config.get("general", "skip_dialogue_key", default="e"))
-        ttk.Entry(keys_frame, textvariable=self.skip_dialogue_key_var, width=10).grid(row=0, column=1, padx=5)
-        
-        ttk.Label(keys_frame, text="Choose Option Key:").grid(row=0, column=2, sticky=tk.W, padx=5, pady=5)
-        self.choose_option_key_var = tk.StringVar(value=self.config.get("general", "choose_option_key", default="space"))
-        ttk.Entry(keys_frame, textvariable=self.choose_option_key_var, width=10).grid(row=0, column=3, padx=5)
-        
         # Click position
-        click_frame = ttk.LabelFrame(main_frame, text="Click Position (for close actions)", padding="10")
+        click_frame = ttk.LabelFrame(main_frame, text="Click Position (for 'click' command)", padding="10")
         click_frame.pack(fill=tk.X, pady=(0, 10))
         
         click_pos = self.config.get("click_position", default={"x": 1687, "y": 715})
@@ -477,11 +495,15 @@ class GenshinSkipperGUI:
         info_frame.pack(fill=tk.X)
         
         info_text = """
-Actions:
-  • spam: Press E + Space (for dialogue skipping)
-  • close_escape: Press Escape (for closing pages)
-  • close_space_click: Press Space + Click (for confirmation dialogs)
-  • click_only: Just click at position (for buttons)
+Action Sequence Commands (one per line):
+  • click         - Click at configured position
+  • Any key       - Press key (e, space, escape, enter, f, etc.)
+  • wait:N        - Wait N milliseconds (e.g., wait:100)
+
+Example sequences:
+  • Dialogue skip:  space, e
+  • Confirm popup:  e, click
+  • Menu close:     escape
 
 Hotkeys:
   • F7: Toggle spam on/off
@@ -502,8 +524,6 @@ Hotkeys:
         # Settings variables - save when changed
         self.pause_var.trace_add("write", lambda *args: self.autosave_setting("general", "pause_between_spams", self.pause_var.get()))
         self.tolerance_var.trace_add("write", lambda *args: self.autosave_setting("general", "default_color_tolerance", self.tolerance_var.get()))
-        self.skip_dialogue_key_var.trace_add("write", lambda *args: self.autosave_setting("general", "skip_dialogue_key", self.skip_dialogue_key_var.get()))
-        self.choose_option_key_var.trace_add("write", lambda *args: self.autosave_setting("general", "choose_option_key", self.choose_option_key_var.get()))
         self.click_x_var.trace_add("write", lambda *args: self.autosave_click_position())
         self.click_y_var.trace_add("write", lambda *args: self.autosave_click_position())
         self.hotkey_spam_var.trace_add("write", lambda *args: self.autosave_setting("hotkeys", "toggle_spam", self.hotkey_spam_var.get()))
@@ -650,6 +670,11 @@ Hotkeys:
                 self.threshold_var.set(det_config.get("threshold", 0.95))
                 self.threshold_label.config(text=f"{det_config.get('threshold', 0.95):.2f}")
                 self.uniform_color_protection_var.set(det_config.get("uniform_color_protection", True))
+                
+                # Load action sequence
+                action_sequence = det_config.get("action_sequence", "")
+                self.action_text.delete("1.0", tk.END)
+                self.action_text.insert("1.0", action_sequence)
             finally:
                 # Clear flag after loading is complete
                 self._loading_detection_config = False
@@ -682,6 +707,473 @@ Hotkeys:
         self.click_x_var.set(pos[0])
         self.click_y_var.set(pos[1])
         self.log_message(f"Click position set to ({pos[0]}, {pos[1]})")
+    
+    def capture_and_save_template(self):
+        """Capture current ROI and save as template for the selected detection."""
+        name = self.selected_detection.get()
+        det_config = self.config.get("detections", name)
+        if not det_config:
+            return
+        
+        roi = self.get_current_roi()
+        img = self.detection.capture_screen(roi)
+        
+        # Ask if user wants to remove background
+        if messagebox.askyesno("Remove Background", 
+                              "Do you want to select a background color to make transparent?\n\n"
+                              "This will open a window where you can click on the color to remove."):
+            img = self.remove_background_interactive(img)
+            if img is None:
+                return  # User cancelled
+        
+        # Save to template path
+        template_path = det_config.get("template", f"img/template_{name.lower()}.png")
+        full_path = os.path.join(os.path.dirname(__file__), template_path)
+        
+        # Ensure img directory exists
+        os.makedirs(os.path.dirname(full_path), exist_ok=True)
+        
+        cv2.imwrite(full_path, img)
+        self.detection.clear_template_cache(name)
+        self.log_message(f"Template saved: {template_path}")
+        self.status_var.set(f"Template saved: {template_path}")
+    
+    def remove_background_interactive(self, img: np.ndarray) -> np.ndarray:
+        """Interactive background removal - click to select colors to make transparent with live preview."""
+        result = [None]
+        tolerance = [30]
+        selected_colors = []  # List of (color, tolerance) tuples
+        preview_image = [img.copy()]  # Current preview with transparency applied
+        
+        # Create preview window
+        preview_window = tk.Toplevel(self.root)
+        preview_window.title("Background Remover")
+        preview_window.configure(bg=self.DARK_BG)
+        preview_window.transient(self.root)
+        preview_window.grab_set()
+        preview_window.geometry("700x600")
+        
+        # Instructions
+        ttk.Label(preview_window, text="Click on colors to make them transparent. You can select multiple colors.", 
+                 font=("Consolas", 10)).pack(pady=5)
+        
+        # Top controls frame
+        controls_frame = ttk.Frame(preview_window)
+        controls_frame.pack(fill=tk.X, padx=10, pady=5)
+        
+        # Tolerance slider
+        ttk.Label(controls_frame, text="Tolerance:").pack(side=tk.LEFT)
+        tol_var = tk.IntVar(value=30)
+        tol_slider = ttk.Scale(controls_frame, from_=1, to=100, variable=tol_var, orient=tk.HORIZONTAL, length=150)
+        tol_slider.pack(side=tk.LEFT, padx=5)
+        tol_label = ttk.Label(controls_frame, text="30", width=4)
+        tol_label.pack(side=tk.LEFT)
+        
+        def on_tolerance_change(*args):
+            tolerance[0] = tol_var.get()
+            tol_label.config(text=str(tolerance[0]))
+        tol_var.trace_add("write", on_tolerance_change)
+        
+        # Color info label
+        ttk.Label(controls_frame, text="   |   ").pack(side=tk.LEFT)
+        color_info = ttk.Label(controls_frame, text="Hover to see color", font=("Consolas", 9))
+        color_info.pack(side=tk.LEFT, padx=10)
+        
+        # Preview canvases frame
+        canvas_frame = ttk.Frame(preview_window)
+        canvas_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
+        
+        # Calculate preview dimensions - ensure minimum size for small ROIs
+        min_preview_size = 200
+        max_preview_size = 350
+        
+        # Scale up small images to at least min_preview_size
+        img_w, img_h = img.shape[1], img.shape[0]
+        scale = max(min_preview_size / min(img_w, img_h), 1)  # Scale up if needed
+        
+        preview_width = int(img_w * scale)
+        preview_height = int(img_h * scale)
+        
+        # Cap at max size while maintaining aspect ratio
+        if preview_width > max_preview_size or preview_height > max_preview_size:
+            scale_down = max_preview_size / max(preview_width, preview_height)
+            preview_width = int(preview_width * scale_down)
+            preview_height = int(preview_height * scale_down)
+        
+        # Ensure minimum dimensions
+        preview_width = max(preview_width, min_preview_size)
+        preview_height = max(preview_height, min_preview_size)
+        
+        # Original image canvas (left)
+        left_frame = ttk.LabelFrame(canvas_frame, text="Original (Click to select color)")
+        left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 5))
+        
+        orig_canvas = tk.Canvas(left_frame, width=preview_width, height=preview_height, 
+                               bg=self.DARK_BG3, cursor="crosshair")
+        orig_canvas.pack(padx=5, pady=5)
+        
+        # Preview canvas (right) - shows checkerboard for transparency
+        right_frame = ttk.LabelFrame(canvas_frame, text="Preview (Transparent areas shown)")
+        right_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(5, 0))
+        
+        preview_canvas = tk.Canvas(right_frame, width=preview_width, height=preview_height, 
+                                   bg=self.DARK_BG3)
+        preview_canvas.pack(padx=5, pady=5)
+        
+        # Selected colors list
+        colors_frame = ttk.LabelFrame(preview_window, text="Selected Colors (click to remove)")
+        colors_frame.pack(fill=tk.X, padx=10, pady=5)
+        
+        colors_inner = ttk.Frame(colors_frame)
+        colors_inner.pack(fill=tk.X, padx=5, pady=5)
+        
+        def create_checkerboard(width, height, square_size=8):
+            """Create a checkerboard pattern for transparency preview."""
+            checker = np.zeros((height, width, 3), dtype=np.uint8)
+            for y in range(0, height, square_size):
+                for x in range(0, width, square_size):
+                    if (x // square_size + y // square_size) % 2 == 0:
+                        checker[y:y+square_size, x:x+square_size] = [60, 60, 60]
+                    else:
+                        checker[y:y+square_size, x:x+square_size] = [40, 40, 40]
+            return checker
+        
+        def update_preview():
+            """Update the preview with current transparency settings."""
+            if not selected_colors:
+                # No colors selected, show original
+                preview_image[0] = cv2.cvtColor(img, cv2.COLOR_BGR2BGRA)
+            else:
+                # Apply all selected colors
+                img_bgra = cv2.cvtColor(img, cv2.COLOR_BGR2BGRA)
+                combined_mask = np.zeros((img.shape[0], img.shape[1]), dtype=np.uint8)
+                
+                for color, tol in selected_colors:
+                    color_bgr = color[:3]
+                    lower = np.maximum(color_bgr.astype(np.int32) - tol, 0).astype(np.uint8)
+                    upper = np.minimum(color_bgr.astype(np.int32) + tol, 255).astype(np.uint8)
+                    mask = cv2.inRange(img[:, :, :3], lower, upper)
+                    combined_mask = cv2.bitwise_or(combined_mask, mask)
+                
+                img_bgra[:, :, 3] = np.where(combined_mask > 0, 0, 255)
+                preview_image[0] = img_bgra
+            
+            # Update preview canvas with checkerboard background
+            checker = create_checkerboard(preview_width, preview_height)
+            
+            # Resize and composite
+            preview_resized = cv2.resize(preview_image[0], (preview_width, preview_height), 
+                                        interpolation=cv2.INTER_NEAREST)
+            
+            # Composite over checkerboard
+            alpha = preview_resized[:, :, 3:4].astype(np.float32) / 255.0
+            preview_rgb = preview_resized[:, :, :3]
+            preview_rgb = cv2.cvtColor(preview_rgb, cv2.COLOR_BGR2RGB)
+            
+            composite = (preview_rgb.astype(np.float32) * alpha + 
+                        checker.astype(np.float32) * (1 - alpha)).astype(np.uint8)
+            
+            pil_preview = Image.fromarray(composite)
+            photo_preview = ImageTk.PhotoImage(pil_preview)
+            preview_canvas.delete("all")
+            preview_canvas.create_image(0, 0, image=photo_preview, anchor=tk.NW)
+            preview_canvas.image = photo_preview
+        
+        def update_colors_display():
+            """Update the selected colors display."""
+            for widget in colors_inner.winfo_children():
+                widget.destroy()
+            
+            if not selected_colors:
+                ttk.Label(colors_inner, text="No colors selected yet").pack(side=tk.LEFT)
+            else:
+                for i, (color, tol) in enumerate(selected_colors):
+                    # Create a small colored button
+                    color_hex = f"#{color[2]:02x}{color[1]:02x}{color[0]:02x}"  # BGR to RGB hex
+                    frame = ttk.Frame(colors_inner)
+                    frame.pack(side=tk.LEFT, padx=2)
+                    
+                    btn = tk.Button(frame, bg=color_hex, width=3, height=1, relief=tk.RAISED,
+                                   command=lambda idx=i: remove_color(idx))
+                    btn.pack()
+                    ttk.Label(frame, text=f"±{tol}", font=("Consolas", 7)).pack()
+        
+        def remove_color(index):
+            """Remove a color from the selection."""
+            if 0 <= index < len(selected_colors):
+                selected_colors.pop(index)
+                update_colors_display()
+                update_preview()
+        
+        def on_canvas_click(event):
+            """Handle click on original canvas to pick color."""
+            # Scale to original image coordinates using fixed preview dimensions
+            scale_x = img.shape[1] / preview_width
+            scale_y = img.shape[0] / preview_height
+            
+            orig_x = int(event.x * scale_x)
+            orig_y = int(event.y * scale_y)
+            
+            if 0 <= orig_x < img.shape[1] and 0 <= orig_y < img.shape[0]:
+                picked_color = img[orig_y, orig_x].copy()
+                selected_colors.append((picked_color, tolerance[0]))
+                update_colors_display()
+                update_preview()
+        
+        def on_canvas_motion(event):
+            """Show color under cursor."""
+            # Scale to original image coordinates using fixed preview dimensions
+            scale_x = img.shape[1] / preview_width
+            scale_y = img.shape[0] / preview_height
+            
+            orig_x = int(event.x * scale_x)
+            orig_y = int(event.y * scale_y)
+            
+            if 0 <= orig_x < img.shape[1] and 0 <= orig_y < img.shape[0]:
+                color = img[orig_y, orig_x]
+                color_hex = f"#{color[2]:02x}{color[1]:02x}{color[0]:02x}"
+                color_info.config(text=f"Color: {color_hex} RGB({color[2]},{color[1]},{color[0]})")
+        
+        orig_canvas.bind("<Button-1>", on_canvas_click)
+        orig_canvas.bind("<Motion>", on_canvas_motion)
+        
+        # Display original image
+        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img_resized = cv2.resize(img_rgb, (preview_width, preview_height), interpolation=cv2.INTER_NEAREST)
+        pil_img = Image.fromarray(img_resized)
+        photo = ImageTk.PhotoImage(pil_img)
+        orig_canvas.create_image(0, 0, image=photo, anchor=tk.NW)
+        orig_canvas.image = photo
+        
+        # Initialize preview
+        update_preview()
+        update_colors_display()
+        
+        # Bottom buttons
+        btn_frame = ttk.Frame(preview_window)
+        btn_frame.pack(pady=10)
+        
+        def on_apply():
+            if selected_colors:
+                result[0] = preview_image[0].copy()
+            else:
+                result[0] = cv2.cvtColor(img, cv2.COLOR_BGR2BGRA)
+            preview_window.destroy()
+        
+        def on_clear():
+            selected_colors.clear()
+            update_colors_display()
+            update_preview()
+        
+        def on_skip():
+            result[0] = cv2.cvtColor(img, cv2.COLOR_BGR2BGRA)
+            preview_window.destroy()
+        
+        def on_cancel():
+            result[0] = None
+            preview_window.destroy()
+        
+        ttk.Button(btn_frame, text="✓ Apply", command=on_apply, width=12).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Clear All", command=on_clear, width=12).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Skip (No Transparency)", command=on_skip, width=18).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Cancel", command=on_cancel, width=12).pack(side=tk.LEFT, padx=5)
+        
+        preview_window.wait_window()
+        return result[0]
+    
+    def make_color_transparent(self, img: np.ndarray, color: np.ndarray, tolerance: int = 30) -> np.ndarray:
+        """Make a specific color transparent in the image."""
+        # Convert to BGRA
+        if img.shape[2] == 3:
+            img_bgra = cv2.cvtColor(img, cv2.COLOR_BGR2BGRA)
+        else:
+            img_bgra = img.copy()
+        
+        # Create mask for the color (within tolerance)
+        color = color[:3]  # Ensure only BGR
+        lower = np.maximum(color.astype(np.int32) - tolerance, 0).astype(np.uint8)
+        upper = np.minimum(color.astype(np.int32) + tolerance, 255).astype(np.uint8)
+        
+        mask = cv2.inRange(img_bgra[:, :, :3], lower, upper)
+        
+        # Set alpha to 0 where mask is white (color matches)
+        img_bgra[:, :, 3] = np.where(mask > 0, 0, 255)
+        
+        return img_bgra
+    
+    def create_new_detection(self):
+        """Create a new detection with a custom name."""
+        name = simpledialog.askstring("New Detection", "Enter detection name:", parent=self.root)
+        if not name:
+            return
+        
+        name = name.upper().replace(" ", "_")
+        
+        # Check if already exists
+        if name in self.config.get("detections", default={}):
+            messagebox.showerror("Error", f"Detection '{name}' already exists!", parent=self.root)
+            return
+        
+        # Create new detection config
+        template_path = f"img/template_{name.lower()}.png"
+        new_config = {
+            "enabled": True,
+            "roi": {"left": 0, "top": 0, "width": 100, "height": 100},
+            "threshold": 0.95,
+            "template": template_path,
+            "action_sequence": "click",
+            "uniform_color_protection": True
+        }
+        
+        self.config.set(new_config, "detections", name)
+        
+        # Update combobox
+        self.refresh_detection_list()
+        self.selected_detection.set(name)
+        self.load_detection_config()
+        
+        # Add to main tab toggles
+        self.refresh_detection_toggles()
+        
+        self.log_message(f"Created new detection: {name}")
+        
+        # Ask if user wants to capture template now
+        if messagebox.askyesno("Capture Template", 
+                              "Do you want to capture a template for this detection now?\n\n"
+                              "1. Position ROI over the target area\n"
+                              "2. Click 'Capture & Save Template'",
+                              parent=self.root):
+            pass  # User will capture manually
+    
+    def rename_detection(self):
+        """Rename the selected detection."""
+        old_name = self.selected_detection.get()
+        if not old_name:
+            return
+        
+        new_name = simpledialog.askstring("Rename Detection", 
+                                         f"Enter new name for '{old_name}':", 
+                                         initialvalue=old_name,
+                                         parent=self.root)
+        if not new_name or new_name == old_name:
+            return
+        
+        new_name = new_name.upper().replace(" ", "_")
+        
+        if new_name in self.config.get("detections", default={}):
+            messagebox.showerror("Error", f"Detection '{new_name}' already exists!", parent=self.root)
+            return
+        
+        # Use ConfigManager's rename method
+        if self.config.rename_detection(old_name, new_name):
+            self.detection.clear_template_cache(old_name)
+            self.refresh_detection_list()
+            self.selected_detection.set(new_name)
+            self.load_detection_config()
+            self.refresh_detection_toggles()
+            self.log_message(f"Renamed detection: {old_name} -> {new_name}")
+        else:
+            messagebox.showerror("Error", "Failed to rename detection!", parent=self.root)
+    
+    def delete_detection(self):
+        """Delete the selected detection."""
+        name = self.selected_detection.get()
+        if not name:
+            return
+        
+        if not messagebox.askyesno("Confirm Delete", 
+                                   f"Are you sure you want to delete detection '{name}'?\n\n"
+                                   "This will also delete the template image file.",
+                                   parent=self.root):
+            return
+        
+        # Get template path before deletion
+        det_config = self.config.get("detections", name)
+        template_path = det_config.get("template", "") if det_config else ""
+        
+        # Delete from config
+        if self.config.delete("detections", name):
+            # Delete template file
+            if template_path:
+                full_path = os.path.join(os.path.dirname(__file__), template_path)
+                if os.path.exists(full_path):
+                    try:
+                        os.remove(full_path)
+                    except OSError:
+                        pass
+            
+            self.detection.clear_template_cache(name)
+            self.refresh_detection_list()
+            
+            # Select first available detection
+            detections = list(self.config.get("detections", default={}).keys())
+            if detections:
+                self.selected_detection.set(detections[0])
+                self.load_detection_config()
+            
+            self.refresh_detection_toggles()
+            self.log_message(f"Deleted detection: {name}")
+    
+    def refresh_detection_list(self):
+        """Refresh the detection combobox list."""
+        detections = list(self.config.get("detections", default={}).keys())
+        self.det_combo['values'] = detections
+    
+    def refresh_detection_toggles(self):
+        """Refresh detection toggles in main tab."""
+        # Clear existing toggles
+        det_frame = None
+        for child in self.main_tab.winfo_children():
+            if isinstance(child, ttk.Frame):
+                for subchild in child.winfo_children():
+                    if isinstance(subchild, ttk.LabelFrame):
+                        if "Detection Toggles" in str(subchild.cget("text")):
+                            det_frame = subchild
+                            break
+        
+        if det_frame:
+            for widget in det_frame.winfo_children():
+                widget.destroy()
+            
+            self.detection_vars.clear()
+            detections = self.config.get("detections", default={})
+            row = 0
+            col = 0
+            for name, det_config in detections.items():
+                var = tk.BooleanVar(value=det_config.get("enabled", True))
+                self.detection_vars[name] = var
+                
+                action_preview = det_config.get("action_sequence", "")[:20]
+                if action_preview:
+                    action_preview = action_preview.replace('\n', ',')[:15] + "..."
+                else:
+                    action_preview = "(empty)"
+                
+                chk = ttk.Checkbutton(det_frame, text=f"{name} ({action_preview})", 
+                                      variable=var, command=lambda n=name: self.toggle_detection(n))
+                chk.grid(row=row, column=col, sticky=tk.W, padx=10, pady=2)
+                
+                col += 1
+                if col >= 3:
+                    col = 0
+                    row += 1
+    
+    def on_action_sequence_changed(self, event=None):
+        """Handle action sequence text changes (for visual feedback only)."""
+        pass  # Save is done explicitly via button
+    
+    def save_action_sequence(self):
+        """Save the action sequence for the current detection."""
+        if self._loading_detection_config:
+            return
+        
+        name = self.selected_detection.get()
+        sequence = self.action_text.get("1.0", tk.END).strip()
+        
+        self.config.set(sequence, "detections", name, "action_sequence")
+        self.refresh_detection_toggles()
+        self.log_message(f"Action sequence saved for {name}")
+        self.status_var.set(f"Action sequence saved for {name}")
     
     def capture_roi(self):
         """Capture current ROI and save to file."""
