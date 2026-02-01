@@ -388,8 +388,8 @@ class GenshinSkipperGUI:
         action_frame = ttk.LabelFrame(main_frame, text="Action Sequence (one command per line)", padding="10")
         action_frame.pack(fill=tk.X, pady=(0, 10))
         
-        action_info = ttk.Label(action_frame, text="Commands: click | any key (e, space, escape, enter...) | wait:ms", 
-                               font=("Consolas", 8), foreground="gray")
+        action_info = ttk.Label(action_frame, text=r"Commands: click | key | wait:ms | set var val | loop N | if $var>val | endif | endloop",
+                       font=("Consolas", 8), foreground="gray")
         action_info.pack(anchor=tk.W)
         
         self.action_text = tk.Text(action_frame, height=4, font=("Consolas", 10),
@@ -555,15 +555,20 @@ class GenshinSkipperGUI:
         info_frame.pack(fill=tk.X)
         
         info_text = """
-Action Sequence Commands (one per line):
-  • click         - Click at configured position
-  • Any key       - Press key (e, space, escape, enter, f, etc.)
-  • wait:N        - Wait N milliseconds (e.g., wait:100)
+Action Sequence Commands:
+    • click         - Click at configured position
+    • Any key       - Press key (e, space, escape, enter, f, etc.)
+    • wait:N        - Wait N milliseconds (e.g., wait:100)
+    • set var val   - Set variable (e.g., set count 3)
+    • loop N        - Loop block N times (or loop $var for variable count)
+    • if $var>5     - Conditional block (>, <, >=, <=, ==, !=)
+    • endif/endloop - End blocks
 
-Example sequences:
-  • Dialogue skip:  space, e
-  • Confirm popup:  e, click
-  • Menu close:     escape
+Examples:
+    • Simple: space, e, wait:100, click
+    • Loop 3 times: loop 3, space, wait:50, endloop
+    • With variable: set n 5, loop $n, e, endloop
+    • Conditional: if $n > 0, click, set n 0, endif
 
 Hotkeys:
   • F7: Toggle spam on/off

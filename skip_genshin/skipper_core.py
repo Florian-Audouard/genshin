@@ -15,6 +15,7 @@ import mss
 import pyautogui
 import win32gui
 
+from action_executor import ActionSequenceExecutor
 
 # ==================== Configuration ====================
 
@@ -355,36 +356,29 @@ class SpamEngine:
             return False
     
     def execute_action(self, action_sequence: str):
-        """Execute a custom action sequence.
+        """Execute a custom action sequence with support for loops, variables, and conditions.
         
         Supported commands:
         - click: Click at configured position
         - Any key name: Press that key (e.g., 'e', 'space', 'escape', 'enter')
         - wait:N: Wait N milliseconds
+        - set varname value: Set a variable
+        - loop N: Start a loop that repeats N times
+        - loop varname: Loop using variable value
+        - endloop: End loop block
+        - if condition: Conditional block (e.g., if $count > 0)
+        - endif: End conditional block
+        
+        Variables are accessed with $ prefix (e.g., $count)
+        Conditions: $var > value, $var < value, $var == value, $var != value
         """
         if not action_sequence:
             return
         
         try:
-            lines = action_sequence.strip().split('\n')
-            for line in lines:
-                line = line.strip().lower()
-                if not line:
-                    continue
-                
-                if line == 'click':
-                    click_pos = self.config.get("click_position")
-                    pyautogui.click(click_pos["x"], click_pos["y"])
-                elif line.startswith('wait:'):
-                    try:
-                        ms = int(line.split(':')[1])
-                        time.sleep(ms / 1000.0)
-                    except (ValueError, IndexError):
-                        pass
-                else:
-                    # Treat as key press
-                    pyautogui.press(line)
-                    self.spam_count += 1
+            executor = ActionSequenceExecutor(self.config, self.spam_count)
+            executor.execute(action_sequence)
+            self.spam_count = executor.spam_count
         except pyautogui.FailSafeException:
             pass
     
