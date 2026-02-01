@@ -371,9 +371,13 @@ class DialogueSkipperGUI:
         main_frame = ttk.Frame(self.roi_tab, padding="10")
         main_frame.pack(fill=tk.BOTH, expand=True)
         
-        # ROI Controls
-        roi_frame = ttk.LabelFrame(main_frame, text="ROI Settings", padding="10")
-        roi_frame.pack(fill=tk.X, pady=(0, 10))
+        # Container for ROI and Action Sequence side by side
+        top_container = ttk.Frame(main_frame)
+        top_container.pack(fill=tk.BOTH, expand=False, pady=(0, 10))
+        
+        # ROI Controls (left side)
+        roi_frame = ttk.LabelFrame(top_container, text="ROI Settings", padding="10")
+        roi_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 5))
         
         # Detection selector with management buttons
         det_row = ttk.Frame(roi_frame)
@@ -418,20 +422,20 @@ class DialogueSkipperGUI:
         ttk.Checkbutton(roi_frame, text="Live Preview", variable=self.live_preview).grid(row=5, column=0, columnspan=2)
         ttk.Checkbutton(roi_frame, text="Uniform Color Protection", variable=self.uniform_color_protection_var).grid(row=5, column=2, columnspan=2)
         
-        # Action Sequence Editor
-        action_frame = ttk.LabelFrame(main_frame, text="Action Sequence (one command per line)", padding="10")
-        action_frame.pack(fill=tk.X, pady=(0, 10))
+        # Action Sequence Editor (right side)
+        action_frame = ttk.LabelFrame(top_container, text="Action Sequence (one command per line)", padding="10")
+        action_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(5, 0))
         
         action_info = ttk.Label(action_frame, text=r"Commands: click | key | wait:ms | set var val | loop N | if $var>val | endif | endloop",
                        font=("Consolas", 8), foreground="gray")
         action_info.pack(anchor=tk.W)
         
-        self.action_text = tk.Text(action_frame, height=4, font=("Consolas", 10),
+        self.action_text = tk.Text(action_frame, height=8, font=("Consolas", 10),
                                    bg=self.DARK_BG2, fg=self.DARK_FG,
                                    insertbackground=self.DARK_FG,
                                    selectbackground=self.DARK_SELECT,
-                                   relief=tk.FLAT, borderwidth=2, width=50)
-        self.action_text.pack(fill=tk.X, pady=5)
+                                   relief=tk.FLAT, borderwidth=2)
+        self.action_text.pack(fill=tk.BOTH, expand=True, pady=5)
         self.action_text.bind("<KeyRelease>", self.on_action_sequence_changed)
         
         ttk.Button(action_frame, text="Save Action Sequence", command=self.save_action_sequence).pack(anchor=tk.W)

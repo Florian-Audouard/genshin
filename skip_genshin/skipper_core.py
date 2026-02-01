@@ -31,12 +31,12 @@ DEFAULT_GLOBAL_SETTINGS = {
         "pause_between_spams": 0.05,
         "default_color_tolerance": 15,
         "check_interval": 0.1,
-        "roi_step_normal": 10,
-        "roi_step_fine": 1
+        "roi_step_normal": 1,
+        "roi_step_fine": 5
     },
     "click_position": {
-        "x": 960,
-        "y": 540
+        "x": 1687,
+        "y": 715
     },
     "hotkeys": {
         "toggle_spam": "F7",
@@ -347,9 +347,9 @@ class ConfigManager:
             return False
         
         det_config = self.config["detections"][old_name]
-        old_template = det_config.get("template", "")
         
-        # Generate new template path (relative to profile directory)
+        # Generate template paths from detection names
+        old_template = f"img/template_{old_name.lower().replace(' ', '_')}.png"
         new_template = f"img/template_{new_name.lower().replace(' ', '_')}.png"
         
         # Rename physical file if it exists
@@ -359,9 +359,8 @@ class ConfigManager:
         if os.path.exists(old_path):
             try:
                 os.rename(old_path, new_path)
-                det_config["template"] = new_template
             except OSError:
-                pass  # Keep old template path if rename fails
+                pass  # Keep old template file if rename fails
         
         # Update config
         self.config["detections"][new_name] = det_config
@@ -401,8 +400,9 @@ class DetectionEngine:
         if not det_config:
             raise ValueError(f"Unknown detection: {detection_name}")
         
-        # Use profile-relative path
-        template_path = self.config.get_template_path(det_config["template"])
+        # Generate template path from detection name
+        template_filename = f"template_{detection_name.lower().replace(' ', '_')}.png"
+        template_path = self.config.get_template_path(f"img/{template_filename}")
         roi = det_config["roi"]
         
         template_bgra = cv2.imread(template_path, cv2.IMREAD_UNCHANGED)
