@@ -1,3 +1,6 @@
+# Local folder (templates, config, user-specific files)
+local/
+
 # Debug folder
 debug/
 

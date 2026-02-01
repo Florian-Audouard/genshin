@@ -1,6 +1,7 @@
 """
-Genshin Dialogue Skipper - GUI Application
+Dialogue Skipper - GUI Application
 Provides a graphical interface for the dialogue skipper with:
+- Multi-profile support (different games/applications)
 - JSON-based configuration storage
 - Modifiable ROIs and thresholds via GUI
 - Toggleable skip actions
@@ -37,12 +38,16 @@ from typing import Dict
 from pynput import keyboard as pynput_keyboard
 
 # Import core logic from separate module
-from skipper_core import ConfigManager, DetectionEngine, SpamEngine
+from skipper_core import (
+    ConfigManager, DetectionEngine, SpamEngine, GlobalSettingsManager,
+    get_available_profiles, create_profile, delete_profile, duplicate_profile,
+    get_last_used_profile
+)
 
 
 # ==================== Main GUI Application ====================
 
-class GenshinSkipperGUI:
+class DialogueSkipperGUI:
     """Main GUI application combining helper and skipper functionality."""
     
     # Dark theme colors
@@ -57,17 +62,23 @@ class GenshinSkipperGUI:
     
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title("Genshin Dialogue Skipper")
+        self.root.title("Dialogue Skipper")
         self.root.geometry("1100x900")
         self.root.resizable(True, True)
         
         # Apply dark theme
         self.setup_dark_theme()
         
-        # Initialize managers
-        self.config = ConfigManager()
-        self.detection = DetectionEngine(self.config)
-        self.spam = SpamEngine(self.config, self.detection)
+        # Profile management
+        last_profile = get_last_used_profile()
+        self.current_profile = tk.StringVar(value=last_profile)
+        self.available_profiles = get_available_profiles()
+        
+        # Initialize managers with current profile
+        self.config = ConfigManager(self.current_profile.get())
+        self.global_settings = GlobalSettingsManager()
+        self.detection = DetectionEngine(self.config, self.global_settings)
+        self.spam = SpamEngine(self.config, self.detection, self.global_settings)
         
         # GUI state
         self.running = False
@@ -97,15 +108,19 @@ class GenshinSkipperGUI:
         self.debug_status = tk.StringVar(value="OFF")
         
         # ROI movement keys setting (separate keys for each direction)
-        roi_keys = self.config.get("general", "roi_keys", default={"up": "z", "down": "s", "left": "q", "right": "d"})
+        roi_keys = self.global_settings.get("general", "roi_keys", default={"up": "z", "down": "s", "left": "q", "right": "d"})
         self.roi_key_up_var = tk.StringVar(value=roi_keys.get("up", "z"))
         self.roi_key_down_var = tk.StringVar(value=roi_keys.get("down", "s"))
         self.roi_key_left_var = tk.StringVar(value=roi_keys.get("left", "q"))
         self.roi_key_right_var = tk.StringVar(value=roi_keys.get("right", "d"))
         
         # ROI movement step sizes
-        self.roi_step_normal_var = tk.IntVar(value=self.config.get("general", "roi_step_normal", default=10))
-        self.roi_step_fine_var = tk.IntVar(value=self.config.get("general", "roi_step_fine", default=1))
+        self.roi_step_normal_var = tk.IntVar(value=self.global_settings.get("general", "roi_step_normal", default=10))
+        self.roi_step_fine_var = tk.IntVar(value=self.global_settings.get("general", "roi_step_fine", default=1))
+        
+        # Set initial window title with profile name
+        profile_display_name = self.config.get('profile', 'name', default=self.current_profile.get())
+        self.root.title(f"Dialogue Skipper - {profile_display_name}")
         
         # Setup
         self.setup_ui()
@@ -231,6 +246,25 @@ class GenshinSkipperGUI:
     
     def setup_ui(self):
         """Setup the complete GUI."""
+        # Profile selector at top
+        profile_frame = ttk.Frame(self.root)
+        profile_frame.pack(fill=tk.X, padx=5, pady=(5, 0))
+        
+        ttk.Label(profile_frame, text="Profile:", font=("Consolas", 10, "bold")).pack(side=tk.LEFT, padx=5)
+        self.profile_combo = ttk.Combobox(profile_frame, textvariable=self.current_profile,
+                                          values=self.available_profiles, state="readonly", width=20)
+        self.profile_combo.pack(side=tk.LEFT, padx=5)
+        self.profile_combo.bind("<<ComboboxSelected>>", lambda e: self.switch_profile())
+        
+        ttk.Button(profile_frame, text="New", command=self.create_new_profile, width=8).pack(side=tk.LEFT, padx=2)
+        ttk.Button(profile_frame, text="Duplicate", command=self.duplicate_current_profile, width=10).pack(side=tk.LEFT, padx=2)
+        ttk.Button(profile_frame, text="Delete", command=self.delete_current_profile, width=8).pack(side=tk.LEFT, padx=2)
+        
+        # Profile display name
+        self.profile_display_var = tk.StringVar(value=self.config.get("profile", "name", default=""))
+        ttk.Label(profile_frame, text="  |  ").pack(side=tk.LEFT)
+        ttk.Label(profile_frame, textvariable=self.profile_display_var, font=("Consolas", 10)).pack(side=tk.LEFT, padx=5)
+        
         # Create notebook for tabs
         self.notebook = ttk.Notebook(self.root)
         self.notebook.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
@@ -486,26 +520,44 @@ class GenshinSkipperGUI:
         main_frame = ttk.Frame(self.settings_tab, padding="10")
         main_frame.pack(fill=tk.BOTH, expand=True)
         
+        # Profile settings
+        profile_frame = ttk.LabelFrame(main_frame, text="Profile Settings", padding="10")
+        profile_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        # Profile display name
+        ttk.Label(profile_frame, text="Profile Name:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=5)
+        self.profile_name_var = tk.StringVar(value=self.config.get("profile", "name", default=""))
+        ttk.Entry(profile_frame, textvariable=self.profile_name_var, width=30).grid(row=0, column=1, padx=5, columnspan=2)
+        
+        # Window title
+        ttk.Label(profile_frame, text="Window Title:").grid(row=1, column=0, sticky=tk.W, padx=5, pady=5)
+        self.window_title_var = tk.StringVar(value=self.config.get("profile", "window_title", default=""))
+        ttk.Entry(profile_frame, textvariable=self.window_title_var, width=30).grid(row=1, column=1, padx=5)
+        ttk.Button(profile_frame, text="Browse Windows", command=self.get_active_window_title).grid(row=1, column=2, padx=5)
+        
+        ttk.Label(profile_frame, text="(Leave empty to always run, regardless of active window)", 
+                  font=("Consolas", 8), foreground="gray").grid(row=2, column=0, columnspan=3, sticky=tk.W, padx=5)
+        
         # General settings
         general_frame = ttk.LabelFrame(main_frame, text="General Settings", padding="10")
         general_frame.pack(fill=tk.X, pady=(0, 10))
         
         # Pause between spams
         ttk.Label(general_frame, text="Pause Between Spams (sec):").grid(row=0, column=0, sticky=tk.W, padx=5, pady=5)
-        self.pause_var = tk.DoubleVar(value=self.config.get("general", "pause_between_spams", default=0.05))
+        self.pause_var = tk.DoubleVar(value=self.global_settings.get("general", "pause_between_spams", default=0.05))
         ttk.Spinbox(general_frame, from_=0.01, to=1.0, increment=0.01, textvariable=self.pause_var, 
                    width=10, format="%.2f").grid(row=0, column=1, padx=5)
         
         # Color tolerance
         ttk.Label(general_frame, text="Color Tolerance (0-255):").grid(row=1, column=0, sticky=tk.W, padx=5, pady=5)
-        self.tolerance_var = tk.IntVar(value=self.config.get("general", "default_color_tolerance", default=15))
+        self.tolerance_var = tk.IntVar(value=self.global_settings.get("general", "default_color_tolerance", default=15))
         ttk.Spinbox(general_frame, from_=0, to=255, textvariable=self.tolerance_var, width=10).grid(row=1, column=1, padx=5)
         
         # Click position
         click_frame = ttk.LabelFrame(main_frame, text="Click Position (for 'click' command)", padding="10")
         click_frame.pack(fill=tk.X, pady=(0, 10))
         
-        click_pos = self.config.get("click_position", default={"x": 1687, "y": 715})
+        click_pos = self.global_settings.get("click_position", default={"x": 960, "y": 540})
         ttk.Label(click_frame, text="X:").grid(row=0, column=0, sticky=tk.W, padx=5)
         self.click_x_var = tk.IntVar(value=click_pos["x"])
         ttk.Spinbox(click_frame, from_=0, to=3840, textvariable=self.click_x_var, width=10).grid(row=0, column=1, padx=5)
@@ -521,11 +573,11 @@ class GenshinSkipperGUI:
         hotkey_frame.pack(fill=tk.X, pady=(0, 10))
         
         ttk.Label(hotkey_frame, text="Toggle Spam:").grid(row=0, column=0, sticky=tk.W, padx=5)
-        self.hotkey_spam_var = tk.StringVar(value=self.config.get("hotkeys", "toggle_spam", default="F7"))
+        self.hotkey_spam_var = tk.StringVar(value=self.global_settings.get("hotkeys", "toggle_spam", default="F7"))
         ttk.Entry(hotkey_frame, textvariable=self.hotkey_spam_var, width=10).grid(row=0, column=1, padx=5)
         
         ttk.Label(hotkey_frame, text="Toggle Debug:").grid(row=0, column=2, sticky=tk.W, padx=5)
-        self.hotkey_debug_var = tk.StringVar(value=self.config.get("hotkeys", "toggle_debug", default="F8"))
+        self.hotkey_debug_var = tk.StringVar(value=self.global_settings.get("hotkeys", "toggle_debug", default="F8"))
         ttk.Entry(hotkey_frame, textvariable=self.hotkey_debug_var, width=10).grid(row=0, column=3, padx=5)
         
         # ROI Movement Keys
@@ -586,20 +638,34 @@ Hotkeys:
         self.roi_height.trace_add("write", lambda *args: self.autosave_roi())
         self.threshold_var.trace_add("write", lambda *args: self.autosave_roi())
         
+        # Profile settings - save when changed
+        self.profile_name_var.trace_add("write", lambda *args: self.autosave_profile_setting("name", self.profile_name_var.get()))
+        self.window_title_var.trace_add("write", lambda *args: self.autosave_profile_setting("window_title", self.window_title_var.get()))
+        
         # Settings variables - save when changed
-        self.pause_var.trace_add("write", lambda *args: self.autosave_setting("general", "pause_between_spams", self.pause_var.get()))
-        self.tolerance_var.trace_add("write", lambda *args: self.autosave_setting("general", "default_color_tolerance", self.tolerance_var.get()))
+        self.pause_var.trace_add("write", lambda *args: self.autosave_global_setting("general", "pause_between_spams", self.pause_var.get()))
+        self.tolerance_var.trace_add("write", lambda *args: self.autosave_global_setting("general", "default_color_tolerance", self.tolerance_var.get()))
         self.click_x_var.trace_add("write", lambda *args: self.autosave_click_position())
         self.click_y_var.trace_add("write", lambda *args: self.autosave_click_position())
-        self.hotkey_spam_var.trace_add("write", lambda *args: self.autosave_setting("hotkeys", "toggle_spam", self.hotkey_spam_var.get()))
-        self.hotkey_debug_var.trace_add("write", lambda *args: self.autosave_setting("hotkeys", "toggle_debug", self.hotkey_debug_var.get()))
+        self.hotkey_spam_var.trace_add("write", lambda *args: self.autosave_global_setting("hotkeys", "toggle_spam", self.hotkey_spam_var.get()))
+        self.hotkey_debug_var.trace_add("write", lambda *args: self.autosave_global_setting("hotkeys", "toggle_debug", self.hotkey_debug_var.get()))
         self.roi_key_up_var.trace_add("write", lambda *args: self.autosave_roi_keys())
         self.roi_key_down_var.trace_add("write", lambda *args: self.autosave_roi_keys())
         self.roi_key_left_var.trace_add("write", lambda *args: self.autosave_roi_keys())
         self.roi_key_right_var.trace_add("write", lambda *args: self.autosave_roi_keys())
-        self.roi_step_normal_var.trace_add("write", lambda *args: self.autosave_setting("general", "roi_step_normal", self.roi_step_normal_var.get()))
-        self.roi_step_fine_var.trace_add("write", lambda *args: self.autosave_setting("general", "roi_step_fine", self.roi_step_fine_var.get()))
+        self.roi_step_normal_var.trace_add("write", lambda *args: self.autosave_global_setting("general", "roi_step_normal", self.roi_step_normal_var.get()))
+        self.roi_step_fine_var.trace_add("write", lambda *args: self.autosave_global_setting("general", "roi_step_fine", self.roi_step_fine_var.get()))
         self.uniform_color_protection_var.trace_add("write", lambda *args: self.autosave_uniform_color_protection())
+    
+    def autosave_profile_setting(self, key: str, value):
+        """Auto-save profile setting."""
+        try:
+            self.config.set(value, "profile", key)
+            # Update display name in header
+            if key == "name":
+                self.profile_display_var.set(value)
+        except (tk.TclError, ValueError):
+            pass
     
     def autosave_roi_keys(self):
         """Auto-save ROI movement keys."""
@@ -610,7 +676,7 @@ Hotkeys:
                 "left": self.roi_key_left_var.get(),
                 "right": self.roi_key_right_var.get()
             }
-            self.config.set(keys, "general", "roi_keys")
+            self.global_settings.set(keys, "general", "roi_keys")
         except (tk.TclError, ValueError):
             pass
     
@@ -642,10 +708,18 @@ Hotkeys:
         except (tk.TclError, ValueError):
             pass  # Ignore errors during typing/invalid values
     
+    def autosave_global_setting(self, *keys_and_value):
+        """Auto-save a global setting."""
+        try:
+            *keys, value = keys_and_value
+            self.global_settings.set(value, *keys)
+        except (tk.TclError, ValueError):
+            pass  # Ignore errors during typing/invalid values
+    
     def autosave_click_position(self):
         """Auto-save click position."""
         try:
-            self.config.set({"x": self.click_x_var.get(), "y": self.click_y_var.get()}, "click_position")
+            self.global_settings.set({"x": self.click_x_var.get(), "y": self.click_y_var.get()}, "click_position")
         except (tk.TclError, ValueError):
             pass  # Ignore errors during typing/invalid values
     
@@ -869,6 +943,30 @@ Hotkeys:
                 # Clear flag after loading is complete
                 self._loading_detection_config = False
     
+    def clear_detection_ui(self):
+        """Clear all detection UI fields and disable controls."""
+        self._loading_detection_config = True
+        try:
+            # Clear ROI values
+            self.roi_left.set(0)
+            self.roi_top.set(0)
+            self.roi_width.set(100)
+            self.roi_height.set(100)
+            
+            # Clear threshold and other settings
+            self.threshold_var.set(0.95)
+            self.threshold_label.config(text="0.95")
+            self.uniform_color_protection_var.set(True)
+            
+            # Clear action sequence
+            self.action_text.delete("1.0", tk.END)
+            
+            # Clear template display
+            if hasattr(self, 'template_label'):
+                self.template_label.config(image='', text="No template")
+        finally:
+            self._loading_detection_config = False
+    
     def on_detection_changed(self, event):
         """Handle detection selection change."""
         self.load_detection_config()
@@ -971,9 +1069,9 @@ Hotkeys:
         if img is None:
             return  # User cancelled
         
-        # Save to template path
+        # Save to template path (relative to profile directory)
         template_path = det_config.get("template", f"img/template_{name.lower()}.png")
-        full_path = os.path.join(os.path.dirname(__file__), template_path)
+        full_path = self.config.get_template_path(template_path)
         
         # Ensure img directory exists
         os.makedirs(os.path.dirname(full_path), exist_ok=True)
@@ -1282,7 +1380,7 @@ Hotkeys:
             counter += 1
             name = f"DETECTION_{counter}"
         
-        # Create new detection config
+        # Create new detection config (path relative to profile directory)
         template_path = f"img/template_{name.lower()}.png"
         new_config = {
             "enabled": True,
@@ -1391,7 +1489,7 @@ Hotkeys:
         if self.config.delete("detections", name):
             # Delete template file
             if template_path:
-                full_path = os.path.join(os.path.dirname(__file__), template_path)
+                full_path = self.config.get_template_path(template_path)
                 if os.path.exists(full_path):
                     try:
                         os.remove(full_path)
@@ -1414,6 +1512,16 @@ Hotkeys:
         """Refresh the detection combobox list."""
         detections = list(self.config.get("detections", default={}).keys())
         self.det_combo['values'] = detections
+        
+        # If no detections, clear UI and disable controls
+        if not detections:
+            self.selected_detection.set("")
+            self.clear_detection_ui()
+        else:
+            # Select first detection if not already selected
+            if not self.selected_detection.get() or self.selected_detection.get() not in detections:
+                self.selected_detection.set(detections[0])
+                self.load_detection_config()
     
     def refresh_detection_toggles(self):
         """Refresh detection toggles in main tab."""
@@ -1511,8 +1619,234 @@ Hotkeys:
             enabled = self.config.get("detections", name, "enabled", default=True)
             var.set(enabled)
         
+        # Update profile settings UI
+        self._loading_detection_config = True
+        self.profile_name_var.set(self.config.get("profile", "name", default=""))
+        self.window_title_var.set(self.config.get("profile", "window_title", default=""))
+        self.profile_display_var.set(self.config.get("profile", "name", default=""))
+        self._loading_detection_config = False
+        
         self.log_message("Configuration reloaded!")
         self.status_var.set("Configuration reloaded!")
+    
+    # ==================== Profile Management ====================
+    
+    def switch_profile(self):
+        """Switch to a different profile."""
+        profile_name = self.current_profile.get()
+        
+        # Stop spam if running
+        if self.spam.running:
+            self.spam.toggle()
+            self.on_spam_state_change(False)
+        
+        # Switch config manager to new profile
+        self.config.switch_profile(profile_name)
+        self.detection.clear_template_cache()
+        
+        # Reload all UI elements
+        self.reload_config()
+        self.refresh_detection_list()
+        self.refresh_detection_toggles()
+        
+        # Update window title with profile name
+        profile_display_name = self.config.get('profile', 'name', default=profile_name)
+        self.root.title(f"Dialogue Skipper - {profile_display_name}")
+        
+        self.log_message(f"Switched to profile: {profile_name}")
+        self.status_var.set(f"Switched to profile: {profile_display_name}")
+    
+    def create_new_profile(self):
+        """Create a new profile."""
+        dialog = tk.Toplevel(self.root)
+        dialog.title("Create New Profile")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        dialog.geometry("400x120")
+        
+        # Center dialog
+        x = self.root.winfo_x() + (self.root.winfo_width() // 2) - 200
+        y = self.root.winfo_y() + (self.root.winfo_height() // 2) - 60
+        dialog.geometry(f"+{x}+{y}")
+        
+        ttk.Label(dialog, text="Profile Name:").pack(pady=(10, 2))
+        name_var = tk.StringVar()
+        name_entry = ttk.Entry(dialog, textvariable=name_var, width=40)
+        name_entry.pack(pady=2)
+        
+        def on_create():
+            profile_name = name_var.get().strip().lower().replace(" ", "_")
+            display_name = name_var.get().strip()
+            
+            if not profile_name:
+                messagebox.showerror("Error", "Profile name is required")
+                return
+            
+            if create_profile(profile_name, display_name, ""):
+                self.available_profiles = get_available_profiles()
+                self.profile_combo['values'] = self.available_profiles
+                self.current_profile.set(profile_name)
+                self.switch_profile()
+                dialog.destroy()
+                self.log_message(f"Created new profile: {profile_name}")
+            else:
+                messagebox.showerror("Error", f"Profile '{profile_name}' already exists")
+        
+        name_entry.focus()
+        ttk.Button(dialog, text="Create", command=on_create).pack(pady=10)
+    
+    def duplicate_current_profile(self):
+        """Duplicate the current profile."""
+        source = self.current_profile.get()
+        
+        dialog = tk.Toplevel(self.root)
+        dialog.title("Duplicate Profile")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        dialog.geometry("400x100")
+        
+        x = self.root.winfo_x() + (self.root.winfo_width() // 2) - 200
+        y = self.root.winfo_y() + (self.root.winfo_height() // 2) - 50
+        dialog.geometry(f"+{x}+{y}")
+        
+        ttk.Label(dialog, text=f"Duplicating: {source}").pack(pady=(10, 5))
+        ttk.Label(dialog, text="New Profile Name:").pack(pady=(5, 2))
+        name_var = tk.StringVar(value=f"{source}_copy")
+        name_entry = ttk.Entry(dialog, textvariable=name_var, width=40)
+        name_entry.pack(pady=2)
+        
+        def on_duplicate():
+            new_id = name_var.get().strip().lower().replace(" ", "_")
+            if not new_id:
+                messagebox.showerror("Error", "Profile name is required")
+                return
+            
+            display_name = name_var.get().strip()
+            
+            if duplicate_profile(source, new_id, display_name):
+                self.available_profiles = get_available_profiles()
+                self.profile_combo['values'] = self.available_profiles
+                self.current_profile.set(new_id)
+                self.switch_profile()
+                dialog.destroy()
+                self.log_message(f"Duplicated profile: {source} -> {new_id}")
+            else:
+                messagebox.showerror("Error", f"Could not duplicate. Profile '{new_id}' may already exist.")
+        
+        name_entry.focus()
+        name_entry.select_range(0, tk.END)
+        ttk.Button(dialog, text="Duplicate", command=on_duplicate).pack(pady=10)
+    
+    def delete_current_profile(self):
+        """Delete the current profile."""
+        profile = self.current_profile.get()
+        
+        if len(self.available_profiles) <= 1:
+            messagebox.showerror("Error", "Cannot delete the last profile")
+            return
+        
+        if not messagebox.askyesno("Confirm Delete", 
+                                   f"Are you sure you want to delete profile '{profile}'?\n\nThis will delete all templates and configuration for this profile."):
+            return
+        
+        # Stop spam if running
+        if self.spam.running:
+            self.spam.toggle()
+            self.on_spam_state_change(False)
+        
+        if delete_profile(profile):
+            self.available_profiles = get_available_profiles()
+            self.profile_combo['values'] = self.available_profiles
+            self.current_profile.set(self.available_profiles[0])
+            self.switch_profile()
+            self.log_message(f"Deleted profile: {profile}")
+        else:
+            messagebox.showerror("Error", f"Could not delete profile '{profile}'")
+    
+    def get_active_window_title(self):
+        """Show a dialog with list of running windows to select from."""
+        import win32gui
+        import win32process
+        
+        # Get list of visible windows
+        windows = []
+        
+        def enum_windows(hwnd, lParam):
+            if win32gui.IsWindowVisible(hwnd):
+                title = win32gui.GetWindowText(hwnd)
+                if title and len(title) > 0:  # Only include windows with titles
+                    windows.append((title, hwnd))
+            return True
+        
+        win32gui.EnumWindows(enum_windows, None)
+        
+        if not windows:
+            messagebox.showwarning("No Windows", "No visible windows found")
+            return
+        
+        # Sort by title
+        windows.sort(key=lambda x: x[0])
+        window_titles = [title for title, _ in windows]
+        
+        # Create selection dialog
+        dialog = tk.Toplevel(self.root)
+        dialog.title("Select Window")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        dialog.geometry("500x400")
+        
+        x = self.root.winfo_x() + (self.root.winfo_width() // 2) - 250
+        y = self.root.winfo_y() + (self.root.winfo_height() // 2) - 200
+        dialog.geometry(f"+{x}+{y}")
+        
+        ttk.Label(dialog, text="Select a window:").pack(pady=(10, 5))
+        
+        # Create listbox with scrollbar
+        frame = ttk.Frame(dialog)
+        frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
+        
+        scrollbar = ttk.Scrollbar(frame)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        listbox = tk.Listbox(frame, yscrollcommand=scrollbar.set,
+                             bg=self.DARK_BG2, fg=self.DARK_FG,
+                             selectbackground=self.DARK_SELECT,
+                             selectforeground=self.DARK_FG,
+                             relief=tk.FLAT, borderwidth=1)
+        listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar.config(command=listbox.yview)
+        
+        # Populate listbox
+        for title in window_titles:
+            listbox.insert(tk.END, title)
+        
+        # Select first item by default
+        if window_titles:
+            listbox.selection_set(0)
+            listbox.see(0)
+        
+        result = [None]
+        
+        def on_select():
+            selection = listbox.curselection()
+            if selection:
+                result[0] = window_titles[selection[0]]
+                dialog.destroy()
+        
+        def on_enter(event):
+            on_select()
+        
+        listbox.bind('<Return>', on_enter)
+        listbox.bind('<Double-Button-1>', lambda e: on_select())
+        
+        ttk.Button(dialog, text="Select", command=on_select).pack(pady=10)
+        
+        # Wait for dialog to close
+        self.root.wait_window(dialog)
+        
+        if result[0]:
+            self.window_title_var.set(result[0])
+            self.log_message(f"Set window title: {result[0]}")
     
     def log_message(self, message: str):
         """Add timestamped message to log."""
@@ -1588,7 +1922,7 @@ Hotkeys:
         try:
             template, mask = self.detection.get_cached_template(name)
             threshold = det_config.get("threshold", 0.95)
-            color_tolerance = self.config.get("general", "default_color_tolerance", default=15)
+            color_tolerance = self.global_settings.get("general", "default_color_tolerance", default=15)
             use_uniform = det_config.get("uniform_color_protection", True)
             confidence = self.detection.calculate_confidence(screen_img, template, mask, color_tolerance, use_uniform)
             
@@ -1697,7 +2031,7 @@ def request_admin():
 def main():
     request_admin()
     try:
-        app = GenshinSkipperGUI()
+        app = DialogueSkipperGUI()
         app.run()
     except Exception as e:
         if args.debug:

@@ -9,8 +9,9 @@ import pyautogui
 class ActionSequenceExecutor:
     """Executes action sequences with loops, variables, and conditionals."""
     
-    def __init__(self, config_manager, initial_spam_count=0):
+    def __init__(self, config_manager, global_settings, initial_spam_count=0):
         self.config = config_manager
+        self.global_settings = global_settings
         self.spam_count = initial_spam_count
         self.variables = {}
         self.lines = []
@@ -51,7 +52,7 @@ class ActionSequenceExecutor:
         
         # Handle click
         if line_lower == 'click':
-            click_pos = self.config.get("click_position")
+            click_pos = self.global_settings.get("click_position", default={"x": 960, "y": 540})
             pyautogui.click(click_pos["x"], click_pos["y"])
         
         # Handle wait

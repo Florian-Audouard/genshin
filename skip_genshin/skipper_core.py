@@ -1,12 +1,15 @@
 """
-Genshin Dialogue Skipper - Core Logic Module
+Dialogue Skipper - Core Logic Module
 Contains the configuration, detection, and spam engines.
+Supports multiple game profiles.
 """
 
 import threading
 import time
 import json
 import os
+import shutil
+import copy
 from typing import Dict, Optional, Tuple
 
 import cv2
@@ -19,15 +22,18 @@ from action_executor import ActionSequenceExecutor
 
 # ==================== Configuration ====================
 
-CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.json")
+LOCAL_DIR = os.path.join(os.path.dirname(__file__), "local")
+LAST_PROFILE_FILE = os.path.join(LOCAL_DIR, "last_profile.txt")
+GLOBAL_SETTINGS_FILE = os.path.join(LOCAL_DIR, "settings.json")
 
-EMPTY_CONFIG = {
+DEFAULT_GLOBAL_SETTINGS = {
     "general": {
         "pause_between_spams": 0.05,
         "default_color_tolerance": 15,
-        "check_interval": 0.1
+        "check_interval": 0.1,
+        "roi_step_normal": 10,
+        "roi_step_fine": 1
     },
-    "detections": {},
     "click_position": {
         "x": 960,
         "y": 540
@@ -38,15 +44,225 @@ EMPTY_CONFIG = {
     }
 }
 
+EMPTY_CONFIG = {
+    "profile": {
+        "name": "New Profile",
+        "window_title": ""
+    },
+    "detections": {}
+}
+
+
+def get_available_profiles() -> list:
+    """Get list of available profile names from local directory."""
+    if not os.path.exists(LOCAL_DIR):
+        os.makedirs(LOCAL_DIR, exist_ok=True)
+    
+    profiles = []
+    for item in os.listdir(LOCAL_DIR):
+        profile_dir = os.path.join(LOCAL_DIR, item)
+        config_path = os.path.join(profile_dir, "config.json")
+        if os.path.isdir(profile_dir) and os.path.exists(config_path):
+            profiles.append(item)
+    return sorted(profiles)
+
+
+def get_last_used_profile() -> str:
+    """Get the last used profile from file, or return first available profile."""
+    if os.path.exists(LAST_PROFILE_FILE):
+        try:
+            with open(LAST_PROFILE_FILE, 'r') as f:
+                profile_name = f.read().strip()
+                # Validate that the profile still exists
+                if profile_name and profile_name in get_available_profiles():
+                    return profile_name
+        except (IOError, OSError):
+            pass
+    
+    # Fallback: return first available profile, or create default
+    profiles = get_available_profiles()
+    if profiles:
+        return profiles[0]
+    else:
+        # Create default genshin profile if none exist
+        create_profile("genshin", "Genshin Impact", "Genshin Impact")
+        return "genshin"
+
+
+def save_last_used_profile(profile_name: str):
+    """Save the last used profile to file."""
+    if not os.path.exists(LOCAL_DIR):
+        os.makedirs(LOCAL_DIR, exist_ok=True)
+    
+    try:
+        with open(LAST_PROFILE_FILE, 'w') as f:
+            f.write(profile_name)
+    except (IOError, OSError) as e:
+        print(f"Error saving last used profile: {e}")
+
+
+def load_global_settings() -> dict:
+    """Load global settings from JSON file, or create default if not exists."""
+    if not os.path.exists(LOCAL_DIR):
+        os.makedirs(LOCAL_DIR, exist_ok=True)
+    
+    if os.path.exists(GLOBAL_SETTINGS_FILE):
+        try:
+            with open(GLOBAL_SETTINGS_FILE, 'r') as f:
+                settings = json.load(f)
+                # Merge with defaults to ensure all keys exist
+                result = copy.deepcopy(DEFAULT_GLOBAL_SETTINGS)
+                for key, value in settings.items():
+                    if key in result and isinstance(result[key], dict) and isinstance(value, dict):
+                        result[key].update(value)
+                    else:
+                        result[key] = value
+                return result
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Error loading global settings: {e}. Using defaults.")
+            return copy.deepcopy(DEFAULT_GLOBAL_SETTINGS)
+    else:
+        # Create default settings file
+        save_global_settings(copy.deepcopy(DEFAULT_GLOBAL_SETTINGS))
+        return copy.deepcopy(DEFAULT_GLOBAL_SETTINGS)
+
+
+def save_global_settings(settings: dict):
+    """Save global settings to JSON file."""
+    if not os.path.exists(LOCAL_DIR):
+        os.makedirs(LOCAL_DIR, exist_ok=True)
+    
+    try:
+        with open(GLOBAL_SETTINGS_FILE, 'w') as f:
+            json.dump(settings, f, indent=4)
+    except IOError as e:
+        print(f"Error saving global settings: {e}")
+
+
+def get_profile_config_path(profile_name: str) -> str:
+    """Get the config file path for a profile."""
+    return os.path.join(LOCAL_DIR, profile_name, "config.json")
+
+
+def get_profile_dir(profile_name: str) -> str:
+    """Get the directory path for a profile."""
+    return os.path.join(LOCAL_DIR, profile_name)
+
+
+def create_profile(profile_name: str, display_name: str = "", window_title: str = "") -> bool:
+    """Create a new profile with default configuration."""
+    profile_dir = get_profile_dir(profile_name)
+    if os.path.exists(profile_dir):
+        return False
+    
+    os.makedirs(profile_dir, exist_ok=True)
+    os.makedirs(os.path.join(profile_dir, "img"), exist_ok=True)
+    
+    # Use deep copy to ensure nested dicts are not shared
+    config = copy.deepcopy(EMPTY_CONFIG)
+    config["profile"] = {
+        "name": display_name or profile_name,
+        "window_title": window_title
+    }
+    
+    config_path = get_profile_config_path(profile_name)
+    with open(config_path, 'w') as f:
+        json.dump(config, f, indent=4)
+    
+    return True
+
+
+def delete_profile(profile_name: str) -> bool:
+    """Delete a profile and all its files."""
+    profile_dir = get_profile_dir(profile_name)
+    if not os.path.exists(profile_dir):
+        return False
+    
+    shutil.rmtree(profile_dir)
+    return True
+
+
+def duplicate_profile(source_name: str, new_name: str, display_name: str = "") -> bool:
+    """Duplicate a profile."""
+    source_dir = get_profile_dir(source_name)
+    new_dir = get_profile_dir(new_name)
+    
+    if not os.path.exists(source_dir) or os.path.exists(new_dir):
+        return False
+    
+    shutil.copytree(source_dir, new_dir)
+    
+    # Update profile name in config
+    config_path = get_profile_config_path(new_name)
+    with open(config_path, 'r') as f:
+        config = json.load(f)
+    
+    config["profile"]["name"] = display_name or new_name
+    
+    with open(config_path, 'w') as f:
+        json.dump(config, f, indent=4)
+    
+    return True
+
+
+# ==================== Global Settings Manager ====================
+
+class GlobalSettingsManager:
+    """Manages global settings shared across all profiles."""
+    
+    def __init__(self):
+        self.settings = load_global_settings()
+    
+    def get(self, *keys, default=None):
+        """Get a nested setting value."""
+        value = self.settings
+        for key in keys:
+            if isinstance(value, dict) and key in value:
+                value = value[key]
+            else:
+                return default
+        return value
+    
+    def set(self, value, *keys):
+        """Set a nested setting value."""
+        settings = self.settings
+        for key in keys[:-1]:
+            if key not in settings:
+                settings[key] = {}
+            settings = settings[key]
+        settings[keys[-1]] = value
+        save_global_settings(self.settings)
+    
+    def reload(self):
+        """Reload settings from file."""
+        self.settings = load_global_settings()
+
 
 # ==================== Configuration Manager ====================
 
 class ConfigManager:
     """Manages loading and saving configuration to JSON file."""
     
-    def __init__(self, config_path: str = CONFIG_FILE):
-        self.config_path = config_path
+    def __init__(self, profile_name: str = None):
+        if profile_name is None:
+            profile_name = get_last_used_profile()
+        self.profile_name = profile_name
+        self.profile_dir = get_profile_dir(profile_name)
+        self.config_path = get_profile_config_path(profile_name)
         self.config = self.load()
+        save_last_used_profile(profile_name)
+    
+    def switch_profile(self, profile_name: str):
+        """Switch to a different profile."""
+        self.profile_name = profile_name
+        self.profile_dir = get_profile_dir(profile_name)
+        self.config_path = get_profile_config_path(profile_name)
+        self.config = self.load()
+        save_last_used_profile(profile_name)
+    
+    def get_template_path(self, relative_path: str) -> str:
+        """Get absolute path for a template relative to the profile directory."""
+        return os.path.join(self.profile_dir, relative_path)
     
     def load(self) -> dict:
         """Load configuration from JSON file, or create empty if not exists."""
@@ -58,19 +274,26 @@ class ConfigManager:
                 return self._merge_with_defaults(config)
             except (json.JSONDecodeError, IOError) as e:
                 print(f"Error loading config: {e}. Using empty config.")
-                return EMPTY_CONFIG.copy()
+                return copy.deepcopy(EMPTY_CONFIG)
         else:
-            self.save(EMPTY_CONFIG)
-            return EMPTY_CONFIG.copy()
+            # Create profile directory if needed
+            os.makedirs(os.path.dirname(self.config_path), exist_ok=True)
+            os.makedirs(os.path.join(self.profile_dir, "img"), exist_ok=True)
+            self.save(copy.deepcopy(EMPTY_CONFIG))
+            return copy.deepcopy(EMPTY_CONFIG)
     
     def _merge_with_defaults(self, config: dict) -> dict:
         """Merge loaded config with empty config to ensure required keys exist."""
-        result = EMPTY_CONFIG.copy()
+        result = copy.deepcopy(EMPTY_CONFIG)
         for key, value in config.items():
             if key in result and isinstance(result[key], dict) and isinstance(value, dict):
                 result[key].update(value)
             else:
                 result[key] = value
+        # Remove old global settings keys if they exist (migration)
+        result.pop('general', None)
+        result.pop('click_position', None)
+        result.pop('hotkeys', None)
         return result
     
     def save(self, config: dict = None):
@@ -126,12 +349,12 @@ class ConfigManager:
         det_config = self.config["detections"][old_name]
         old_template = det_config.get("template", "")
         
-        # Generate new template path
+        # Generate new template path (relative to profile directory)
         new_template = f"img/template_{new_name.lower().replace(' ', '_')}.png"
         
         # Rename physical file if it exists
-        old_path = os.path.join(os.path.dirname(__file__), old_template)
-        new_path = os.path.join(os.path.dirname(__file__), new_template)
+        old_path = self.get_template_path(old_template)
+        new_path = self.get_template_path(new_template)
         
         if os.path.exists(old_path):
             try:
@@ -152,8 +375,9 @@ class ConfigManager:
 class DetectionEngine:
     """Handles template matching and detection logic."""
     
-    def __init__(self, config_manager: ConfigManager):
+    def __init__(self, config_manager: ConfigManager, global_settings: GlobalSettingsManager = None):
         self.config = config_manager
+        self.global_settings = global_settings if global_settings else GlobalSettingsManager()
         self.template_cache: Dict[str, Tuple[np.ndarray, Optional[np.ndarray]]] = {}
         self.debug = False
         self._last_detection_states: Dict[str, bool] = {}
@@ -177,7 +401,8 @@ class DetectionEngine:
         if not det_config:
             raise ValueError(f"Unknown detection: {detection_name}")
         
-        template_path = os.path.join(os.path.dirname(__file__), det_config["template"])
+        # Use profile-relative path
+        template_path = self.config.get_template_path(det_config["template"])
         roi = det_config["roi"]
         
         template_bgra = cv2.imread(template_path, cv2.IMREAD_UNCHANGED)
@@ -290,7 +515,7 @@ class DetectionEngine:
             template, mask = self.get_cached_template(detection_name)
             screen = self.capture_screen(det_config["roi"])
             threshold = det_config.get("threshold", 0.95)
-            color_tolerance = self.config.get("general", "default_color_tolerance", default=15)
+            color_tolerance = self.global_settings.get("general", "default_color_tolerance", default=15)
             use_uniform_protection = det_config.get("uniform_color_protection", True)
             
             confidence = self.calculate_confidence(screen, template, mask, color_tolerance, use_uniform_protection)
@@ -317,8 +542,9 @@ class DetectionEngine:
 class SpamEngine:
     """Handles the spamming/automation logic."""
     
-    def __init__(self, config_manager: ConfigManager, detection_engine: DetectionEngine):
+    def __init__(self, config_manager: ConfigManager, detection_engine: DetectionEngine, global_settings: GlobalSettingsManager = None):
         self.config = config_manager
+        self.global_settings = global_settings if global_settings else GlobalSettingsManager()
         self.detection = detection_engine
         self.running = False
         self.debug_mode = False
@@ -346,12 +572,17 @@ class SpamEngine:
             except Exception as e:
                 print(f"Callback error: {e}")
     
-    def is_genshin_active(self) -> bool:
-        """Check if Genshin Impact is the active window."""
+    def is_target_window_active(self) -> bool:
+        """Check if the target window (from profile config) is the active window."""
         try:
+            window_title = self.config.get("profile", "window_title", default="")
+            if not window_title:
+                # If no window title configured, always return True (no restriction)
+                return True
+            
             hwnd = win32gui.GetForegroundWindow()
             title = win32gui.GetWindowText(hwnd)
-            return title == "Genshin Impact"
+            return title == window_title
         except Exception:
             return False
     
@@ -376,7 +607,7 @@ class SpamEngine:
             return
         
         try:
-            executor = ActionSequenceExecutor(self.config, self.spam_count)
+            executor = ActionSequenceExecutor(self.config, self.global_settings, self.spam_count)
             executor.execute(action_sequence)
             self.spam_count = executor.spam_count
         except pyautogui.FailSafeException:
@@ -385,9 +616,9 @@ class SpamEngine:
     def _spam_loop(self):
         """Main spam loop running in background thread."""
         while True:
-            if self.running and self.is_genshin_active():
+            if self.running and self.is_target_window_active():
                 detections = self.config.get("detections", default={})
-                pause = self.config.get("general", "pause_between_spams", default=0.05)
+                pause = self.global_settings.get("general", "pause_between_spams", default=0.05)
                 
                 for name, det_config in detections.items():
                     if det_config.get("enabled", True):
