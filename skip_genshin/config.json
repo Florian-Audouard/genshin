@@ -59,6 +59,19 @@
             "template": "img/template_dialogue.png",
             "uniform_color_protection": false,
             "action_sequence": "space\ne"
+        },
+        "BLACK_PAGE": {
+            "enabled": true,
+            "roi": {
+                "left": 1701,
+                "top": 1340,
+                "width": 38,
+                "height": 39
+            },
+            "threshold": 0.95,
+            "template": "img/template_detection_1.png",
+            "action_sequence": "click",
+            "uniform_color_protection": true
         }
     },
     "click_position": {

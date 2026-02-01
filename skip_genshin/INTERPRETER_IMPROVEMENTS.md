@@ -7,25 +7,26 @@ The action sequence executor has been significantly enhanced with advanced progr
 ### New Features
 
 1. **Variable Storage**
-   - Store values with `set varname value`
-   - Reference with `$varname` prefix
-   - Types: integers, strings, booleans
+    - Store values with `set varname value`
+    - Reference with `$varname` prefix
+    - Types: integers, strings, booleans
 
 2. **Loop Support**
-   - Fixed count loops: `loop 3`
-   - Variable-based loops: `loop $count`
-   - Nested loops supported
-   - Block syntax: `loop ... endloop`
+    - Fixed count loops: `loop 3`
+    - Variable-based loops: `loop $count`
+    - Nested loops supported
+    - Block syntax: `loop ... endloop`
 
 3. **Conditional Execution**
-   - If statements: `if $var > 5`
-   - Supported operators: `>`, `<`, `>=`, `<=`, `==`, `!=`
-   - Block syntax: `if ... endif`
-   - Nested conditions supported
+    - If statements: `if $var > 5`
+    - Supported operators: `>`, `<`, `>=`, `<=`, `==`, `!=`
+    - Block syntax: `if ... endif`
+    - Nested conditions supported
 
 ### Architecture
 
 **New File: `action_executor.py`**
+
 - Implements `ActionSequenceExecutor` class
 - Handles parsing and execution of enhanced sequences
 - Maintains program counter for control flow
@@ -33,6 +34,7 @@ The action sequence executor has been significantly enhanced with advanced progr
 - Supports nested block execution
 
 **Modified: `skipper_core.py`**
+
 - Updated `execute_action()` method to use new executor
 - Imports ActionSequenceExecutor
 - Maintains backward compatibility with simple commands
@@ -40,6 +42,7 @@ The action sequence executor has been significantly enhanced with advanced progr
 ### Usage Examples
 
 **Simple Variables:**
+
 ```
 set count 5
 loop $count
@@ -49,6 +52,7 @@ endloop
 ```
 
 **Conditionals:**
+
 ```
 set attempts 3
 if $attempts > 0
@@ -57,6 +61,7 @@ endif
 ```
 
 **Complex Flow:**
+
 ```
 set outer 2
 loop $outer
@@ -71,6 +76,7 @@ endloop
 ### Backward Compatibility
 
 All existing action sequences continue to work:
+
 - `click` - unchanged
 - `space`, `e`, `escape` - unchanged
 - `wait:100` - unchanged

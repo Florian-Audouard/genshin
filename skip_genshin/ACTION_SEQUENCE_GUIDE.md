@@ -17,6 +17,7 @@ set delay 100
 ```
 
 Access variables with `$` prefix:
+
 ```
 wait:$delay
 if $count > 0
@@ -29,6 +30,7 @@ endif
 Repeat a block of commands.
 
 ### Fixed loop count:
+
 ```
 loop 3
   space
@@ -38,6 +40,7 @@ endloop
 ```
 
 ### Variable-based loop:
+
 ```
 set iterations 5
 loop $iterations
@@ -51,6 +54,7 @@ endloop
 Execute code based on conditions.
 
 ### Supported operators:
+
 - `>` greater than
 - `<` less than
 - `>=` greater or equal
@@ -59,6 +63,7 @@ Execute code based on conditions.
 - `!=` not equals
 
 ### Example:
+
 ```
 set attempts 3
 if $attempts > 0
@@ -70,6 +75,7 @@ endif
 ## Complex Examples
 
 ### Repeat dialogue skip 5 times with delay:
+
 ```
 set count 5
 loop $count
@@ -81,6 +87,7 @@ endloop
 ```
 
 ### Conditional click:
+
 ```
 set can_click 1
 if $can_click == 1
@@ -89,6 +96,7 @@ endif
 ```
 
 ### Nested loops:
+
 ```
 set outer 2
 loop $outer
@@ -102,6 +110,7 @@ endloop
 ```
 
 ### Sequential automation with delays:
+
 ```
 set step 0
 set step 1
