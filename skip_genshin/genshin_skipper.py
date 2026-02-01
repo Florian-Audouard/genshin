@@ -1584,8 +1584,8 @@ Hotkeys:
             template, mask = self.detection.get_cached_template(name)
             threshold = det_config.get("threshold", 0.95)
             color_tolerance = self.config.get("general", "default_color_tolerance", default=15)
-            
-            confidence = self.detection.calculate_confidence(screen_img, template, mask, color_tolerance)
+            use_uniform = det_config.get("uniform_color_protection", True)
+            confidence = self.detection.calculate_confidence(screen_img, template, mask, color_tolerance, use_uniform)
             
             # Update labels
             self.current_confidence.set(f"{confidence:.4f}")
