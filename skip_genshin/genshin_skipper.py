@@ -8,15 +8,22 @@ Provides a graphical interface for the dialogue skipper with:
 - Detection management (create, rename, delete)
 """
 
+import argparse
 import io
 import sys
 import ctypes
 import cv2
 import os
 import shutil
+import time
 
-# Hide console window on Windows
-if sys.platform == "win32":
+# Parse --debug argument early
+parser = argparse.ArgumentParser()
+parser.add_argument('--debug', action='store_true', help='Keep terminal open for debugging')
+args, _ = parser.parse_known_args()
+
+# Hide console window on Windows (unless --debug)
+if sys.platform == "win32" and not args.debug:
     ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
 
 import numpy as np
@@ -89,10 +96,22 @@ class GenshinSkipperGUI:
         self.spam_status = tk.StringVar(value="PAUSED")
         self.debug_status = tk.StringVar(value="OFF")
         
+        # ROI movement keys setting (separate keys for each direction)
+        roi_keys = self.config.get("general", "roi_keys", default={"up": "z", "down": "s", "left": "q", "right": "d"})
+        self.roi_key_up_var = tk.StringVar(value=roi_keys.get("up", "z"))
+        self.roi_key_down_var = tk.StringVar(value=roi_keys.get("down", "s"))
+        self.roi_key_left_var = tk.StringVar(value=roi_keys.get("left", "q"))
+        self.roi_key_right_var = tk.StringVar(value=roi_keys.get("right", "d"))
+        
+        # ROI movement step sizes
+        self.roi_step_normal_var = tk.IntVar(value=self.config.get("general", "roi_step_normal", default=10))
+        self.roi_step_fine_var = tk.IntVar(value=self.config.get("general", "roi_step_fine", default=1))
+        
         # Setup
         self.setup_ui()
         self.setup_callbacks()
         self.setup_keyboard_listener()
+        self.setup_roi_keyboard_controls()
         self.load_detection_config()
         self.setup_autosave()
         
@@ -358,10 +377,9 @@ class GenshinSkipperGUI:
         btn_frame = ttk.Frame(roi_frame)
         btn_frame.grid(row=4, column=0, columnspan=4, pady=10)
         
-        ttk.Button(btn_frame, text="Set from Mouse (F9)", command=self.set_roi_from_mouse).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Select ROI (F9)", command=self.select_roi_from_screen).pack(side=tk.LEFT, padx=5)
         ttk.Button(btn_frame, text="Capture & Save Template", command=self.capture_and_save_template).pack(side=tk.LEFT, padx=5)
         ttk.Button(btn_frame, text="Copy Image", command=self.copy_image_to_clipboard).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="Copy ROI Code", command=self.copy_roi_code).pack(side=tk.LEFT, padx=5)
         
         ttk.Checkbutton(roi_frame, text="Live Preview", variable=self.live_preview).grid(row=5, column=0, columnspan=2)
         ttk.Checkbutton(roi_frame, text="Uniform Color Protection", variable=self.uniform_color_protection_var).grid(row=5, column=2, columnspan=2)
@@ -442,6 +460,26 @@ class GenshinSkipperGUI:
         ttk.Label(pos_frame, text="Mouse Position:").pack(side=tk.LEFT)
         self.mouse_pos_label = ttk.Label(pos_frame, text="(0, 0)", font=("Consolas", 12))
         self.mouse_pos_label.pack(side=tk.LEFT, padx=10)
+        
+        # ROI Keyboard control focus widget
+        kb_frame = ttk.Frame(main_frame)
+        kb_frame.pack(fill=tk.X, pady=(10, 0))
+        
+        ttk.Label(kb_frame, text="Keyboard Control:", font=("Consolas", 9)).pack(side=tk.LEFT)
+        self.roi_focus_widget = tk.Label(kb_frame, text="  Click here to enable arrow/ZQSD controls  ",
+                                         bg=self.DARK_BG3, fg=self.DARK_FG,
+                                         relief=tk.SUNKEN, padx=10, pady=5,
+                                         font=("Consolas", 9))
+        self.roi_focus_widget.pack(side=tk.LEFT, padx=10)
+        self.roi_focus_widget.bind('<Button-1>', self._focus_roi_widget)
+        self.roi_focus_widget.bind('<FocusIn>', lambda e: self.roi_focus_widget.config(bg=self.DARK_ACCENT, text="  ACTIVE - Use arrows/keys to move ROI  "))
+        self.roi_focus_widget.bind('<FocusOut>', lambda e: self.roi_focus_widget.config(bg=self.DARK_BG3, text="  Click here to enable arrow/ZQSD controls  "))
+        # Make it focusable
+        self.roi_focus_widget.config(takefocus=True)
+        
+        step_info = ttk.Label(kb_frame, text="Move: keys | Resize: Ctrl+keys | Fine: Shift+keys",
+                              font=("Consolas", 8), foreground="gray")
+        step_info.pack(side=tk.LEFT, padx=10)
     
     def setup_settings_tab(self):
         """Setup the settings tab."""
@@ -490,6 +528,28 @@ class GenshinSkipperGUI:
         self.hotkey_debug_var = tk.StringVar(value=self.config.get("hotkeys", "toggle_debug", default="F8"))
         ttk.Entry(hotkey_frame, textvariable=self.hotkey_debug_var, width=10).grid(row=0, column=3, padx=5)
         
+        # ROI Movement Keys
+        roi_keys_frame = ttk.LabelFrame(main_frame, text="ROI Movement Keys (+ Arrows always work)", padding="10")
+        roi_keys_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        ttk.Label(roi_keys_frame, text="Up:").grid(row=0, column=0, sticky=tk.W, padx=5)
+        ttk.Entry(roi_keys_frame, textvariable=self.roi_key_up_var, width=5).grid(row=0, column=1, padx=5)
+        
+        ttk.Label(roi_keys_frame, text="Down:").grid(row=0, column=2, sticky=tk.W, padx=5)
+        ttk.Entry(roi_keys_frame, textvariable=self.roi_key_down_var, width=5).grid(row=0, column=3, padx=5)
+        
+        ttk.Label(roi_keys_frame, text="Left:").grid(row=0, column=4, sticky=tk.W, padx=5)
+        ttk.Entry(roi_keys_frame, textvariable=self.roi_key_left_var, width=5).grid(row=0, column=5, padx=5)
+        
+        ttk.Label(roi_keys_frame, text="Right:").grid(row=0, column=6, sticky=tk.W, padx=5)
+        ttk.Entry(roi_keys_frame, textvariable=self.roi_key_right_var, width=5).grid(row=0, column=7, padx=5)
+        
+        ttk.Label(roi_keys_frame, text="Normal Step (px):").grid(row=1, column=0, columnspan=2, sticky=tk.W, padx=5, pady=(10, 0))
+        ttk.Spinbox(roi_keys_frame, from_=1, to=100, textvariable=self.roi_step_normal_var, width=5).grid(row=1, column=2, padx=5, pady=(10, 0))
+        
+        ttk.Label(roi_keys_frame, text="Fine Step (Shift):").grid(row=1, column=3, columnspan=2, sticky=tk.W, padx=5, pady=(10, 0))
+        ttk.Spinbox(roi_keys_frame, from_=1, to=50, textvariable=self.roi_step_fine_var, width=5).grid(row=1, column=5, padx=5, pady=(10, 0))
+        
         # Info
         info_frame = ttk.LabelFrame(main_frame, text="Information", padding="10")
         info_frame.pack(fill=tk.X)
@@ -528,7 +588,26 @@ Hotkeys:
         self.click_y_var.trace_add("write", lambda *args: self.autosave_click_position())
         self.hotkey_spam_var.trace_add("write", lambda *args: self.autosave_setting("hotkeys", "toggle_spam", self.hotkey_spam_var.get()))
         self.hotkey_debug_var.trace_add("write", lambda *args: self.autosave_setting("hotkeys", "toggle_debug", self.hotkey_debug_var.get()))
+        self.roi_key_up_var.trace_add("write", lambda *args: self.autosave_roi_keys())
+        self.roi_key_down_var.trace_add("write", lambda *args: self.autosave_roi_keys())
+        self.roi_key_left_var.trace_add("write", lambda *args: self.autosave_roi_keys())
+        self.roi_key_right_var.trace_add("write", lambda *args: self.autosave_roi_keys())
+        self.roi_step_normal_var.trace_add("write", lambda *args: self.autosave_setting("general", "roi_step_normal", self.roi_step_normal_var.get()))
+        self.roi_step_fine_var.trace_add("write", lambda *args: self.autosave_setting("general", "roi_step_fine", self.roi_step_fine_var.get()))
         self.uniform_color_protection_var.trace_add("write", lambda *args: self.autosave_uniform_color_protection())
+    
+    def autosave_roi_keys(self):
+        """Auto-save ROI movement keys."""
+        try:
+            keys = {
+                "up": self.roi_key_up_var.get(),
+                "down": self.roi_key_down_var.get(),
+                "left": self.roi_key_left_var.get(),
+                "right": self.roi_key_right_var.get()
+            }
+            self.config.set(keys, "general", "roi_keys")
+        except (tk.TclError, ValueError):
+            pass
     
     def autosave_roi(self):
         """Auto-save ROI settings for the selected detection."""
@@ -597,13 +676,119 @@ Hotkeys:
                 elif key == pynput_keyboard.Key.f8:
                     self.root.after(0, self.toggle_debug)
                 elif key == pynput_keyboard.Key.f9:
-                    self.root.after(0, self.set_roi_from_mouse)
+                    self.root.after(0, self.select_roi_from_screen)
             except AttributeError:
                 pass
         
         self.keyboard_listener = pynput_keyboard.Listener(on_press=on_press)
         self.keyboard_listener.start()
     
+    def setup_roi_keyboard_controls(self):
+        """Setup keyboard controls for ROI movement and resizing."""
+        def is_roi_focus_active():
+            """Check if the ROI focus widget has focus."""
+            return self.root.focus_get() == self.roi_focus_widget
+        
+        def get_step(event):
+            """Get step size based on Shift key state."""
+            if event.state & 0x1:  # Shift pressed
+                return self.roi_step_fine_var.get()
+            return self.roi_step_normal_var.get()
+        
+        def handle_roi_move(direction, ctrl_pressed, event=None):
+            """Handle ROI movement or resize based on direction and ctrl state."""
+            if not is_roi_focus_active():
+                return None  # Let default handling occur
+            
+            step = get_step(event) if event else self.roi_step_normal_var.get()
+            
+            if ctrl_pressed:
+                # Resize mode
+                if direction == 'up':
+                    self.roi_height.set(max(1, self.roi_height.get() - step))
+                elif direction == 'down':
+                    self.roi_height.set(self.roi_height.get() + step)
+                elif direction == 'left':
+                    self.roi_width.set(max(1, self.roi_width.get() - step))
+                elif direction == 'right':
+                    self.roi_width.set(self.roi_width.get() + step)
+            else:
+                # Move mode
+                if direction == 'up':
+                    self.roi_top.set(max(0, self.roi_top.get() - step))
+                elif direction == 'down':
+                    self.roi_top.set(self.roi_top.get() + step)
+                elif direction == 'left':
+                    self.roi_left.set(max(0, self.roi_left.get() - step))
+                elif direction == 'right':
+                    self.roi_left.set(self.roi_left.get() + step)
+            
+            return "break"  # Prevent default behavior
+        
+        # Bind arrow keys (always work when focus widget is active)
+        self.root.bind('<Up>', lambda e: handle_roi_move('up', False, e))
+        self.root.bind('<Down>', lambda e: handle_roi_move('down', False, e))
+        self.root.bind('<Left>', lambda e: handle_roi_move('left', False, e))
+        self.root.bind('<Right>', lambda e: handle_roi_move('right', False, e))
+        self.root.bind('<Control-Up>', lambda e: handle_roi_move('up', True, e))
+        self.root.bind('<Control-Down>', lambda e: handle_roi_move('down', True, e))
+        self.root.bind('<Control-Left>', lambda e: handle_roi_move('left', True, e))
+        self.root.bind('<Control-Right>', lambda e: handle_roi_move('right', True, e))
+        
+        # Bind all letter keys for custom mapping
+        for key in 'abcdefghijklmnopqrstuvwxyz':
+            self.root.bind(f'<{key}>', lambda e, k=key: self._handle_letter_key(e, k, False))
+            self.root.bind(f'<{key.upper()}>', lambda e, k=key: self._handle_letter_key(e, k, False))
+            self.root.bind(f'<Control-{key}>', lambda e, k=key: self._handle_letter_key(e, k, True))
+    
+    def _focus_roi_widget(self, event=None):
+        """Focus the ROI control widget."""
+        self.roi_focus_widget.focus_set()
+    
+    def _handle_letter_key(self, event, key, ctrl_pressed):
+        """Handle letter key for ROI movement if configured."""
+        # Only work when focus widget is active
+        if self.root.focus_get() != self.roi_focus_widget:
+            return None
+        
+        key_lower = key.lower()
+        step = self.roi_step_fine_var.get() if (event.state & 0x1) else self.roi_step_normal_var.get()
+        
+        # Check against configured keys
+        direction = None
+        if key_lower == self.roi_key_up_var.get().lower():
+            direction = 'up'
+        elif key_lower == self.roi_key_down_var.get().lower():
+            direction = 'down'
+        elif key_lower == self.roi_key_left_var.get().lower():
+            direction = 'left'
+        elif key_lower == self.roi_key_right_var.get().lower():
+            direction = 'right'
+        
+        if direction is None:
+            return None
+        
+        if ctrl_pressed:
+            if direction == 'up':
+                self.roi_height.set(max(1, self.roi_height.get() - step))
+            elif direction == 'down':
+                self.roi_height.set(self.roi_height.get() + step)
+            elif direction == 'left':
+                self.roi_width.set(max(1, self.roi_width.get() - step))
+            elif direction == 'right':
+                self.roi_width.set(self.roi_width.get() + step)
+        else:
+            if direction == 'up':
+                self.roi_top.set(max(0, self.roi_top.get() - step))
+            elif direction == 'down':
+                self.roi_top.set(self.roi_top.get() + step)
+            elif direction == 'left':
+                self.roi_left.set(max(0, self.roi_left.get() - step))
+            elif direction == 'right':
+                self.roi_left.set(self.roi_left.get() + step)
+        
+        return "break"
+
     def on_spam_state_change(self, running: bool):
         """Handle spam state change."""
         self.root.after(0, lambda: self._update_spam_status(running))
@@ -693,13 +878,71 @@ Hotkeys:
             "height": self.roi_height.get()
         }
     
-    def set_roi_from_mouse(self):
-        """Set ROI position from current mouse position."""
-        pos = pyautogui.position()
-        self.roi_left.set(pos[0])
-        self.roi_top.set(pos[1])
-        self.log_message(f"ROI position set to ({pos[0]}, {pos[1]})")
-        self.status_var.set(f"ROI position: ({pos[0]}, {pos[1]})")
+    def select_roi_from_screen(self):
+        """Open fullscreen overlay to select ROI by drawing a rectangle."""
+        self.root.withdraw()  # Hide main window
+        time.sleep(0.1)  # Allow window to hide
+        
+        # Create fullscreen transparent overlay
+        overlay = tk.Toplevel()
+        overlay.attributes('-fullscreen', True)
+        overlay.attributes('-topmost', True)
+        overlay.attributes('-alpha', 0.3)
+        overlay.configure(bg='black')
+        overlay.config(cursor='cross')
+        
+        canvas = tk.Canvas(overlay, highlightthickness=0, bg='black')
+        canvas.pack(fill=tk.BOTH, expand=True)
+        
+        # Selection state
+        start_pos = [None, None]
+        rect_id = [None]
+        result = [None]
+        
+        def on_press(event):
+            start_pos[0] = event.x
+            start_pos[1] = event.y
+            if rect_id[0]:
+                canvas.delete(rect_id[0])
+            rect_id[0] = canvas.create_rectangle(event.x, event.y, event.x, event.y, 
+                                                  outline='red', width=2)
+        
+        def on_drag(event):
+            if start_pos[0] is not None and rect_id[0]:
+                canvas.coords(rect_id[0], start_pos[0], start_pos[1], event.x, event.y)
+        
+        def on_release(event):
+            if start_pos[0] is not None:
+                x1, y1 = start_pos
+                x2, y2 = event.x, event.y
+                # Normalize coordinates
+                left = min(x1, x2)
+                top = min(y1, y2)
+                width = abs(x2 - x1)
+                height = abs(y2 - y1)
+                if width > 5 and height > 5:  # Minimum size check
+                    result[0] = (left, top, width, height)
+            overlay.destroy()
+        
+        def on_escape(event):
+            overlay.destroy()
+        
+        canvas.bind('<ButtonPress-1>', on_press)
+        canvas.bind('<B1-Motion>', on_drag)
+        canvas.bind('<ButtonRelease-1>', on_release)
+        overlay.bind('<Escape>', on_escape)
+        
+        overlay.wait_window()
+        self.root.deiconify()  # Show main window again
+        
+        if result[0]:
+            left, top, width, height = result[0]
+            self.roi_left.set(left)
+            self.roi_top.set(top)
+            self.roi_width.set(width)
+            self.roi_height.set(height)
+            self.log_message(f"ROI set to ({left}, {top}, {width}x{height})")
+            self.status_var.set(f"ROI: ({left}, {top}, {width}x{height})")
     
     def set_click_from_mouse(self):
         """Set click position from current mouse position."""
@@ -1252,15 +1495,6 @@ Hotkeys:
         self.log_message(f"Image copied to clipboard ({roi['width']}x{roi['height']})")
         self.status_var.set("Image copied!")
     
-    def copy_roi_code(self):
-        """Copy ROI as code to clipboard."""
-        roi = self.get_current_roi()
-        code = f'{{"left": {roi["left"]}, "top": {roi["top"]}, "width": {roi["width"]}, "height": {roi["height"]}}}'
-        self.root.clipboard_clear()
-        self.root.clipboard_append(code)
-        self.log_message(f"Copied: {code}")
-        self.status_var.set("ROI code copied!")
-    
     def reload_config(self):
         """Reload configuration from file."""
         self.config.config = self.config.load()
@@ -1457,8 +1691,17 @@ def request_admin():
 
 def main():
     request_admin()
-    app = GenshinSkipperGUI()
-    app.run()
+    try:
+        app = GenshinSkipperGUI()
+        app.run()
+    except Exception as e:
+        if args.debug:
+            print(f"Error: {e}")
+            import traceback
+            traceback.print_exc()
+    finally:
+        if args.debug:
+            input("\nPress Enter to close...")
 
 
 if __name__ == "__main__":

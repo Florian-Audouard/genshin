@@ -2,7 +2,10 @@
     "general": {
         "pause_between_spams": 0.05,
         "default_color_tolerance": 15,
-        "check_interval": 0.1
+        "check_interval": 0.1,
+        "roi_move_keys": "zqsd",
+        "roi_step_normal": 1,
+        "roi_step_fine": 10
     },
     "detections": {
         "CHARACTER": {
@@ -16,7 +19,7 @@
             "threshold": 0.95,
             "template": "img/template_character.png",
             "action_sequence": "click",
-            "uniform_color_protection": true
+            "uniform_color_protection": false
         },
         "PAGE": {
             "enabled": true,
@@ -48,11 +51,11 @@
             "enabled": true,
             "roi": {
                 "left": 551,
-                "top": 37,
+                "top": 38,
                 "width": 54,
-                "height": 54
+                "height": 53
             },
-            "threshold": 0.98,
+            "threshold": 0.97,
             "template": "img/template_dialogue.png",
             "uniform_color_protection": false,
             "action_sequence": "space\ne"
@@ -64,6 +67,7 @@
     },
     "hotkeys": {
         "toggle_spam": "F7",
-        "toggle_debug": "F8"
+        "toggle_debug": "F8",
+        "roi_step": 1
     }
 }
