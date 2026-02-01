@@ -16,10 +16,10 @@
                 "width": 50,
                 "height": 377
             },
-            "threshold": 0.95,
+            "threshold": 0.99,
             "template": "img/template_character.png",
             "action_sequence": "click",
-            "uniform_color_protection": false
+            "uniform_color_protection": true
         },
         "PAGE": {
             "enabled": true,
